@@ -1,0 +1,5 @@
+html, body{
+    background:url('../../img/dist.png') center center no-repeat fixed;
+    height:100%;
+    background-size:100% 100%;
+}
