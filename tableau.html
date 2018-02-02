@@ -5,24 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
   <div class = 'container'>
     <div class = 'row'>
       <div class = 'col-md-2'>
-        <h3>Home</h3>
-        <h3>Tutorials</h3>
-        <h3>Analysis</h3>
-        <h3>Visuals</h3>
+        <div class = 'affix'>
+        <h3><a href='index.html'>Home</a></h3>
+        <h3><a href='tutorial.html'>Tutorials</a></h3>
+        <h3><a href='analysis.html'>Analysis</a></h3>
+        <h3><a href='visuals.html'>Visuals</a></h3>
+        </div>
       </div>
       <div class = 'col-md-8'>
-        <p><h2>Using Tableau to Graph NHL Data</h2></p>
+        <h2>Using Tableau to Graph NHL Data</h2>
         <p></p>
-        <p><h2>By</h2></p>
+        <h2>By</h2>
         <p></p>
-        <p><h2>Matthew Barlowe</h2></p>
-        <p><b><h2> I. Introduction</h2></b><p>
+        <h2>Matthew Barlowe</h2>
+        <b><h2> I. Introduction</h2></b>
 	      <p>Okay in this article I’m going to show you how to use Tableau to create interactive graphs of
           NHL data.  Tableau is a Business Intelligence platform that interacts with data to create a
           variety of dashboards that you can insert in web pages or host on Tableau’s public server.
@@ -118,7 +123,7 @@
         <p>After Columns and Rows the next most important shelf is the Marks shelf.  It’s the one in the screen with the Colors, Size, Text, etc. buttons.  The Marks shelf actually controls how the data will look on the graph.  You can control what type of graph it is, the colors on the graph, and text along with many more other options.  Learning this area goes a long way in making your graphs customizable and is a little complicated at first.  But once you learn it the process is very similar with every other graph.</p>
         <p>Up above the Marks shelf is the Filter shelf.  This shelf is important because it allows us to determine what data we want to show.  This is especially important with our NHL data because most people want to see their own teams data first before moving on to other teams.  With the Filter shelf you can go ahead and limit the data for the users or it will allow you to insert drop down menus that will allow the people looking at the graphs to manipulate the data themselves all with just a couple clicks.</p>
         <p>One last thing to mention on this page is the Show Me tab in the top right corner.  I won’t be using this because I already know what I need to make these graphs, but if you’re ever stuck on how to make a graph or what a particular graph needs just click here and voila!  Down drops a menu showing you pretty much all the basic graphs you’ll ever need and what exactly you need to have with your data to make them.  It’s an invaluable built in tool I’ve used countless times and I advise you to treat it the same way.  Especially if you know what data you want to show but are unsure of how to best display it.  I get my pills ready in the rows and columns and click on the Show Me tab and see if I have the proper dimensions and measures for the graphs I may be thinking about.</p>
-        <h2><p>IV.  Scatter Plots</p></h2>
+        <h2><b>IV.  Scatter Plots</b></h2>
         <p>The first graph I’m going to show you is the scatter plot.  Scatter plots have been used for a long time now to show the relation between two different sets of data.  Usually the x axis is the independent variable and the y axis is the dependent variable. This isn’t the case with this first data, or at least we aren’t using it to make an argument that CA and CF are related right now.</p>
         </p>The scatter plot I’m going to make first will be a players CF60 vs their CA60.  This plot will be a replication of Tierney’s popular plot to show shot rates for the entire NHL.  I’ve even included the NHL logos I’ve created for this plot in the google drive with the rest of the data.  I changed up the logos to some of the more older ones when I originally was making these myself so if you see some weird logos in there that’s why.  First let's take a look at Tierney's graph and see what he’s doing so we can then translate it to Tableau.</p>
         <div class ='fitimage'>
