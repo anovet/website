@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Twitter Bot Commands</title>
+</head>
+<body>
+      <div class = 'col-md-2'>
+        <div class = 'affix'>
+        <h3 class="text-left"><a href='index.html' class='class1'>Home</a></h3>
+        <h3 class="text-left"><a href='projects.html' class='class1'>Projects</a></h3>
+        <h3 class="text-left"><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+        <h3 class="text-left"><a href='analysis.html' class='class1'>Analysis</a></h3>
+        </div>
+      </div>
+      <div class = 'col-md-8'>
+        <h1>Twitter Bot Commands</h1>
+        <br />
+        <p style='font-size:24px'>I have written a brief tutorial on how to
+        query the twitter bot so that it will return the statistics or graphs
+        you want.  If you have any questions please feel free to email me or
+        contact me on <a href='https://twitter.com/barloweanalytic'>twitter.</a></p>
+        <p>There are two types of queries that the bot will provide.
+        They are divided into statistical queries and graph queries.
+        As of right now the statistical query will return the season
+        values of CF%, xGF%, and ixG for players and CF% and xGF% for
+        teams.  For the graphs it will return a 5 game moving average
+        over the season for players and teams for these values, and
+        these values only as of right now:</p>
+        <h3>Statistics the Bot will Graph:</h3>
+        <p>toi | cf | ca | c_plus_minus | ff | fa | xgf | xga |
+        gf | ga | g | a1 | a2 | ixg | cf60 | ca60 | cf_percent |
+        ff60 | fa60 | ff_percent | gf60 | ga60 | gf_percent | xgf60
+        | xga60 | xgf_percent | g60 | a160 | a260 | p60 | ixg60</p>
+        <p>C stands for Corsi, F for Fenwick, and xg stands for expected goals
+        which uses my method detailed here
+        <a href='https://rpubs.com/mcbarlowe/xGmodel'>here.</a>
+        The stats and player names must be spelled EXACTLY as listed
+        above to properly process your query.  Also player names
+        should be spelled correctly as well.  There is no fuzzy searching
+        implemented for this bot yet so if you can’t spell Marchessault
+        then you aren’t getting his stats, at least from here.</p>
+        <p>In addition you can flag the query to return values adjusted
+        for score and venue with the ‘-adj’ flag and for 5v5 only with the
+        ‘-5v5’ flag.  Listed below are the entire examples that the bot
+        will take and return a value.  They have to be entered in that
+        order and the -adj and -5v5 flags are optional. If you are
+        familiar with terminal or cmd line commands these are
+        structured in a very similar way.  Any misspellings,
+        any words out of order will cause your request not to be processed.
+        The ‘vs.’ keyword will return the graph/stats of two
+        teams/players and is necessary for that effect to happen.</p>
+
+
+
+      </div>
+</body>
+</html>

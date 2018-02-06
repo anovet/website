@@ -11,299 +11,297 @@
   <title>Tableau Intro</title>
 </head>
 <body>
-  <div class = 'container'>
-    <div class = 'row'>
-      <div class = 'col-md-2'>
-        <div class = 'affix'>
-        <h3><a href='index.html' class='class1'>Home</a></h3>
-        <h3><a href='projects.html' class='class1'>Projects</a></h3>
-        <h3><a href='tutorial.html' class='class1'>Tutorials</a></h3>
-        <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
-        </div>
+    <div class = 'col-md-2'>
+      <div class = 'affix'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorial.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
       </div>
-      <div class = 'col-md-8'>
-        <h2>Using Tableau to Graph NHL Data</h2>
-        <p></p>
-        <h2>By</h2>
-        <p></p>
-        <h2>Matthew Barlowe</h2>
-        <b><h2> I. Introduction</h2></b>
-	      <p>Okay in this article I’m going to show you how to use Tableau to create interactive graphs of
-          NHL data.  Tableau is a Business Intelligence platform that interacts with data to create a
-          variety of dashboards that you can insert in web pages or host on Tableau’s public server.
-          Some examples with hockey data are the seminal webpages of Dom Galimini’s
-          <a href = 'http://ownthepuck.blogspot.com/'> Hero Charts</a> and Ian Fleming’s
-          <a href = 'https://www.dispellingvoodoo.com/save-v3-1417'>SAV3</a> Charts for Goalies.</p>
-        <p>Although he doesn’t have a specific page setup, Sean Tierney of
-          <a href = 'https://twitter.com/ChartingHockey'>@ChartingHockey</a> fame and writer for the
-          Athletic uses Tableau exclusively for his visuals as well.  Tierney’s public
-          <a href = 'https://public.tableau.com/profile/sean.tierney#!/'>Tableau</a> page is a great spot
-          to visit to see how other visuals are made as well as you can download the entire workbooks and
-          see how he personally constructs each graph.</p>
-        <p>But why use Tableau as opposed to graphs in R/Python or Excel?  One reason is that
-          Tableau can work with various inputs for its data.  It can use common CSV files or Excel
-          files you import or it can connect to external databases such as SQL or even Google Sheets.
-          One of the benefits of that is when the data changes your visuals will automatically change
-          as well.  The next advantage is that Tableau allows you to build graphs using an intuitive drag
-          and drop interface where you can see how your actions affect the visuals in real time.
-          When using programming languages like R or Python you often have to run the code again
-          before you see any changes in your graph.</p>
-        <p>Often this isn’t a problem but sometimes can take a while with larger datasets.
-        Additionally Tableau allows one to easily manipulate their data almost as well as someone can
-        with R and Python without knowing any programming knowledge in advance.  It helps break down
-        barriers to data analysis that are often formidable to those without prior programming
-        knowledge.  It allows the people viewing the Tableau notebook the ability to make the graphs they
-        want to make to tell the story they want to about their team.  This is helpful in allowing more
-        voices into the discussion which always results in better analysis overall. Lastly, and perhaps
-        most importantly, Tableau is a free software, at least the version I will use in this lesson, to
-        download and use.  Tableau offers a premium version that offers more options but won’t be
-        necessary in the graphs I’m going to show you.</p>
-        <p>Additionally Tableau allows one to easily manipulate their data almost as well as someone can
-        with R and Python without knowing any programming knowledge in advance.  It helps break down
-        barriers to data analysis that are often formidable to those without prior programming
-        knowledge.  This is helpful in allowing more voices into the discussion which always results in
-        better analysis overall.</p>
-	      <p>There are some disadvantages to Tableau as well.  The first is that with larger datasets the
-        slower it runs.  I wouldn’t use Tableau to work with a data frame of thousands of columns;
-        however, the data sizes we are going to work with will be perfectly ok.  Another disadvantage is
-        that while Tableau does allow a lot of customization you are still ultimately stuck in their
-        world.  There will ultimately be customization options that you just won’t be able to do if
-        you’re used to working with things like matplotlib and ggplot2.  One last disadvantage is that
-        the free software is stored at Tableau so no internet connection means no saving.  Even with an
-        internet connection save often</p>
-        <h2><b>II. Installation and Importing Data</b></h2>
-	      <p>Tableau can be downloaded <a href = 'https://public.tableau.com/en-us/s/download'>here.</a>
-        You’ll have to give them your email first and such but  hey nothing’s truly free.  Once you have
-        the file downloaded open it and follow the instructions to install.  It’s a pretty straight
-        forward install.  With everything finished, open your Tableau icon and you’ll be greeted with the
-        opening screen:
-        <div class ='fitimage'>
-          <img src = 'img/first.png'>
-        </div>
-        <p>There’s a lot of options on there but the ones for this article are the Connect and Open areas. Connect is how Tableau opens up a new data source it connects to the data you will be making your visualizations with.  I won’t go into them all in detail but the main one this article will work with is the Text file option since all the data for this is stored in CSV files.  CSV stands for Comma Separated Value file and it’s a standard way of storing tables in a text file.  Each row of the table is represented by a line in the file and each cell value separated by a comma hence the name.  Also one quick thing is to make sure if you work with CSV in the future that your data doesn’t have commas in it before converting to CSV format.
-        </p>
-        <p>After clicking on the Text File option, Tableau will ask you to select a file and
-        choose a CSV file.  The files I will be using in this dataset will be found in a Google Drive
-        <a href ='https://drive.google.com/open?id=0B8UCtw99csGbYVZ2N0d3djJ6YTQ'>folder.</a>
-        The folder contains three main data.  Two of them were obtained from Emmanuel Perry’s Corsica and
-        are each player’s total stats for the 2017 season and each player's stats broken down by
-        individual game for the 2016 and 2017 season.  Without Perry’s site a lot of this couldn’t happen
-        so if you enjoy articles like this and would like to continue seeing them I highly suggest
-        contributing to Corsica’s <a href = 'https://www.patreon.com/corsica'>Patreon.</a>
-        The third dataset comes from Dawson Spriging’s, also known as @DTMAboutHeart, GAR data for each
-        player from the 2017.
-        <p>Again a lot of thanks goes to these guys for making these datasets publicly available.  While graphs and visualizations are the fun part of NHL stats, they really are just the tip of the iceberg.  The work necessary to make this data includes a lot of not fun stuff going on behind the scenes.  So once again if you enjoy this make sure to give these two a thanks or at least don’t yell at them as much when they say your favorite player is bad.</p>
-        <p>Ok now that’s out of the way let’s start with file that is labeled 2017 Skater Stats.csv in  the google drive.  This is the final stats for every skater in the NHL from the 2017 season, and once you select it Tableau will open a new screen that looks like this picture.</p>
-        <div class ='fitimage'>
-          <img src = 'img/second.png'>
-        </div>
-        <p>
-        I won’t get too much into the details about everything on this page because it’s beyond the scope of this article, but I’ll touch on the basics.  In the bottom half of the screen you can see the data values that I’ve loaded into tableau from the CSV file.  Looking at this is a good way to make sure your data was imported properly as well.  Think of it as an almost mini Excel inside tableau that just shows you the values of the data.</p>
-        </p>You’ll notice at the top of the columns you’ll see either an ‘Abc’,  a ‘#’, or if it’s a date a little calendar.  These symbols tell you the data types that are in their respective columns.  ‘Abc’ means that each value in the column is a string, or in simpler terms, written words.  These include values like names, teams, positions.  The ‘#’ means that the data is numerical and can be used in calculations.</p>
-        <p>It seems with this data Tableau has decided that the season column is a string as well even though it's a date.  For this data set I won’t bother changing that as it won’t affect the graphs we are going to produce with it, but in others that will be a serious problem.  So before going straight into making graphs it's always a good idea to scan this area and make sure the data is in the proper formats.  If not you can change them in the sidebar on the worksheet when you got to start making the graph.</p>
-        <p>In addition to preview your data, one can use this screen to merge different data sets to create new ones by dragging another file into the top half above the data table.  From there one can change the the different type of joins with the default being an inner join.  There are even ways to change which key the join is committed on as well.  Basically a lot of simple data manipulation techniques of SQL or R can also be done inside of Tableau as well without needing to open the data in another program.</p>
-        <p>If you’re reading this and have no idea what I’m talking about don’t worry because you really don’t need it.  When I started using Tableau I could barely use Excel I was able to make it work just fine.  Now Tableau is installed and the data is loaded; let's start making graphs.</p>
-        <p><h2>III. Worksheet Layout</h2></p>
-        At the bottom left of the screen I showed above you’ll see tabs labeled Data Source, Sheet1, and then some pictures with plus signs that look like this:
-        <div class ='fitimage'>
-          <img src = 'img/third.png'>
-        </div>
-        <p>These are the main tabs you’ll use to move around in tableau.  Click on Sheet1 and then it will  pull up this screen:</p>
-        <div class ='fitimage'>
-          <img src = 'img/fourth.png'>
-        </div>
-        <p>This is the screen where you’ll be spending most of your time in Tableau.  Here is where each individual graph is created from the imported data.
-        On the left of the window you’ll see an area underneath the Data tab separated into a Dimensions and Measures where the columns from the data are located.  Dimensions and Measures are how Tableau sorts the data. Dimensions are fields that describe the measures by grouping it together or slicing it into different categories.  A lot of the times these are columns that contain text values like names or Boolean values in either True or False.  Dimensions can be continuous as well as discrete </p>
-        <p>The next area Measures is anything considered by Tableau to contain numerical or quantitative data.  Examples of this in the data would be Corsi For, Corsi Against, or Expected Goals.
-        Measures and Dimensions can both be continuous and discrete data More info on the difference between Measures and Dimensions can be read <a href ="http://onlinehelp.tableau.com/current/pro/desktop/en-us/datafields_typesandroles_dataroles_dimensionmeasure.html">here.</a>
-        Another <a href = 'https://vizpainter.com/dates-in-tableau-make-me-want-to-tear-my-hair-out/'>link </a>
-        also helps break down the differences between Dimensions and Measures as well.  Don’t worry if it feels confusing at first it takes a while to get use to them but as you go through creating theses graphs you’ll start to get a feel for the difference between them.</p>
-        <p>The next major area of the worksheet is the Column and Rows.  Here is where we will be dragging our Dimensions and Measures to create the axes of our graphs.  The general term for this is called a shelf in Tableau as shelves are place one can drag the data pills (what the dimensions and measures are called when placed on a shelf due to their oval shapes) to change the look of a graph.</p>
-        <p>The easiest way to think of Columns and Rows is that Columns represent the values on the x axis of the graph you are trying to make and rows represent the y axis.  You can place as many pills as you want in either the Rows or Columns area to create faceted graphs or multiple graphs on the same axes.  I suggest playing around with this for a bit to see how Tableau reacts as you place more pills in either category.  For this article though we’ll basically be sticking with one value in the rows and one in the columns.</p>
-        <p>After Columns and Rows the next most important shelf is the Marks shelf.  It’s the one in the screen with the Colors, Size, Text, etc. buttons.  The Marks shelf actually controls how the data will look on the graph.  You can control what type of graph it is, the colors on the graph, and text along with many more other options.  Learning this area goes a long way in making your graphs customizable and is a little complicated at first.  But once you learn it the process is very similar with every other graph.</p>
-        <p>Up above the Marks shelf is the Filter shelf.  This shelf is important because it allows us to determine what data we want to show.  This is especially important with our NHL data because most people want to see their own teams data first before moving on to other teams.  With the Filter shelf you can go ahead and limit the data for the users or it will allow you to insert drop down menus that will allow the people looking at the graphs to manipulate the data themselves all with just a couple clicks.</p>
-        <p>One last thing to mention on this page is the Show Me tab in the top right corner.  I won’t be using this because I already know what I need to make these graphs, but if you’re ever stuck on how to make a graph or what a particular graph needs just click here and voila!  Down drops a menu showing you pretty much all the basic graphs you’ll ever need and what exactly you need to have with your data to make them.  It’s an invaluable built in tool I’ve used countless times and I advise you to treat it the same way.  Especially if you know what data you want to show but are unsure of how to best display it.  I get my pills ready in the rows and columns and click on the Show Me tab and see if I have the proper dimensions and measures for the graphs I may be thinking about.</p>
-        <h2><b>IV.  Scatter Plots</b></h2>
-        <p>The first graph I’m going to show you is the scatter plot.  Scatter plots have been used for a long time now to show the relation between two different sets of data.  Usually the x axis is the independent variable and the y axis is the dependent variable. This isn’t the case with this first data, or at least we aren’t using it to make an argument that CA and CF are related right now.</p>
-        </p>The scatter plot I’m going to make first will be a players CF60 vs their CA60.  This plot will be a replication of Tierney’s popular plot to show shot rates for the entire NHL.  I’ve even included the NHL logos I’ve created for this plot in the google drive with the rest of the data.  I changed up the logos to some of the more older ones when I originally was making these myself so if you see some weird logos in there that’s why.  First let's take a look at Tierney's graph and see what he’s doing so we can then translate it to Tableau.</p>
-        <div class ='fitimage'>
-          <img src = 'img/fifth.png'>
-        </div>
-        <p>As we can see here Tierney has placed CF60 on the bottom as the x axis going left to right.  On the y axis he has CA60 going up to down, but if you look closer the numbers decrease as one moves down the y axis.  He has inverted the y axis in order to put the players in the upper right quadrant of the graph.</p>
-        <p>I normally don’t do this as you always want the origin to be in the same spot so as not to confuse the reader.  However, the way it is done here doesn’t really create any problems as we aren’t trying to show any relation between the the different points in the scatter plot.  Since each point is independent of the others the scale and order of the axis won’t create any misleading graphics that could happen with other more relational data.  The last thing to take note of is that each point represents one player.  All together the three main things we need to know to recreate this chart is what each point represents, what the axes represent, and what type of graph.  With this limited info and our data we’re 75% of the way to replicating this graph.</p>
-        <p>Switching back to my worksheet window I go to look for CF60 and CA60 and see they aren’t actually in the data set.  Don’t worry though I can easily create them by creating what Tableau calls a calculated field.  This would be similar to creating a new column in Excel based on calculations of other cells in that row.</p>
-        <div class ='fitimage'>
-          <img src = 'img/sixth.png'>
-        </div>
-        <p>So I right clicked on the CF measures pill and went to to create calculation as shown in the above picture.  There i typed this formula [CF]/[TOI] * 60 and repeated it for the CA pill as well.  Keep in mind this is for CF and CA not CF%.  Now that we have our values created it’s time to drag them to the Columns and Rows shelf.  Since I want CF60 to be my x axis I will place it on the columns shelf and CA60 in the rows for the y axis.  Once that’s done you’ll see that there is a graph with the appropriate axes but only one dot on the screen.</p>
-        <div class ='fitimage'>
-          <img src = 'img/seventh.png'>
-        </div>
-        <p>You’ll also notice that our variables of CF60 and CA60 are displayed with SUM() around them.  This is because of how Tableau handles the data when you place it in the rows and columns shelf.  It builds a pivot table with the information you’ve given it, but doesn’t yet have the info from another measure of dimension to separate it into separate points.</p>
-        <p>Sum is just the default if you right click on the pill and go down to Measure(Sum) in the drop down menu you’ll see many other functions you can use on the data including common ones such as Median, Average, and Count.  For the graphs in the article you won’t have to change that but it’s something to think about when working with other more varied data.</p>
-        <p>So how do you get each individual player to show up?  This is where Tableau can be a little tricky but once you get the hang of it it becomes very nice.  To get the individual players to show up all you have to do is drag the Player pill from the Dimensions to the Detail square on the marks shelf.  Once you do this you’ll see the pill appear underneath on the Marks shelf and then your graph will look something like the picture below.</p>
-        <div class ='fitimage'>
-          <img src = 'img/eigth.png'>
-        </div>
-        <p>And voila, you’ve created your first scatter plot!  It’s a bit ugly and doesn’t really tell us too much yet but as you can see if you hover your mouse over the points it will tell you the player and what their CF60 and CA60 was for the 2017 season.  The main thing though is that every other scatter plot you create will mainly follow this same structure to get the base working in Tableau.</p>
-        <p>Now it’s time to add all the details that will turn this into a fully functional data visualization.  First we’ll adjust the axes to center our mass of points within the graph.  You can do this by right clicking each axis and adjust the values until get things perfect.  There is a much easier way though.  If you hold shift while your cursor is over the graph you will see the cursor change into a cross of four arrows.  With that cursor click on the graph and you’ll be able to pan it left/right and up/down until you situate the data just where you want it.  Tableau will automatically adjust the axes so that they coordinate correctly with the data as well.</p>
-        <p>So we’ve got the data centered what’s next?  Well on Tierney’s graph he has lines denoting the league average for CF60 and CA60 so let’s add those next to get quadrants on our graph.  First to do that we’ll need to create fixed average calculation for each values average.  To do this we need to go back to create calculated field for both CF60 and CA60 only this time you’ll type in the formula field this command {FIXED : Avg([CF60])} and label it however you want I chose CF60 avg.  Repeat that with CA60 and once done drag both pills to the details box on the Marks shelf.  Now right click either axes and select ‘Add Reference Line.’  It will pull up a window that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/ninth.png'>
-        </div>
-        <p>Select the CA60 avg in the  value drop down menu in the value section if it’s the CA60 axis and CF60 avg if it's the CF60 axis and then label it with a custom label or don’t label it at all.  I chose to label it NHL CF60 avg and NHL CA60 avg for both of mine. After all that our graph should now look like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/tenth.png'>
-        </div>
-        <p>Ok next let’s add the team icons to make it look like Tierney’s graph.  I’ve included some NHL team logo thumbnails in the google drive linked at the start of the article.  To do that you’ll want to take the whole directory of logo’s and place it in your Shapes folder that is located inside your My Tableau Repository folder wherever you installed that.  And that’s it once the shapes are in the folder restart Tableau and you’ll be able to access them in the graph.</p>
-        <p>Once you have the img ready to go, to get the icons to match up to the team logo you’ll want to drag the Teams pill to the shape tile on the Marks shelf and drop it.  A menu will pop up just select add all members and you’ll see the circles on the graph change to different shapes.  Now we just need to change the shapes to logos.
-        First click on the shapes button on the Marks shelf and it will pull up this menu:</p>
-        <div class ='fitimage'>
-          <img src = 'img/eleventh.png'>
-        </div>
-        <p>Normally you’d have to match up the shapes with the labels, but I went ahead and named the image files to match the team abbreviations so all you have to click is assign palette and it will automatically match up the logos with the team abbreviations, you’re welcome.  Now that’s done you should have something that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twelfth.png'>
-        </div>
-        <p>Now we’re getting pretty close but not quite there yet.  One our y axis is still normal and not inverted.  Two it’s a little zoomed out so it’s hard to make out individual icons, and last we’re missing the labels.  Flipping the y axis is easy all you need to do is right click on it and select ‘Edit Axis.’  In the ‘Edit Axis’ menu you’ll see a checkbox for reversed in the bottom left corner and just check.  </p>
-        <p>So with the y axis inverted now let’s zoom in a bit and try to get a little separation on the icons.  Just right click on the graph itself and select ‘Show View Toolbar’ this will bring up a small menu with a plus and minus just click on the plus once to zoom in a bit.  And now to add the labels all you need to do is drag the Player pill to the labels box on the Marks shelf and then you’ll end up with something like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/thirteenth.png'>
-        </div>
-        <p>Still looks a little busy though.  One way to clear it up is to filter out the players who played marginal minutes last season.  Not only does this help clean up the graph it also helps get rid of small sample sizes which might affect the average and aren’t really representative of a player’s true talent because of the inherent large variances that comes with a small number of games.</p>
-        <p>	If you guessed the way to do this was to use the ‘Filters’ shelf, then you would be correct!  I’m going to drag the TOI pill to the ‘Filters’ shelf and then I’ll select all values from the next menu that pops up then you’ll see a menu that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/fourteenth.png'>
-        </div>
-        <p>Select the at least option out of the selections and change that value to 250.  This allows you to add later players that might have higher than 1,702 minutes and not let them get filtered out. That way the graph will only include players that have played at least 250 minutes in the 2017 season.  Let’s take one more look at Tierney’s graph and see what is left to do:</p>
-        <div class ='fitimage'>
-          <img src = 'img/fifteenth.png'>
-        </div>
-        <p>We’re pretty close as you can see the only thing left to do is label the quadrants as he has done.  There are several ways to do this, but the way I’ll show you to start is to use an Annotation.  Right click the graph and it will bring up a drop down menu that you used earlier to pull up the ‘View Toolbar.’  On that menu there will be Annotate, hover over that and there will be another menu select ‘Area’ from that menu. </p>
-        <p>It will bring up a pop up text box that is empty.  Type in either Good, Fun, Bad, or Dull and hit enter.  This will place a big grey box with your text in the center on the graph.  To make the box transparent right click and select ‘Format’ and Tableau will pull up the ‘Format’ menu where the Dimensions and Measures are.  On this menu will be a ‘Shading’ drop down menu; click on that and set the sliding bar for shading all the way down to 0% and your text box will be transparent.  Repeat this for all four quadrants just like Tierney has done with his graph.  With that the last thing to do is to change the title by double clicking on it and changing the text.  </p>
-        <p>I did a little more tweaking as well.  I edited each axis so that the min value was 30 and max 65 by right clicking each axis and selecting ‘Edit Axis.’  I also switch the font to Andale Mono just because I like it but you can use whatever you want.  Ok the graph is done and the last thing to do is to setup a dashboard to share it to the world.  At the bottom left corner you’ll see what looks like a four square with a plus on it.  Click on that and it will create a dashboard that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/sixteenth.png'>
-        </div>
-        <p></p>
-        <p>From there all we need to do is drag the Sheet 1 to the drop sheets area. After that I change the size of the graph to 1000x800 to make it a bit bigger.  The menus to do that will look like this:</p>
-        <p></p>
-        <div class ='fitimage'>
-          <img src = 'img/seventeenth.png'>
-        </div>
-        <p></p>
-        <p>And that’s the last thing to do.  Now let’s save this and our graph is done!  Let’s see how it turned out:</p>
-        <p></p>
-        <div class ='fitimage'>
-          <img src = 'img/eighteenth.png'>
-        </div>
-        <p>Other than some font choices I’d say they look pretty close.  You’ve created your very first scatter plot for NHL data and now have the tools to create any other scatter plot you feel like.  The finished workbook will be linked at the end of the tutorial so you can see exactly how I did everything</p>
-        <p></p>
+    </div>
+    <div class = 'col-md-8'>
+      <h2>Using Tableau to Graph NHL Data</h2>
+      <p></p>
+      <h2>By</h2>
+      <p></p>
+      <h2>Matthew Barlowe</h2>
+      <h2><b> I. Introduction</b></h2>
+      <p>Okay in this article I’m going to show you how to use Tableau to create interactive graphs of
+        NHL data.  Tableau is a Business Intelligence platform that interacts with data to create a
+        variety of dashboards that you can insert in web pages or host on Tableau’s public server.
+        Some examples with hockey data are the seminal webpages of Dom Galimini’s
+        <a href = 'http://ownthepuck.blogspot.com/'> Hero Charts</a> and Ian Fleming’s
+        <a href = 'https://www.dispellingvoodoo.com/save-v3-1417'>SAV3</a> Charts for Goalies.</p>
+      <p>Although he doesn’t have a specific page setup, Sean Tierney of
+        <a href = 'https://twitter.com/ChartingHockey'>@ChartingHockey</a> fame and writer for the
+        Athletic uses Tableau exclusively for his visuals as well.  Tierney’s public
+        <a href = 'https://public.tableau.com/profile/sean.tierney#!/'>Tableau</a> page is a great spot
+        to visit to see how other visuals are made as well as you can download the entire workbooks and
+        see how he personally constructs each graph.</p>
+      <p>But why use Tableau as opposed to graphs in R/Python or Excel?  One reason is that
+        Tableau can work with various inputs for its data.  It can use common CSV files or Excel
+        files you import or it can connect to external databases such as SQL or even Google Sheets.
+        One of the benefits of that is when the data changes your visuals will automatically change
+        as well.  The next advantage is that Tableau allows you to build graphs using an intuitive drag
+        and drop interface where you can see how your actions affect the visuals in real time.
+        When using programming languages like R or Python you often have to run the code again
+        before you see any changes in your graph.</p>
+      <p>Often this isn’t a problem but sometimes can take a while with larger datasets.
+      Additionally Tableau allows one to easily manipulate their data almost as well as someone can
+      with R and Python without knowing any programming knowledge in advance.  It helps break down
+      barriers to data analysis that are often formidable to those without prior programming
+      knowledge.  It allows the people viewing the Tableau notebook the ability to make the graphs they
+      want to make to tell the story they want to about their team.  This is helpful in allowing more
+      voices into the discussion which always results in better analysis overall. Lastly, and perhaps
+      most importantly, Tableau is a free software, at least the version I will use in this lesson, to
+      download and use.  Tableau offers a premium version that offers more options but won’t be
+      necessary in the graphs I’m going to show you.</p>
+      <p>Additionally Tableau allows one to easily manipulate their data almost as well as someone can
+      with R and Python without knowing any programming knowledge in advance.  It helps break down
+      barriers to data analysis that are often formidable to those without prior programming
+      knowledge.  This is helpful in allowing more voices into the discussion which always results in
+      better analysis overall.</p>
+      <p>There are some disadvantages to Tableau as well.  The first is that with larger datasets the
+      slower it runs.  I wouldn’t use Tableau to work with a data frame of thousands of columns;
+      however, the data sizes we are going to work with will be perfectly ok.  Another disadvantage is
+      that while Tableau does allow a lot of customization you are still ultimately stuck in their
+      world.  There will ultimately be customization options that you just won’t be able to do if
+      you’re used to working with things like matplotlib and ggplot2.  One last disadvantage is that
+      the free software is stored at Tableau so no internet connection means no saving.  Even with an
+      internet connection save often</p>
+      <h2><b>II. Installation and Importing Data</b></h2>
+      <p>Tableau can be downloaded <a href = 'https://public.tableau.com/en-us/s/download'>here.</a>
+      You’ll have to give them your email first and such but  hey nothing’s truly free.  Once you have
+      the file downloaded open it and follow the instructions to install.  It’s a pretty straight
+      forward install.  With everything finished, open your Tableau icon and you’ll be greeted with the
+      opening screen:
+      <div class ='fitimage'>
+        <img src = 'img/first.png'>
+      </div>
+      <p>There’s a lot of options on there but the ones for this article are the Connect and Open areas. Connect is how Tableau opens up a new data source it connects to the data you will be making your visualizations with.  I won’t go into them all in detail but the main one this article will work with is the Text file option since all the data for this is stored in CSV files.  CSV stands for Comma Separated Value file and it’s a standard way of storing tables in a text file.  Each row of the table is represented by a line in the file and each cell value separated by a comma hence the name.  Also one quick thing is to make sure if you work with CSV in the future that your data doesn’t have commas in it before converting to CSV format.
+      </p>
+      <p>After clicking on the Text File option, Tableau will ask you to select a file and
+      choose a CSV file.  The files I will be using in this dataset will be found in a Google Drive
+      <a href ='https://drive.google.com/open?id=0B8UCtw99csGbYVZ2N0d3djJ6YTQ'>folder.</a>
+      The folder contains three main data.  Two of them were obtained from Emmanuel Perry’s Corsica and
+      are each player’s total stats for the 2017 season and each player's stats broken down by
+      individual game for the 2016 and 2017 season.  Without Perry’s site a lot of this couldn’t happen
+      so if you enjoy articles like this and would like to continue seeing them I highly suggest
+      contributing to Corsica’s <a href = 'https://www.patreon.com/corsica'>Patreon.</a>
+      The third dataset comes from Dawson Spriging’s, also known as @DTMAboutHeart, GAR data for each
+      player from the 2017.
+      <p>Again a lot of thanks goes to these guys for making these datasets publicly available.  While graphs and visualizations are the fun part of NHL stats, they really are just the tip of the iceberg.  The work necessary to make this data includes a lot of not fun stuff going on behind the scenes.  So once again if you enjoy this make sure to give these two a thanks or at least don’t yell at them as much when they say your favorite player is bad.</p>
+      <p>Ok now that’s out of the way let’s start with file that is labeled 2017 Skater Stats.csv in  the google drive.  This is the final stats for every skater in the NHL from the 2017 season, and once you select it Tableau will open a new screen that looks like this picture.</p>
+      <div class ='fitimage'>
+        <img src = 'img/second.png'>
+      </div>
+      <p>
+      I won’t get too much into the details about everything on this page because it’s beyond the scope of this article, but I’ll touch on the basics.  In the bottom half of the screen you can see the data values that I’ve loaded into tableau from the CSV file.  Looking at this is a good way to make sure your data was imported properly as well.  Think of it as an almost mini Excel inside tableau that just shows you the values of the data.</p>
+      <p>You’ll notice at the top of the columns you’ll see either an ‘Abc’,  a ‘#’, or if it’s a date a little calendar.  These symbols tell you the data types that are in their respective columns.  ‘Abc’ means that each value in the column is a string, or in simpler terms, written words.  These include values like names, teams, positions.  The ‘#’ means that the data is numerical and can be used in calculations.</p>
+      <p>It seems with this data Tableau has decided that the season column is a string as well even though it's a date.  For this data set I won’t bother changing that as it won’t affect the graphs we are going to produce with it, but in others that will be a serious problem.  So before going straight into making graphs it's always a good idea to scan this area and make sure the data is in the proper formats.  If not you can change them in the sidebar on the worksheet when you got to start making the graph.</p>
+      <p>In addition to preview your data, one can use this screen to merge different data sets to create new ones by dragging another file into the top half above the data table.  From there one can change the the different type of joins with the default being an inner join.  There are even ways to change which key the join is committed on as well.  Basically a lot of simple data manipulation techniques of SQL or R can also be done inside of Tableau as well without needing to open the data in another program.</p>
+      <p>If you’re reading this and have no idea what I’m talking about don’t worry because you really don’t need it.  When I started using Tableau I could barely use Excel I was able to make it work just fine.  Now Tableau is installed and the data is loaded; let's start making graphs.</p>
+      <h2>III. Worksheet Layout</h2>
+      At the bottom left of the screen I showed above you’ll see tabs labeled Data Source, Sheet1, and then some pictures with plus signs that look like this:
+      <div class ='fitimage'>
+        <img src = 'img/third.png'>
+      </div>
+      <p>These are the main tabs you’ll use to move around in tableau.  Click on Sheet1 and then it will  pull up this screen:</p>
+      <div class ='fitimage'>
+        <img src = 'img/fourth.png'>
+      </div>
+      <p>This is the screen where you’ll be spending most of your time in Tableau.  Here is where each individual graph is created from the imported data.
+      On the left of the window you’ll see an area underneath the Data tab separated into a Dimensions and Measures where the columns from the data are located.  Dimensions and Measures are how Tableau sorts the data. Dimensions are fields that describe the measures by grouping it together or slicing it into different categories.  A lot of the times these are columns that contain text values like names or Boolean values in either True or False.  Dimensions can be continuous as well as discrete </p>
+      <p>The next area Measures is anything considered by Tableau to contain numerical or quantitative data.  Examples of this in the data would be Corsi For, Corsi Against, or Expected Goals.
+      Measures and Dimensions can both be continuous and discrete data More info on the difference between Measures and Dimensions can be read <a href ="http://onlinehelp.tableau.com/current/pro/desktop/en-us/datafields_typesandroles_dataroles_dimensionmeasure.html">here.</a>
+      Another <a href = 'https://vizpainter.com/dates-in-tableau-make-me-want-to-tear-my-hair-out/'>link </a>
+      also helps break down the differences between Dimensions and Measures as well.  Don’t worry if it feels confusing at first it takes a while to get use to them but as you go through creating theses graphs you’ll start to get a feel for the difference between them.</p>
+      <p>The next major area of the worksheet is the Column and Rows.  Here is where we will be dragging our Dimensions and Measures to create the axes of our graphs.  The general term for this is called a shelf in Tableau as shelves are place one can drag the data pills (what the dimensions and measures are called when placed on a shelf due to their oval shapes) to change the look of a graph.</p>
+      <p>The easiest way to think of Columns and Rows is that Columns represent the values on the x axis of the graph you are trying to make and rows represent the y axis.  You can place as many pills as you want in either the Rows or Columns area to create faceted graphs or multiple graphs on the same axes.  I suggest playing around with this for a bit to see how Tableau reacts as you place more pills in either category.  For this article though we’ll basically be sticking with one value in the rows and one in the columns.</p>
+      <p>After Columns and Rows the next most important shelf is the Marks shelf.  It’s the one in the screen with the Colors, Size, Text, etc. buttons.  The Marks shelf actually controls how the data will look on the graph.  You can control what type of graph it is, the colors on the graph, and text along with many more other options.  Learning this area goes a long way in making your graphs customizable and is a little complicated at first.  But once you learn it the process is very similar with every other graph.</p>
+      <p>Up above the Marks shelf is the Filter shelf.  This shelf is important because it allows us to determine what data we want to show.  This is especially important with our NHL data because most people want to see their own teams data first before moving on to other teams.  With the Filter shelf you can go ahead and limit the data for the users or it will allow you to insert drop down menus that will allow the people looking at the graphs to manipulate the data themselves all with just a couple clicks.</p>
+      <p>One last thing to mention on this page is the Show Me tab in the top right corner.  I won’t be using this because I already know what I need to make these graphs, but if you’re ever stuck on how to make a graph or what a particular graph needs just click here and voila!  Down drops a menu showing you pretty much all the basic graphs you’ll ever need and what exactly you need to have with your data to make them.  It’s an invaluable built in tool I’ve used countless times and I advise you to treat it the same way.  Especially if you know what data you want to show but are unsure of how to best display it.  I get my pills ready in the rows and columns and click on the Show Me tab and see if I have the proper dimensions and measures for the graphs I may be thinking about.</p>
+      <h2><b>IV.  Scatter Plots</b></h2>
+      <p>The first graph I’m going to show you is the scatter plot.  Scatter plots have been used for a long time now to show the relation between two different sets of data.  Usually the x axis is the independent variable and the y axis is the dependent variable. This isn’t the case with this first data, or at least we aren’t using it to make an argument that CA and CF are related right now.</p>
+      <p>The scatter plot I’m going to make first will be a players CF60 vs their CA60.  This plot will be a replication of Tierney’s popular plot to show shot rates for the entire NHL.  I’ve even included the NHL logos I’ve created for this plot in the google drive with the rest of the data.  I changed up the logos to some of the more older ones when I originally was making these myself so if you see some weird logos in there that’s why.  First let's take a look at Tierney's graph and see what he’s doing so we can then translate it to Tableau.</p>
+      <div class ='fitimage'>
+        <img src = 'img/fifth.png'>
+      </div>
+      <p>As we can see here Tierney has placed CF60 on the bottom as the x axis going left to right.  On the y axis he has CA60 going up to down, but if you look closer the numbers decrease as one moves down the y axis.  He has inverted the y axis in order to put the players in the upper right quadrant of the graph.</p>
+      <p>I normally don’t do this as you always want the origin to be in the same spot so as not to confuse the reader.  However, the way it is done here doesn’t really create any problems as we aren’t trying to show any relation between the the different points in the scatter plot.  Since each point is independent of the others the scale and order of the axis won’t create any misleading graphics that could happen with other more relational data.  The last thing to take note of is that each point represents one player.  All together the three main things we need to know to recreate this chart is what each point represents, what the axes represent, and what type of graph.  With this limited info and our data we’re 75% of the way to replicating this graph.</p>
+      <p>Switching back to my worksheet window I go to look for CF60 and CA60 and see they aren’t actually in the data set.  Don’t worry though I can easily create them by creating what Tableau calls a calculated field.  This would be similar to creating a new column in Excel based on calculations of other cells in that row.</p>
+      <div class ='fitimage'>
+        <img src = 'img/sixth.png'>
+      </div>
+      <p>So I right clicked on the CF measures pill and went to to create calculation as shown in the above picture.  There i typed this formula [CF]/[TOI] * 60 and repeated it for the CA pill as well.  Keep in mind this is for CF and CA not CF%.  Now that we have our values created it’s time to drag them to the Columns and Rows shelf.  Since I want CF60 to be my x axis I will place it on the columns shelf and CA60 in the rows for the y axis.  Once that’s done you’ll see that there is a graph with the appropriate axes but only one dot on the screen.</p>
+      <div class ='fitimage'>
+        <img src = 'img/seventh.png'>
+      </div>
+      <p>You’ll also notice that our variables of CF60 and CA60 are displayed with SUM() around them.  This is because of how Tableau handles the data when you place it in the rows and columns shelf.  It builds a pivot table with the information you’ve given it, but doesn’t yet have the info from another measure of dimension to separate it into separate points.</p>
+      <p>Sum is just the default if you right click on the pill and go down to Measure(Sum) in the drop down menu you’ll see many other functions you can use on the data including common ones such as Median, Average, and Count.  For the graphs in the article you won’t have to change that but it’s something to think about when working with other more varied data.</p>
+      <p>So how do you get each individual player to show up?  This is where Tableau can be a little tricky but once you get the hang of it it becomes very nice.  To get the individual players to show up all you have to do is drag the Player pill from the Dimensions to the Detail square on the marks shelf.  Once you do this you’ll see the pill appear underneath on the Marks shelf and then your graph will look something like the picture below.</p>
+      <div class ='fitimage'>
+        <img src = 'img/eigth.png'>
+      </div>
+      <p>And voila, you’ve created your first scatter plot!  It’s a bit ugly and doesn’t really tell us too much yet but as you can see if you hover your mouse over the points it will tell you the player and what their CF60 and CA60 was for the 2017 season.  The main thing though is that every other scatter plot you create will mainly follow this same structure to get the base working in Tableau.</p>
+      <p>Now it’s time to add all the details that will turn this into a fully functional data visualization.  First we’ll adjust the axes to center our mass of points within the graph.  You can do this by right clicking each axis and adjust the values until get things perfect.  There is a much easier way though.  If you hold shift while your cursor is over the graph you will see the cursor change into a cross of four arrows.  With that cursor click on the graph and you’ll be able to pan it left/right and up/down until you situate the data just where you want it.  Tableau will automatically adjust the axes so that they coordinate correctly with the data as well.</p>
+      <p>So we’ve got the data centered what’s next?  Well on Tierney’s graph he has lines denoting the league average for CF60 and CA60 so let’s add those next to get quadrants on our graph.  First to do that we’ll need to create fixed average calculation for each values average.  To do this we need to go back to create calculated field for both CF60 and CA60 only this time you’ll type in the formula field this command {FIXED : Avg([CF60])} and label it however you want I chose CF60 avg.  Repeat that with CA60 and once done drag both pills to the details box on the Marks shelf.  Now right click either axes and select ‘Add Reference Line.’  It will pull up a window that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/ninth.png'>
+      </div>
+      <p>Select the CA60 avg in the  value drop down menu in the value section if it’s the CA60 axis and CF60 avg if it's the CF60 axis and then label it with a custom label or don’t label it at all.  I chose to label it NHL CF60 avg and NHL CA60 avg for both of mine. After all that our graph should now look like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/tenth.png'>
+      </div>
+      <p>Ok next let’s add the team icons to make it look like Tierney’s graph.  I’ve included some NHL team logo thumbnails in the google drive linked at the start of the article.  To do that you’ll want to take the whole directory of logo’s and place it in your Shapes folder that is located inside your My Tableau Repository folder wherever you installed that.  And that’s it once the shapes are in the folder restart Tableau and you’ll be able to access them in the graph.</p>
+      <p>Once you have the img ready to go, to get the icons to match up to the team logo you’ll want to drag the Teams pill to the shape tile on the Marks shelf and drop it.  A menu will pop up just select add all members and you’ll see the circles on the graph change to different shapes.  Now we just need to change the shapes to logos.
+      First click on the shapes button on the Marks shelf and it will pull up this menu:</p>
+      <div class ='fitimage'>
+        <img src = 'img/eleventh.png'>
+      </div>
+      <p>Normally you’d have to match up the shapes with the labels, but I went ahead and named the image files to match the team abbreviations so all you have to click is assign palette and it will automatically match up the logos with the team abbreviations, you’re welcome.  Now that’s done you should have something that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twelfth.png'>
+      </div>
+      <p>Now we’re getting pretty close but not quite there yet.  One our y axis is still normal and not inverted.  Two it’s a little zoomed out so it’s hard to make out individual icons, and last we’re missing the labels.  Flipping the y axis is easy all you need to do is right click on it and select ‘Edit Axis.’  In the ‘Edit Axis’ menu you’ll see a checkbox for reversed in the bottom left corner and just check.  </p>
+      <p>So with the y axis inverted now let’s zoom in a bit and try to get a little separation on the icons.  Just right click on the graph itself and select ‘Show View Toolbar’ this will bring up a small menu with a plus and minus just click on the plus once to zoom in a bit.  And now to add the labels all you need to do is drag the Player pill to the labels box on the Marks shelf and then you’ll end up with something like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/thirteenth.png'>
+      </div>
+      <p>Still looks a little busy though.  One way to clear it up is to filter out the players who played marginal minutes last season.  Not only does this help clean up the graph it also helps get rid of small sample sizes which might affect the average and aren’t really representative of a player’s true talent because of the inherent large variances that comes with a small number of games.</p>
+      <p>	If you guessed the way to do this was to use the ‘Filters’ shelf, then you would be correct!  I’m going to drag the TOI pill to the ‘Filters’ shelf and then I’ll select all values from the next menu that pops up then you’ll see a menu that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/fourteenth.png'>
+      </div>
+      <p>Select the at least option out of the selections and change that value to 250.  This allows you to add later players that might have higher than 1,702 minutes and not let them get filtered out. That way the graph will only include players that have played at least 250 minutes in the 2017 season.  Let’s take one more look at Tierney’s graph and see what is left to do:</p>
+      <div class ='fitimage'>
+        <img src = 'img/fifteenth.png'>
+      </div>
+      <p>We’re pretty close as you can see the only thing left to do is label the quadrants as he has done.  There are several ways to do this, but the way I’ll show you to start is to use an Annotation.  Right click the graph and it will bring up a drop down menu that you used earlier to pull up the ‘View Toolbar.’  On that menu there will be Annotate, hover over that and there will be another menu select ‘Area’ from that menu. </p>
+      <p>It will bring up a pop up text box that is empty.  Type in either Good, Fun, Bad, or Dull and hit enter.  This will place a big grey box with your text in the center on the graph.  To make the box transparent right click and select ‘Format’ and Tableau will pull up the ‘Format’ menu where the Dimensions and Measures are.  On this menu will be a ‘Shading’ drop down menu; click on that and set the sliding bar for shading all the way down to 0% and your text box will be transparent.  Repeat this for all four quadrants just like Tierney has done with his graph.  With that the last thing to do is to change the title by double clicking on it and changing the text.  </p>
+      <p>I did a little more tweaking as well.  I edited each axis so that the min value was 30 and max 65 by right clicking each axis and selecting ‘Edit Axis.’  I also switch the font to Andale Mono just because I like it but you can use whatever you want.  Ok the graph is done and the last thing to do is to setup a dashboard to share it to the world.  At the bottom left corner you’ll see what looks like a four square with a plus on it.  Click on that and it will create a dashboard that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/sixteenth.png'>
+      </div>
+      <p></p>
+      <p>From there all we need to do is drag the Sheet 1 to the drop sheets area. After that I change the size of the graph to 1000x800 to make it a bit bigger.  The menus to do that will look like this:</p>
+      <p></p>
+      <div class ='fitimage'>
+        <img src = 'img/seventeenth.png'>
+      </div>
+      <p></p>
+      <p>And that’s the last thing to do.  Now let’s save this and our graph is done!  Let’s see how it turned out:</p>
+      <p></p>
+      <div class ='fitimage'>
+        <img src = 'img/eighteenth.png'>
+      </div>
+      <p>Other than some font choices I’d say they look pretty close.  You’ve created your very first scatter plot for NHL data and now have the tools to create any other scatter plot you feel like.  The finished workbook will be linked at the end of the tutorial so you can see exactly how I did everything</p>
+      <p></p>
 
-        <p><h2><b>V. Bar Charts</b></h2></p>
+      <h2><b>V. Bar Charts</b></h2>
 
-        <p>The next graph I’m going to show you to make is the bar chart.  The data we will be working on with that is DTMAboutHeart’s WAR data from the 2017 season.  If you haven’t read about his stat you can read about it over at <a href = 'https://hockey-graphs.com/2016/10/24/a-primer-on-dtmabouthearts-war-model/' target = '_blank'>Hockey Graphs.</a>  I won’t go into the intricacies of this stat but it’s a very interesting, if long, read and if you enjoy hockey analytics I suggest you give it a read.</p>
-        <p>With that out of the way it's time to move on to the charts.  Not only will this be a bar chart but we’ll create a stacked bar chart so we can show the different components that make up each player’s WAR score.  I’m going to move a little faster in this example if you find yourself wondering what something is just look back up at the scatter plot as the terms will be the same.</p>
-        <p>So first you’ll need to connect to the 2017 GAR data I’ve linked in the Google drive folder.  If you have any questions just refresh your memory from the scatter plot section up above because it will be the exact same process.  Once the data is connected create your new worksheet by clicking on the tab in the lower left corner like before.</p>
-        <p>	So now we’re back to the blank worksheet screen the first thing we’ll do is drag the Player’s pill from the Dimensions area over to the columns row.  This will just show you a bunch of player’s names with Abc underneath them.  Next I’m going to drag the Measure Values from the Measures shelf over to the rows.  We haven’t used the Measure Values pill yet but it’s a quick way of moving every single measure at once to a new shelf.  It’s much quicker when you have lot’s of different measures to do this and then filter them as needed than dragging each individual pill.</p>
-        <p>	Once that pill is dropped in rows you’ll see a whole bunch of bars with the value of 20,162,017.  Can you guess what’s happening here?  Yep as I warned before Tableau has determined that the year column is an actual integer instead of a date.  It won’t bother us much here since we are only dealing with one season of data.  You can fix this easily in Tableau with the split function.  Right click on Season and select Transform and it will pull up a window like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/nineteenth.png'>
-        </div>
-        <p>The separator is 6 because we want the date string to be split between 2016 and 2017 and I chose last because I want the last part of the split which is 2017.  Hit ok and you will see a new pill in your Dimensions area named Season-Split 1.  You can rename this by right clicking the pill and selecting Rename and then renaming it to whatever you think makes more sense.  Again we won’t be using it for this graph but it’s good info to know that a lot of what you can do in Excel to manipulate data one can also do in Tableau as well.</p>
-        <p>So now that our measure values is in our row we need to filter out the stats we need.  In the GAR write up it wrote that EVO, EVD, PPO, Faceoffs(FAC), Taking Penalties (Take), and Drawing Penalties (Draw) were the main components making up a player’s total GAR score so I’m going to focus on those.  To start I’m going to drag the Measure Values pill over to the rows shelf.  Once you do that you’ll see that every single value is added to the graph all on the same axis but we don’t want all of those.  The easiest way to filter out what you need is to right click the Measures Values pill and select Edit Filter.  This pulls up a list of checkboxes with each Measure of our data set.  Then all that simply needs to be is just uncheck the ones we aren’t going to use from the list.  </p>
-        <div class ='fitimage'>
-          <img src = 'img/twentieth.png'>
-        </div>
-        <p>The picture up above is what you should now be working with.  It looks like the bars are all solid but if you hover above each one you can see that they are broken down into each individual stat it’s just that every stat is the same color.  To fix that I’ll drag the Measure Names from the Dimensions shelf to the Color area of the Marks shelf.  I selected the Color Blind palette for my graph by clicking on the Color square and going to Edit Colors and choosing it from the drop down menu.  This gives me a graph looking like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyfirst.png'>
-        </div>
-        <p>So now we just have too many players at once on the graph we need to come up with a way to filter it to make things easier to take in.  The clearest way to do this of course is by team and position.  To do this I’m going to drag the Team and Position pills to the filter shelf, and then once they are there I right click on them and select show filter for both pills.  This will bring up menus to the right of your graph where the Measure Names box is that looks like this.</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentysecond.png'>
-        </div>
-        <p>For the teams I’m going to change that filter list to a dropdown box so it takes up less space and looks cleaner.  Since the positions filter isn’t that large I’m going to leave it as is.  To change the Team filter to a drop down menu you’ll need to hover your mouse over the box.  As you do you’ll notice a triangle in the top right corner of the box.  Click on that and a menu will appear and just go down and click the Single Value Dropdown selection and that’s all it takes.<p>
-        <p>Now let’s start a new Dashboard like we did with the last graph so we can set the final size of the graph and save it to the cloud. I selected 800x600 size for my dashboard and then drag the worksheet to the work area.  It will hide some of the names on the x axis but to solve that just make the window of the graph a little bit bigger and then hit save.  Your final graph should look something like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentythird.png'>
-        </div>
-        <p>One last thing before we move on from bar graphs I want to talk about these three important buttons that make working with bar graphs easier to organize:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyfourth.png'>
-        </div>
-        <p>These are found at the top of the worksheet page right above the columns and rows.  The button on the left flips the axes of your graph the x becomes y and vice versa.  This is a quick way to change your bar graph from horizontal to vertical.  It can also be used with scatter plots as well and any other graph where there are two set axes.  The next two allow you to sort the graph either ascending or descending.  This is especially important with bar graph as it allows you to group the bars quickly to show either side of the data to get your point across.</p>
-        <p></p>
-        <p><b><h2>VI. Line Plots</h2></b></p>
-            <p></p>
-            <p>The third and final plot we are going to cover are line plots, specifically time series line plots that you may know as rolling averages of Corsi For % that are so common on the Corsica website.  The data for this will come from the 2017 skater stats by Game csv file.  This file includes every single player’s stats from the 2017 and 2016 season broken down by each individual game.  So if a player played only 62 games in the last season there are 62 rows with that player and the date of the game and that games individual player stats.</p>
-            <p>	Ok once you’ve got your data imported and new worksheet created let's look at how we’ll start building our graph.  Since we are doing a line plot over time the standard way of doing this is to place time as the x axis and to do that I will place the Date pill on the Columns shelf.  As you’ll see next to the Date pill there is a calendar looking item this means that Tableau has identified it as a Date object unlike before with the GAR data.  After dragging the Date pill to the columns you see that the graph area only has the time broken down by years.  I’m going to want something more granular though that shows a little more detail.</p>
-            <p>	To get the dates to display at a day level all you have to do is right click the Date pill and when you do that you’ll see two options to choose whether the date is Year, Month, or day that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyfifth.png'>
-        </div>
-        <p>We are going to choose the second option of these choices because that turns our date into a continuous variable instead of a discrete one which the top choices are.  This will help in making our x axis span the time we want to look at.  If you chose the first option it would just break the x axis down into discrete days of the month 1 through 31.  You’d want to do this if you were looking at particular behaviors that may happen during certain times of every month of the year but for this case that won’t help us at all.  So now that our date is continuous the pill will turn green and you’ll see this on your screen:
-        <div class ='fitimage'>
-          <img src = 'img/twentysixth.png'>
-        </div>
-        <p>While this may seem useless at first, what it does tell us is exactly which dates we have data on for this span of years.  Unfortunately it looks like some playoff data got captured in here so we’ll need to filter that out first before we move on to building the rest of our graph as not to skew anyone’s statistics.</p>
-        <p>	To start doing this I’m will create another calculated field.  So I start by right clicking Date going down to Create in the dropdown menu and then selecting create calculated field where I type in this formula:</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyseventh.png'>
-        </div>
-        <p>Hit Ok and that will create a pill in the Dimensions shelf that says T|F No Playoffs.  Drag that to the Filter shelf and select True from the menu that pops up because we want the values where this formula equals true which are the regular season games.
-        Ok with that fixed we now have our Dates on the x axis set now let’s add our CF% values to the Columns shelf and get our line plot over time.  After dragging the CF% pill from the Measures shelf to the Columns you’ll see a bunch of squiggly lines that move up and down that don’t make any sense at all.  That’s because as I said before Tableau takes the Sum of that column in your data without breaking it down by each player.  The next step like before with the scatter plot is to drag the Players pill to the Marks shelf and now it looks like even more of a mess!</p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyeigth.png'>
-        </div>
-        <p>So that’s a lot of info at once that doesn’t make any more sense than the original graph.  The key to fixing this is to filter it out by players like we did for the GAR data.  That means moving the Player pill to the filter shelf. Right click on the Player pill on the filter shelf and select show filter and a filter box will appear to the right of the graph.  The auto filter box is a selection of check boxes where you can select which players you want to show or not.  At the top right of the box is a magnifying glass, seen in the picture below, which you can click on to search for certain players.  I also clicked the arrow in the top right corner and selected Customize and checked Show Apply Button this way you can check players and the Tableau dashboard won’t keep constantly reloading until you hit apply.<p>
-        <div class ='fitimage'>
-          <img src = 'img/twentyninth.png'>
-        </div>
-        <p>But even after you filter out for the players you want to show the lines all look the same because the colors haven’t been set.  To solve this just drag the Player pill from Dimensions to the color square on Marks and Tableau will automatically assign a color to each player you’ve selected in your filter.  After all this work you should have something that looks like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/thirtieth.png'>
-        </div>
-        <p>We can see a lot of info from this there’s really just too much variance in the values to draw any strong conclusions about any of these player’s CF% values over time.  This is where the moving average helps out a lot because it smooths out all those peaks and valleys and allows you to see the trend of the players.
-        Right click the Sum(CF%) pill in the Rows shelf and select Add Table Calculation and which will pull up a window that looks like this and for a 20 game moving average you’ll need to set the window up like this:</p>
-        <div class ='fitimage'>
-          <img src = 'img/thirtyfirst.png'>
-        </div>
-        <p>Why 19 and not 20?  Because if you selected 20 the average on that game would be the 21st game average.  To get a certain game average you’ll take that number and subtract one because it will include the game on that specific date.  This is similar to something Rob Tufts does with his <a href = 'https://public.tableau.com/profile/robert.tufts#!/vizhome/NHLMomentumCharts/MomentumCharts'>momentum charts</a> on a team level but sort of for players.  If you don’t follow him I highly suggest it as his Tableau work makes mine look pretty primitive and really is without peer in terms of high level of variety and quality.  You can follow him on twitter <a href = 'https://twitter.com/robbtuftshockey' target = '_blank'>@robbtuftshockey</a>.  He does the usage charts for Vollman’s Hockey Abstract if you’re still doubting me.<p>
-        <div class ='fitimage'>
-          <img src = 'img/thirtysecond.png'>
-        </div>
-        <p>The only thing left is to tweak some things on the graph to make it prettier.  The first thing I’ll do is add a constant line at the 50 mark to demarcate when a player is dropping above or below it.  You do that the same as the average lines from the scatter plot but instead this time we’ll change it to a Constant line in the drop down menu to the right of the line value and set that constant value to 50.  I’ll also drag the date to the filters shelf so that we can adjust the timeline to look at a player's performance over a particular time frame. </p>
-        <p>	Next I’ll adjust the y axis because I don’t believe one needs to see the origin as average CF% values almost never drop to zero.  I’ll right click my y axis and select Edit Axis and set my y axis minimum to 40 and maximum to 65 along with renaming my axis to show that the graph is a 20 game moving average of CF%.  May some values happen outside those values?  Sure but they’ll be extreme outliers and the fact they break your scale will be an easily seen indicator that a player is playing well above or below where they should be.  The last thing I’ll add is a filter for date so you can look at spans of dates as you want and not be constrained to the whole time period.  Drag the Date pill to the Filters shelf and select range of values.  Once that is done right click the Pill and select show filter and now you should have a range of dates slider you can adjust to the right of your graph.  Your graph should now look something like this depending on what players and dates you've chosen in your filter:</p>
-        <div class ='fitimage'>
-          <img src = 'img/thirtythird.png'>
-        </div>
-        <p>With the adjustment of the axis you can see the peaks and valleys of each player much better.  Some will argue that truncating the y axis like this makes the data say more than it should, but in the NHL the change of even a couple of percentage points one way or the other is a big difference in the level of play.  By highlighting these differences we are showing a much more accurate picture of each player's difference in play than if we had kept the origin in the graph.
-        So now our graph is pretty much finished and all this left is to create the dashboard for it.  I drag the worksheet to the space and set the size to 800x600 as before and then adjust the size of the boxes of my filter like you would a window for any other program and then here is our final product.  I’ve selected the frontrunners from last years Calder race as the players here but you can change it to anyone you see fit.</p>
-        <div class ='fitimage'>
-          <img src = 'img/thirtyfourth.png'>
-        </div>
-        <p>Keep in mind with this type of graph you can change it to any stat you want; GF%, FF%, xGF%, iCF, or PPG.  All you would need to do is just change the stat in the Rows shelf to whatever you wanted it to be and then the graph would change accordingly.</p>
-        <p></p>
+      <p>The next graph I’m going to show you to make is the bar chart.  The data we will be working on with that is DTMAboutHeart’s WAR data from the 2017 season.  If you haven’t read about his stat you can read about it over at <a href = 'https://hockey-graphs.com/2016/10/24/a-primer-on-dtmabouthearts-war-model/' target = '_blank'>Hockey Graphs.</a>  I won’t go into the intricacies of this stat but it’s a very interesting, if long, read and if you enjoy hockey analytics I suggest you give it a read.</p>
+      <p>With that out of the way it's time to move on to the charts.  Not only will this be a bar chart but we’ll create a stacked bar chart so we can show the different components that make up each player’s WAR score.  I’m going to move a little faster in this example if you find yourself wondering what something is just look back up at the scatter plot as the terms will be the same.</p>
+      <p>So first you’ll need to connect to the 2017 GAR data I’ve linked in the Google drive folder.  If you have any questions just refresh your memory from the scatter plot section up above because it will be the exact same process.  Once the data is connected create your new worksheet by clicking on the tab in the lower left corner like before.</p>
+      <p>	So now we’re back to the blank worksheet screen the first thing we’ll do is drag the Player’s pill from the Dimensions area over to the columns row.  This will just show you a bunch of player’s names with Abc underneath them.  Next I’m going to drag the Measure Values from the Measures shelf over to the rows.  We haven’t used the Measure Values pill yet but it’s a quick way of moving every single measure at once to a new shelf.  It’s much quicker when you have lot’s of different measures to do this and then filter them as needed than dragging each individual pill.</p>
+      <p>	Once that pill is dropped in rows you’ll see a whole bunch of bars with the value of 20,162,017.  Can you guess what’s happening here?  Yep as I warned before Tableau has determined that the year column is an actual integer instead of a date.  It won’t bother us much here since we are only dealing with one season of data.  You can fix this easily in Tableau with the split function.  Right click on Season and select Transform and it will pull up a window like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/nineteenth.png'>
+      </div>
+      <p>The separator is 6 because we want the date string to be split between 2016 and 2017 and I chose last because I want the last part of the split which is 2017.  Hit ok and you will see a new pill in your Dimensions area named Season-Split 1.  You can rename this by right clicking the pill and selecting Rename and then renaming it to whatever you think makes more sense.  Again we won’t be using it for this graph but it’s good info to know that a lot of what you can do in Excel to manipulate data one can also do in Tableau as well.</p>
+      <p>So now that our measure values is in our row we need to filter out the stats we need.  In the GAR write up it wrote that EVO, EVD, PPO, Faceoffs(FAC), Taking Penalties (Take), and Drawing Penalties (Draw) were the main components making up a player’s total GAR score so I’m going to focus on those.  To start I’m going to drag the Measure Values pill over to the rows shelf.  Once you do that you’ll see that every single value is added to the graph all on the same axis but we don’t want all of those.  The easiest way to filter out what you need is to right click the Measures Values pill and select Edit Filter.  This pulls up a list of checkboxes with each Measure of our data set.  Then all that simply needs to be is just uncheck the ones we aren’t going to use from the list.  </p>
+      <div class ='fitimage'>
+        <img src = 'img/twentieth.png'>
+      </div>
+      <p>The picture up above is what you should now be working with.  It looks like the bars are all solid but if you hover above each one you can see that they are broken down into each individual stat it’s just that every stat is the same color.  To fix that I’ll drag the Measure Names from the Dimensions shelf to the Color area of the Marks shelf.  I selected the Color Blind palette for my graph by clicking on the Color square and going to Edit Colors and choosing it from the drop down menu.  This gives me a graph looking like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyfirst.png'>
+      </div>
+      <p>So now we just have too many players at once on the graph we need to come up with a way to filter it to make things easier to take in.  The clearest way to do this of course is by team and position.  To do this I’m going to drag the Team and Position pills to the filter shelf, and then once they are there I right click on them and select show filter for both pills.  This will bring up menus to the right of your graph where the Measure Names box is that looks like this.</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentysecond.png'>
+      </div>
+      <p>For the teams I’m going to change that filter list to a dropdown box so it takes up less space and looks cleaner.  Since the positions filter isn’t that large I’m going to leave it as is.  To change the Team filter to a drop down menu you’ll need to hover your mouse over the box.  As you do you’ll notice a triangle in the top right corner of the box.  Click on that and a menu will appear and just go down and click the Single Value Dropdown selection and that’s all it takes.<p>
+      <p>Now let’s start a new Dashboard like we did with the last graph so we can set the final size of the graph and save it to the cloud. I selected 800x600 size for my dashboard and then drag the worksheet to the work area.  It will hide some of the names on the x axis but to solve that just make the window of the graph a little bit bigger and then hit save.  Your final graph should look something like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentythird.png'>
+      </div>
+      <p>One last thing before we move on from bar graphs I want to talk about these three important buttons that make working with bar graphs easier to organize:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyfourth.png'>
+      </div>
+      <p>These are found at the top of the worksheet page right above the columns and rows.  The button on the left flips the axes of your graph the x becomes y and vice versa.  This is a quick way to change your bar graph from horizontal to vertical.  It can also be used with scatter plots as well and any other graph where there are two set axes.  The next two allow you to sort the graph either ascending or descending.  This is especially important with bar graph as it allows you to group the bars quickly to show either side of the data to get your point across.</p>
+      <p></p>
+      <h2><b>VI. Line Plots</b></h2>
+          <p></p>
+          <p>The third and final plot we are going to cover are line plots, specifically time series line plots that you may know as rolling averages of Corsi For % that are so common on the Corsica website.  The data for this will come from the 2017 skater stats by Game csv file.  This file includes every single player’s stats from the 2017 and 2016 season broken down by each individual game.  So if a player played only 62 games in the last season there are 62 rows with that player and the date of the game and that games individual player stats.</p>
+          <p>	Ok once you’ve got your data imported and new worksheet created let's look at how we’ll start building our graph.  Since we are doing a line plot over time the standard way of doing this is to place time as the x axis and to do that I will place the Date pill on the Columns shelf.  As you’ll see next to the Date pill there is a calendar looking item this means that Tableau has identified it as a Date object unlike before with the GAR data.  After dragging the Date pill to the columns you see that the graph area only has the time broken down by years.  I’m going to want something more granular though that shows a little more detail.</p>
+          <p>	To get the dates to display at a day level all you have to do is right click the Date pill and when you do that you’ll see two options to choose whether the date is Year, Month, or day that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyfifth.png'>
+      </div>
+      <p>We are going to choose the second option of these choices because that turns our date into a continuous variable instead of a discrete one which the top choices are.  This will help in making our x axis span the time we want to look at.  If you chose the first option it would just break the x axis down into discrete days of the month 1 through 31.  You’d want to do this if you were looking at particular behaviors that may happen during certain times of every month of the year but for this case that won’t help us at all.  So now that our date is continuous the pill will turn green and you’ll see this on your screen:
+      <div class ='fitimage'>
+        <img src = 'img/twentysixth.png'>
+      </div>
+      <p>While this may seem useless at first, what it does tell us is exactly which dates we have data on for this span of years.  Unfortunately it looks like some playoff data got captured in here so we’ll need to filter that out first before we move on to building the rest of our graph as not to skew anyone’s statistics.</p>
+      <p>	To start doing this I’m will create another calculated field.  So I start by right clicking Date going down to Create in the dropdown menu and then selecting create calculated field where I type in this formula:</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyseventh.png'>
+      </div>
+      <p>Hit Ok and that will create a pill in the Dimensions shelf that says T|F No Playoffs.  Drag that to the Filter shelf and select True from the menu that pops up because we want the values where this formula equals true which are the regular season games.
+      Ok with that fixed we now have our Dates on the x axis set now let’s add our CF% values to the Columns shelf and get our line plot over time.  After dragging the CF% pill from the Measures shelf to the Columns you’ll see a bunch of squiggly lines that move up and down that don’t make any sense at all.  That’s because as I said before Tableau takes the Sum of that column in your data without breaking it down by each player.  The next step like before with the scatter plot is to drag the Players pill to the Marks shelf and now it looks like even more of a mess!</p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyeigth.png'>
+      </div>
+      <p>So that’s a lot of info at once that doesn’t make any more sense than the original graph.  The key to fixing this is to filter it out by players like we did for the GAR data.  That means moving the Player pill to the filter shelf. Right click on the Player pill on the filter shelf and select show filter and a filter box will appear to the right of the graph.  The auto filter box is a selection of check boxes where you can select which players you want to show or not.  At the top right of the box is a magnifying glass, seen in the picture below, which you can click on to search for certain players.  I also clicked the arrow in the top right corner and selected Customize and checked Show Apply Button this way you can check players and the Tableau dashboard won’t keep constantly reloading until you hit apply.<p>
+      <div class ='fitimage'>
+        <img src = 'img/twentyninth.png'>
+      </div>
+      <p>But even after you filter out for the players you want to show the lines all look the same because the colors haven’t been set.  To solve this just drag the Player pill from Dimensions to the color square on Marks and Tableau will automatically assign a color to each player you’ve selected in your filter.  After all this work you should have something that looks like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/thirtieth.png'>
+      </div>
+      <p>We can see a lot of info from this there’s really just too much variance in the values to draw any strong conclusions about any of these player’s CF% values over time.  This is where the moving average helps out a lot because it smooths out all those peaks and valleys and allows you to see the trend of the players.
+      Right click the Sum(CF%) pill in the Rows shelf and select Add Table Calculation and which will pull up a window that looks like this and for a 20 game moving average you’ll need to set the window up like this:</p>
+      <div class ='fitimage'>
+        <img src = 'img/thirtyfirst.png'>
+      </div>
+      <p>Why 19 and not 20?  Because if you selected 20 the average on that game would be the 21st game average.  To get a certain game average you’ll take that number and subtract one because it will include the game on that specific date.  This is similar to something Rob Tufts does with his <a href = 'https://public.tableau.com/profile/robert.tufts#!/vizhome/NHLMomentumCharts/MomentumCharts'>momentum charts</a> on a team level but sort of for players.  If you don’t follow him I highly suggest it as his Tableau work makes mine look pretty primitive and really is without peer in terms of high level of variety and quality.  You can follow him on twitter <a href = 'https://twitter.com/robbtuftshockey' target = '_blank'>@robbtuftshockey</a>.  He does the usage charts for Vollman’s Hockey Abstract if you’re still doubting me.<p>
+      <div class ='fitimage'>
+        <img src = 'img/thirtysecond.png'>
+      </div>
+      <p>The only thing left is to tweak some things on the graph to make it prettier.  The first thing I’ll do is add a constant line at the 50 mark to demarcate when a player is dropping above or below it.  You do that the same as the average lines from the scatter plot but instead this time we’ll change it to a Constant line in the drop down menu to the right of the line value and set that constant value to 50.  I’ll also drag the date to the filters shelf so that we can adjust the timeline to look at a player's performance over a particular time frame. </p>
+      <p>	Next I’ll adjust the y axis because I don’t believe one needs to see the origin as average CF% values almost never drop to zero.  I’ll right click my y axis and select Edit Axis and set my y axis minimum to 40 and maximum to 65 along with renaming my axis to show that the graph is a 20 game moving average of CF%.  May some values happen outside those values?  Sure but they’ll be extreme outliers and the fact they break your scale will be an easily seen indicator that a player is playing well above or below where they should be.  The last thing I’ll add is a filter for date so you can look at spans of dates as you want and not be constrained to the whole time period.  Drag the Date pill to the Filters shelf and select range of values.  Once that is done right click the Pill and select show filter and now you should have a range of dates slider you can adjust to the right of your graph.  Your graph should now look something like this depending on what players and dates you've chosen in your filter:</p>
+      <div class ='fitimage'>
+        <img src = 'img/thirtythird.png'>
+      </div>
+      <p>With the adjustment of the axis you can see the peaks and valleys of each player much better.  Some will argue that truncating the y axis like this makes the data say more than it should, but in the NHL the change of even a couple of percentage points one way or the other is a big difference in the level of play.  By highlighting these differences we are showing a much more accurate picture of each player's difference in play than if we had kept the origin in the graph.
+      So now our graph is pretty much finished and all this left is to create the dashboard for it.  I drag the worksheet to the space and set the size to 800x600 as before and then adjust the size of the boxes of my filter like you would a window for any other program and then here is our final product.  I’ve selected the frontrunners from last years Calder race as the players here but you can change it to anyone you see fit.</p>
+      <div class ='fitimage'>
+        <img src = 'img/thirtyfourth.png'>
+      </div>
+      <p>Keep in mind with this type of graph you can change it to any stat you want; GF%, FF%, xGF%, iCF, or PPG.  All you would need to do is just change the stat in the Rows shelf to whatever you wanted it to be and then the graph would change accordingly.</p>
+      <p></p>
 
-        <p><b><h2>VII. Conclusion</h2></b></p>
-        <p></p>
-        <p>	So there you have it a basic run down of three types of graphs common to interpreting NHL statistics.  These graphs aren’t just solely for the NHL though, as bar, scatter, and line plots are very useful for a wide variety of data.  This tutorial also isn’t exhaustive of Tableau’s abilities as well.  In fact I’ve just scratched the surface of what this powerful program can do in terms of data visualization.  Especially in terms of customization with the dashboards and how you actually present the data itself.</p>
-        <p>	Again I thank Emmanuel Perry of Corsica, DTMAboutHeart, and Sean Tierney for providing the data and inspiration for this tutorial respectively.  Ian Fleming as mentioned above is another great when it comes to Tableau as well especially in term of creating dashboards that show a lot of information easily.  Studying Tierney and Fleming and trying to replicate their styles is how I learned to use Tableau and I suggest you do the same for NHL data. </p>
-        <p>	I also would like to send many thanks to Alex Gable who helped edit this piece and improve it’s quality.  You can find him on Twitter
-  <a href = 'https://twitter.com/gableingaround' target = '_blank'>@gablingaround</a> who I’m just checking is criminally underfollowed for one of the better analytics voices in hockey Twitter.
-	There are other great people out there as well I’d like to mention as well who do great work they include
-  <a href = 'https://public.tableau.com/profile/joshua.khalfin#!/' target = '_blank'>Joshua Khalfin</a> who’s great with CHL player data and <a href = 'https://public.tableau.com/profile/ziggy#!/' target = '_blank'>Ziggy</a> (don’t know their real name) who makes great NHL visuals dealing with a variety of things that you can follow on Twitter <a href = 'https://twitter.com/Ziggy_14' target = '_blank'>@Ziggy</a>.</p>
-        <p>	Ultimately, Tableau is a great tool for displaying customized NHL data very easily.  Much more easily than Excel or other more programmatically options if you don’t know how to program.  I feel that NHL statistics should be more available and understood to whoever wants to and Tableau allows people to do good analysis without having to expend too much time learning the tools to do so.  Will there be things Tableau can’t do?  Sure, but for 90% (completely made up stat I know I used the eye test on this) of hockey stats it works just fine in trying to communicate your findings to an audience.</p>
-        <p>	Hopefully this article helped you get started in learning Tableau and its many wonderful tools to show hockey data.  If you have any questions feel free to email me at mcbarlowe@gmail.com or ask me on twitter @matt_barlowe.  I will have all three graphs setup on my <a href = 'https://public.tableau.com/profile/matthew.barlowe#!/' target = '_blank'>Tableau page</a> so you can see them in action.  Ultimately I believe hockey analytics is an area that needs to be expanded so more voices can join in and this is my part in doing that.   I’m always happy to help anyone learn who wants to so feel free to contact me anytime.</p>
+      <h2><b>VII. Conclusion</b></h2>
+      <p></p>
+      <p>	So there you have it a basic run down of three types of graphs common to interpreting NHL statistics.  These graphs aren’t just solely for the NHL though, as bar, scatter, and line plots are very useful for a wide variety of data.  This tutorial also isn’t exhaustive of Tableau’s abilities as well.  In fact I’ve just scratched the surface of what this powerful program can do in terms of data visualization.  Especially in terms of customization with the dashboards and how you actually present the data itself.</p>
+      <p>	Again I thank Emmanuel Perry of Corsica, DTMAboutHeart, and Sean Tierney for providing the data and inspiration for this tutorial respectively.  Ian Fleming as mentioned above is another great when it comes to Tableau as well especially in term of creating dashboards that show a lot of information easily.  Studying Tierney and Fleming and trying to replicate their styles is how I learned to use Tableau and I suggest you do the same for NHL data. </p>
+      <p>	I also would like to send many thanks to Alex Gable who helped edit this piece and improve it’s quality.  You can find him on Twitter
+<a href = 'https://twitter.com/gableingaround' target = '_blank'>@gablingaround</a> who I’m just checking is criminally underfollowed for one of the better analytics voices in hockey Twitter.
+There are other great people out there as well I’d like to mention as well who do great work they include
+<a href = 'https://public.tableau.com/profile/joshua.khalfin#!/' target = '_blank'>Joshua Khalfin</a> who’s great with CHL player data and <a href = 'https://public.tableau.com/profile/ziggy#!/' target = '_blank'>Ziggy</a> (don’t know their real name) who makes great NHL visuals dealing with a variety of things that you can follow on Twitter <a href = 'https://twitter.com/Ziggy_14' target = '_blank'>@Ziggy</a>.</p>
+      <p>	Ultimately, Tableau is a great tool for displaying customized NHL data very easily.  Much more easily than Excel or other more programmatically options if you don’t know how to program.  I feel that NHL statistics should be more available and understood to whoever wants to and Tableau allows people to do good analysis without having to expend too much time learning the tools to do so.  Will there be things Tableau can’t do?  Sure, but for 90% (completely made up stat I know I used the eye test on this) of hockey stats it works just fine in trying to communicate your findings to an audience.</p>
+      <p>	Hopefully this article helped you get started in learning Tableau and its many wonderful tools to show hockey data.  If you have any questions feel free to email me at mcbarlowe@gmail.com or ask me on twitter @matt_barlowe.  I will have all three graphs setup on my <a href = 'https://public.tableau.com/profile/matthew.barlowe#!/' target = '_blank'>Tableau page</a> so you can see them in action.  Ultimately I believe hockey analytics is an area that needs to be expanded so more voices can join in and this is my part in doing that.   I’m always happy to help anyone learn who wants to so feel free to contact me anytime.</p>
 <p></p>
 
 Extra Links for further Study:
-<a href = 'https://www.ryansleeper.com/tableau-tip-how-to-automatically-highlight-latest-trends/' target ='_blank'><p>Ryan Sleeper</p></a>
-<a href = 'https://onlinehelp.tableau.com/current/pro/desktop/en-us/help.html#building_overview.html%3FTocPath%3DDesign%2520Views%2520and%2520Analyze%2520Data%7CBuild%2520Data%2520Views%7C_____0' target ='_blank'><p>Tableau Docs</p></a>
-<a href = 'https://public.tableau.com/profile/robert.tufts#!/' target ='_blank'><p>Robb Tufts Tableau Page</p></a>
-<a href = 'http://robbsdatavizgallery.blogspot.com/p/about-me.html' target ='_blank'><p>Robb Tufts Viz Blog</p></a>
-<a href = 'http://www.vizwiz.com/' target ='_blank'><p>VizWiz</p></a>
+<p><a href = 'https://www.ryansleeper.com/tableau-tip-how-to-automatically-highlight-latest-trends/' target ='_blank'>Ryan Sleeper</a></p>
+<p><a href = 'https://onlinehelp.tableau.com/current/pro/desktop/en-us/help.html#building_overview.html%3FTocPath%3DDesign%2520Views%2520and%2520Analyze%2520Data%7CBuild%2520Data%2520Views%7C_____0' target ='_blank'>Tableau Docs</a></p>
+<p><a href = 'https://public.tableau.com/profile/robert.tufts#!/' target ='_blank'>Robb Tufts Tableau Page</a></p>
+<p><a href = 'http://robbsdatavizgallery.blogspot.com/p/about-me.html' target ='_blank'>Robb Tufts Viz Blog</a></p>
+<p><a href = 'http://www.vizwiz.com/' target ='_blank'>VizWiz</a></p>
 
 
 
@@ -333,5 +331,4 @@ Extra Links for further Study:
 
 
     </div>
-  </div>
 </body>
