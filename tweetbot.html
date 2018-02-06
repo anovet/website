@@ -46,7 +46,9 @@
         above to properly process your query.  Also player names
         should be spelled correctly as well.  There is no fuzzy searching
         implemented for this bot yet so if you can’t spell Marchessault
-        then you aren’t getting his stats, at least from here.</p>
+        then you aren’t getting his stats, at least from here. Also the team
+        names are the same abbreviations that you will find on
+        <a href='corsica.hockey'>Corsica</a></p>
         <p>In addition you can flag the query to return values adjusted
         for score and venue with the ‘-adj’ flag and for 5v5 only with the
         ‘-5v5’ flag.  Listed below are the entire examples that the bot
@@ -57,6 +59,47 @@
         any words out of order will cause your request not to be processed.
         The ‘vs.’ keyword will return the graph/stats of two
         teams/players and is necessary for that effect to happen.</p>
+        <h3>Examples:</h3>
+        <h5>Stat Query Examples</h5>
+        <p style='font-size:16px'><b>@barloweanalytic Justin Faulk playerstats 2018 -adj -5v5</b></p>
+        <p>This will return the 5v5 score venue adjusted values of Justin Faulk’s CF%, xGF%, and ixG</p>
+        <p style='font-size:16px'><b>@barloweanalytic Car teamstats 2018 -adj -5v5</b></p>
+        <p>This will return the Carolina hurricanes CF% and xGF% score venue adjusted and at 5v5.</p>
+        <p>If you wanted either of those unadjusted you would type
+        the same query and leave out the ‘-adj’ flag and if you
+        wanted all situations you would do the same with the ‘5v5’ flag</p>
+        <p style='font-size:16px'><b>@barloweanalytic Justin Faulk vs. Jeff Skinner playerstats 2018</b></p>
+        <p>This will return both the stats for Faulk and Skinner.
+        If you want to adjust them add the appropriate flags</p>
+        <h5>Graph examples</h5>
+        <p style='font-size:16px'><b>@barloweanalytic Justin Faulk player graph cf_percent 2018 -adj -5v5</b></p>
+        <p>This will return the graph of a 5 game rolling average of Justin Faulk’s CF% adjusted and 5v5 only</p>
+        <p style='font-size:16px'><b>@barloweanalytic Justin Faulk vs. Jeff Skinner player graph cf_percent 2018 -adj -5v5</b></p>
+        <p>This will do the same as above but also graph Jeff Skinner’s stats as well</p>
+        <p style='font-size:16px'>@barloweanalytic CAR team graph cf_percent 2018 -adj -5v5</p>
+        <p>As above but now for the Carolina Hurricanes</p>
+
+        <p style='font-size:16px'><b>@barloweanalytic Car vs. PIT graph cf_percent 2018 -adj -5v5</b></p>
+        <p>Just like with the carolina graph above but will also plot Pittsburgh’s cf% values over the season as well</p>
+        <h3>Last things:</h3>
+        <p>The player names and team names are case insensitive everything
+        else should be lower case.  If the bot doesn’t respond that means
+        you made an error in your query and should double check and try again.
+        If you feel that your query is correct and something is wrong please
+        contact me through twitter or email barloweanalytics@gmail.com</p>
+
+        <p>Would also like to think Emannuel Perry for his
+        <a href='https://github.com/mannyelk/corsica/blob/master/modules/dryscrape.R'>game scraper</a>
+        and Harry Shomer for his <a href='https://github.com/HarryShomer/Hockey-Scraper'>
+          scraper</a> as well.  Without either of these guys this project would
+        not be possible so a big thanks goes to them for writing the programs
+        used to compile the NHL pbp data that I then convert into stats that the
+        bot can access to fulfill the queries.</p>
+
+
+
+
+
 
 
 
