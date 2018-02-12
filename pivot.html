@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Tableau Pivot Tables</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Tableau's Pivot Table Feature</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Since everybody enjoyed my intro to Tableau, I've decided to continue writing more tutorials
+      about features people may not know about that make working with data much easier.  The first one
+      that comes to mind is the use of Pivot Tables in Tableau. If you are familiar with Excel you may
+      be familiar with the term Pivot Table; however the Pivot Table in Tableau is not the same. In
+      Excel the pivot table is used mainly for group and summarising data while in Tableau uses their
+      pivot table to move the data from a wide to a long format and vice versa.  Don't know what that means?
+      Don't worry cause we'll be explaining it here shortly. This tutorial assumes that you are familiar
+      with the basics of Tableau that I covered in my earlier <a href='tableau.html'>tutorial.</a>
+      <h2><b>The Data:</b></h2>
+      <p>The data for this came from <a href='https://twitter.com/andidee15?lang=en'>Andi Duroux</a> and
+      is used to form her excellently made Tableau dashboard which can be found
+      <a href='https://public.tableau.com/profile/andi.duroux#!/vizhome/PlayerEvaluationTool/PlayerEvaluationTool'>here.</a>
+      She was kind enough to let me use the data from that dashboard for this tutorial. It was created
+      in a very impressive Excel workbook, which if you enjoy those type of things I would definitely ask her
+      for it as there's a lot of Excel skills one can learn from that workbook alone. So with data in hand,
+      I am going to recreate her workbork and show you how you can use pivot tables and grouping to do the same.
+      You can dowload the data from <a href='PivotTutorialData.csv'>here</a> and load it into Tableau
+      to follow along. Again, lots of thanks to Andi for allowing us use of her data.
+      <h2><b>What Does Pivoting Do?</b></h2>
+      <p>Using Tableau's Pivot function pivot's the data from a wide to a long format and vice versa. Ok, so
+      what does that actually mean? If you imported the data from the csv into excel you would see something
+      like this:</p>
+      <div class='fitimage'>
+        <img  src='img/widedata.png' alt='A picture of wide data'>
+      </div>
+      <br />
+      <p>This is very common with spreadsheets and data tables because it makes it very easy for people to
+      look at the data. It also makes it easier to run calculations such as sum and averages on each observation
+      (the rows) and the variables (the columns). However when it comes to converting the data in to a graph
+      it can be a hindrance. Esepcially since we are replicating the tableau Dashboard linked above.  The reason
+      for that is Tableau considers the columns in this case to be measures instead of dimensions.  We want to group
+      our data into different categories and to do that we need to turn our columns into a dimension.</p>
+      <p>I touched on the difference between dimensions and measures in my first tutorials, but a brief overview is a dimension
+      is a way you want to slice your data while a measure is the value you want to store in that slice.  You can
+      read more about it <a href='https://www.evolytics.com/blog/tableau-fundamentals-dimension-vs-measure/'>here.</a>
+      Another way to think of it is that the dimensions are your indenpendent variable, and measures the dependent
+      variables. With the way the data is setup now the player is the dependent variable which if you plug it
+      int returns all the values of that players statistics.  When we pivot it the name of the statistic will
+      return that single value which we will then filter by the player.</p>
+      <p>Some may be asking now, "Well why can't we just turn the measures into a dimension inside tableau?"
+      Well sometimes you could, but in this case it will just turn the value in that measure into a dimension.  So
+      instead of grouping by the statistic name itself it will group by the value of that statistic.  This is why
+      we need the statistic names to be grouped into one column which allows us to subgroup them as needed in the
+      chart. So how do we get those column names into one column? That brings us back to pivoting the data.</p>
+      <h2><b>How to Pivot:</b></h2>
+      <p>Pivoting in Tableau is incredibly easy. All one has to do is select the columns that you want pivoted
+      on the data source screen, then click on the little arrow and select pivot like in the picture below:
+      <div class='fitimage'>
+        <img  src='img/pivoting.png' alt='Pivoting menu'>
+      </div>
+      <br />
+      <p>This will pivot all the stat columns into two columns: Pivot Values and Pivot Names. Which in return will
+      result in your data looking something like this:
+      <div class='fitimage'>
+        <img  src='img/pivotresults.png' alt='Pivoting menu'>
+      </div>
+      <br />
+      <p>And that's it! So now that we have the data ready to go let's move on to making the actual graph.
+      <h2><b>Creating the Graph:</b></h2>
+      <p>Ok to create our beginning table graph I'm going to drag the Pivot Values pill to the Columns shelf and Pivot
+      Field Names to the Rows Shelf.  Next I will drag our Players pill to the Filters shelf, select show the filter
+      from the dropdown menu, and then change that filter to a drop down menu itself. If you are unsure how to do this
+      the <a href='tableau.html'>first tutorial</a> will cover how to create a filter. Once you've done all that you
+      will have a graph that looks like this:
+      <div class='fitimage'>
+        <img  src='img/firstgraph.png' alt='First graph'>
+      </div>
+      <br />
+      <p>The titles for the bar graphs will be different than yours but that's because I've already created aliases for
+      them which we'll go over in a minute.  So now that we have the main graph created it's time to create the groups
+      as seen in Andi's tableau dashboard. The first step to doing that is right clicking on the Pivot Field Names pill
+      selecting Create from the menu and then selecting Group.
+      <div class='fitimage'>
+        <img  src='img/group.png' alt='Finding Group Menu'>
+      </div>
+      <br />
+      <p>This will then pull up the group menu that looks like this:</p>
+      <div class='fitimage'>
+        <img  src='img/groupmenu.png' alt='Group Menu'>
+      </div>
+      <br />
+      <p>Now all you do is simply select the stats you want to group, hit the group button, and then name your Group.
+      Repeat until you have all the stats grouped as you want them.
+      <div class='fitimage'>
+        <img  src='img/groupinprogress.png' alt='Group Menu'>
+      </div>
+      <br />
+      <p>Once you have all your groups created then you drag the Group pill in front of the Pivot Field Names
+      on the rows shelf which leads to a graph looking like this:
+      <div class='fitimage'>
+        <img  src='img/finalgraph.png' alt='Final Graph'>
+      </div>
+      <br />
+      <p>Once thats done you can drag and drop the categories and stats to place them in the order that you want.
+      And with that last step you've now created what is called a heirarchical data structure just in Tableau alone!
+      If you don't know what that means its fine, but if you're familiar with working with dataframes in Python and
+      R you probably do. It's beyond the scope of this tutorial but is a phrase to keep in mind as you'll probably
+      read about it in other writings, and it will be something I'll cover in future writings.
+      <h2><b>Creating the Aliases:</b></h2>
+      <p>So with the groupings created now all that's left to finish the graph is to change the stat names
+      by changing their aliases.  Alias is a term that you'll see over and over again in Tableau.  Any time
+      you want to change the name of a dropdown menu, or a statistic that appears in the graph, you'll want
+      to look for the Alias option in the menu.  We'll get to ours by right clicking the Pivot Field Names
+      and selecting Alias from the menu. That will then give us a menu like this:
+      <div class='fitimage'>
+        <img  src='img/alias.png' alt='Final Graph'>
+      </div>
+      <br />
+      <p>Just click on the value in the Alias column and change it to whatever you want.  Now you are finished
+      your first grouped data data viz! I'll go over turning this into a simple comparison dashboard in the
+      next <a href='dashboard.html'>tutorial.</a> The dashboard put together can be found
+      <a href='https://public.tableau.com/views/testing_144/Dashboard1?:embed=y&:display_count=yes'>here.</a>
+      It doesn't have all the bells and whistles of a finished graph but it will give you a solid framework
+      on which to build upon if you are building a data visualition like this in the future.</p>
+
+
+
+
+
+
+
+    </div>
+    <div class = 'col-md-4'>
+    </div>
