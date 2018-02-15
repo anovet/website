@@ -44,7 +44,8 @@
       running python.  Yes it was that easy, amazing isn't it! Let's check and make sure
       you're up and running by typing <code>python3</code> into the terminal and hit enter.
       You should see the Python version come up (which should be 3.6.4) and then a prompt that
-      looks like this <code>>>></code>.</p>
+      looks like this <code>>>></code>. Once that pops up type <code>exit()</code> and return
+      back to the terminal.</p>
       <p>Now that's python is setup lets get some python packages installed that will
       be very important in making things go smooth in your programming future. We will
       do this by using <code>pip</code>. Pip is similar to Homebrew in that it is a package
@@ -97,6 +98,14 @@
       Type <code>workon</code> again and now it should show <code>temp</code> in the list of virtual
       environments on the computer. If you've been able to complete all that good job! The hardest
       part is over and now you are ready to being coding in earnest.</p>
+      <p>So why virtualenvwrapper over virtualenv or other virtual environments? One reason is
+      that it stores your virtual environments in one location and allows you to acces those no
+      matter where you are in the file structure without typing long filepath names or creating aliases
+      in <code>.bash_profile</code>. With <code>virtualenv</code> you have to provide the file path
+      of the location of the virtual environment in order to activate it; by using <code>virtualenvwrapper</code>
+      you avoide all the trouble of typing out those filepaths. Another benefit is that <code>virtualenvwrapper</code>
+      keeps track of all the environments you have created so in case you forget the name of one you can just
+      type <code>workon</code> and get a list of all the environments you have ever created.
       <h2>Navigating Your Pythons</h2>
       <p>You should now have two Pythons installed on your Mac if you've followed the instructions:
       the Apple supplied python 2.7 and the python 3.6 which you brewed with Homebrew. These two pythons
