@@ -61,6 +61,17 @@ Hello World
       <a href='https://bash.cyberciti.biz/guide/Shebang'>at this site</a>. Basically,
       this line is telling Unix what type of python to use to run the script.</p>
       <p>If you have followed my other tutorials you may be asking now, "Why did
-      you list <code>/usr/bin/env</code>
+      you list <code>/usr/bin/env</code> instead of <code>/usr/bin/local</code>
+      where our Homebrewed python3 is located? An excellent question. The reason
+      we use <code>/usr/bin/env</code> instead of where our python is actually located
+      is because <code>env</code> is an actual Unix command that will create
+      an environment using the environment variables and then run the program passed
+      to it in the arguments which in this case is python3.</p>
+      <p>So the <code>env</code> will then use the <code>$PATH</code> variable, the
+      same one mentioned in the Homebrew tutorial, of the environment
+      and go down the directories on that <code>$PATH</code>until it finds the
+      right directory of the program which it then executes. To sum it all up
+      it just makes your code more portable because it will search that computer
+      to find where <code>python</code> is to exectue the script.
 
 
