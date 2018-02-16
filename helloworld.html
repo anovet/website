@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Hello World</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Hello World</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>"Hello World" is a very common first program for just about any
+      programming langauge. I'm sure there's some history behind it, but
+      I've never bothered to look it up. Usually it's just a simple program
+      of very limited lines that prints out the phrase "Hello World." The
+      purpose of this tutorial is to get you setup to write that first
+      program.</p>
+      <h2>Getting Started</h2>
+      <p>The first thing to do is open your favorite text editor. I use NeoVim
+      which is based on Vim a text editor that comes with Unix. Vim is know for
+      being dificult if you aren't used to it, but there are many others out
+      there: Nano and Emacs come with the MacOS Unix as well, you could use
+      Atom which is built by Github, or even plain old TextEdit. The main
+      thing is to use something that won't add extra unseen characters to
+      what you type like a word processor such as Microsoft Word or Apple
+      Pages.</p>
+      <p>Once you have your text editor open type these lines into them:
+      <pre><code class='python'>
+#!/usr/bin/env python3
+
+if __name__=="__main__":
+    print("Hello World")
+      </code></pre>
+      Once that is done save your file as <code>helloworld.py</code> and exit the text editor if you are using
+      a terminal editor and type <code>python3 helloworld.py</code> which will
+      produce this output:
+      <pre><code class='python'>
+Hello World
+      </code></pre>
+      Congratulations, you've just written your first python program! Obviously,
+      there's a lot more to it than this but even in just this simple program
+      you can learn a lot.</p>
+      <h2>Breaking Down the Code</h2>
+      <p>Ok let's look at the code and see what's going on in this program. The first
+      line of the code is what's called a shebang line. This isn't unique to
+      python scripts but is common in the Linux/Unix environment. A shebang line
+      tells the shell what type of interpreter to use to process the text of the
+      file. You can read more about shebangs and their use in *nix envronments
+      <a href='https://bash.cyberciti.biz/guide/Shebang'>at this site</a>. Basically,
+      this line is telling Unix what type of python to use to run the script.</p>
+      <p>If you have followed my other tutorials you may be asking now, "Why did
+      you list <code>/usr/bin/env</code>
+
+
