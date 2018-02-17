@@ -40,8 +40,7 @@
       <pre><code class='python'>
 #!/usr/bin/env python3
 
-if __name__=="__main__":
-    print("Hello World")
+print("Hello World")
       </code></pre>
       Once that is done save your file as <code>helloworld.py</code> and exit the text editor if you are using
       a terminal editor and type <code>python3 helloworld.py</code> which will
@@ -72,6 +71,33 @@ Hello World
       and go down the directories on that <code>$PATH</code>until it finds the
       right directory of the program which it then executes. To sum it all up
       it just makes your code more portable because it will search that computer
-      to find where <code>python</code> is to exectue the script.
-
-
+      to find where <code>python</code> is to exectue the script.</p>
+      <p>And one last thing the shebang is good for is letting people know exactly
+      what type of code they are looking at. It will say python3 if working with
+      version 3.x, python2 if working with version 2.x, and just plain python
+      if the code will run with either version. You won't have to worry about
+      python 2.x for much longer as it will soon be deprecated but there is
+      plenty of legacy code out there still.</p>
+      <pre><code class='python'>
+print("Hello World")
+      </code></pre>
+      <p>The next part above is where the code actually starts doing something. In
+      this case that something is printing the phrase "Hello World." Now there are
+      a lot more things you can do than this in python, but <code>print</code> is one
+      of the most useful functions in python. <code>print</code> is the way python
+      outputs things to the terminal screen. You can read more about the function
+      <a href='https://docs.python.org/3/library/functions.html#print'>here</a>.
+      You have now officially written your first program. While it doesn't seem
+      very impressive right now but the cliche of "a journey of a thousand miles
+      begins with just one step" applies here. Plus think of all the hard work
+      done just to get your system setup to get to this point. So keep plugging
+      along, and if you'd like to learn faster I suggest visiting
+      <a href='automatetheboringstuff.com'>Automate the Boring Stuff</a> and reading
+      their really comprehensive tutorial to get you further along the path to
+      python mastery.</p>
+      <h2>Sources</h2>
+      <a href='https://unix.stackexchange.com/questions/103467/what-is-env-command-doing'>What is env</a>
+      <br />
+      <a href='https://stackoverflow.com/questions/6908143/should-i-put-shebang-in-python-scripts-and-what-form-should-it-take'>
+        What form should shebang take</a>
+    </div>
