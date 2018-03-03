@@ -57,6 +57,18 @@
         any words out of order will cause your request not to be processed.
         The ‘vs.’ keyword will return the graph/stats of two
         teams/players and is necessary for that effect to happen.</p>
+        <p>We now have Goalie staistics as well:</p>
+        <p>ca | fa |   xga   | sa | ga | ldga | mdga | hdga | lda | mda | hda |
+        sv_percent | fsv_percent | xfsv_percent | dfsv_percent |
+        hdsv_percent | mdsv_percent | ldsv_percent | gsaa
+        <p>These are the statistics you can query to get a running average in
+        graph feature of the bot for goalies. Gsaa for the total season stats
+        will just be an adjusted GSAA based on the High Danger, Medium Danger,
+        and Low Danger shots faced by a goalie. The five game running average
+        will be an adjusted gsaa30 which is the adjusted goals saved above average
+        per 30 shots to help account for a goalie's TOI. Goalie stats are not
+        adjusted for home and score as player stats are but can be flagged for 5v5
+        only as player stats are.
         <h3>Examples:</h3>
         <h5>Stat Query Examples</h5>
         <p style='font-size:16px'><b>@barloweanalytic Justin Faulk playerstats 2018 -adj -5v5</b></p>
@@ -69,6 +81,10 @@
         <p style='font-size:16px'><b>@barloweanalytic Justin Faulk vs. Jeff Skinner playerstats 2018</b></p>
         <p>This will return both the stats for Faulk and Skinner.
         If you want to adjust them add the appropriate flags</p>
+        <p style='font-size:16px'><b>@barloweanalytic Cam Ward vs. Scott Darling goaliestats 2018</b></p>
+        <p>This query will return the season goaliestats for Cam Ward and Scott Darling.
+        This will include Sv%, LDSV%, MDSV%, HDSV% and adjusted GSAA.
+        If you want to adjust them add the appropriate flags</p>
         <h5>Graph examples</h5>
         <p style='font-size:16px'><b>@barloweanalytic Justin Faulk player graph cf_percent 2018 -adj -5v5</b></p>
         <p>This will return the graph of a 5 game rolling average of Justin Faulk’s CF% adjusted and 5v5 only</p>
@@ -76,9 +92,11 @@
         <p>This will do the same as above but also graph Jeff Skinner’s stats as well</p>
         <p style='font-size:16px'><b>@barloweanalytic CAR team graph cf_percent 2018 -adj -5v5</b></p>
         <p>As above but now for the Carolina Hurricanes</p>
-
-        <p style='font-size:16px'><b>@barloweanalytic Car vs. PIT graph cf_percent 2018 -adj -5v5</b></p>
+        <p style='font-size:16px'><b>@barloweanalytic Car vs. PIT team graph cf_percent 2018 -adj -5v5</b></p>
         <p>Just like with the Carolina graph above but will also plot Pittsburgh’s cf% values over the season as well</p>
+        <p style='font-size:16px'><b>@barloweanalytic Cam Ward vs. Scott Darling goalie graph sv_percent 2018 -5v5</b></p>
+        <p>This will return the 5 game running average of SV% for Cam Ward and Soctt Darling from the 2018 season
+        filtered to include only stats that happened at 5v5.</p>
         <h3>Last things:</h3>
         <p>The player names and team names are case insensitive everything
         else should be lower case.  If the bot doesn’t respond that means
