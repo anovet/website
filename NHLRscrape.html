@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Scraping with R</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>NHL Scraping in R</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok I'm going to do a brief tutorial on how to scrape NHL games using Emmanuel Perry's of
+      <a href='corsica.hockey'>Corsica</a> fame. Also another big thanks to <a href='www.twitter.com/EvolvingWild'>
+        EvolvingWild</a> for getting the code setup as is to make it
+      easier to run. They both did 99% of the work for this I just did a little rearranging to make
+      it easier for you to use.</p>
+      <h2>Getting Started</h2>
+      <p>The actual code we will be using can be found on my Github <a href='https://github.com/mcbarlowe/tutorialscode/blob/master/Rscraper/Manny_scraper_HTM.R'>
+        here.</a> This tutorial will assume you have some familiarity with R and RStudio. If you have RStudio installed and running
+      and know how to install packages you should be able to follow this tutorial just fine. Although I suggest being able
+      to use R for some data analysis to actually work with the data produced as it can be very large. </p>
+      <p>But if you aren't don't be discouraged
+      as working with this data taught me a lot about how to use dplyr and other R tidyverse packages even more so because I found the data
+      interesting in and of itself. The first thing to get this code
+      going is to make sure you have the correct packages installed and at near the top of the script you'll see the packages
+      that are loaded when you run it.</p>
+      <pre><code class='R'>
+## Dependencies
+require(RCurl); require(rjson); require(dplyr);
+require(lubridate); require(doMC); require(rvest)
+      </code></pre>
+      <p>If you don't have these packages all you need to do is type <code>install.packages('rjson')</code> in your Rstudio
+      terminal, and Rstudio will install the package for you. If you aren't sure all you need to do is look at
+      the packages tab in Rstudio and that will show all the packages you have insalled. Here is a picture of where that
+      tab is:</p>
+      <div class ='fitimage'>
+        <img src = 'img/packages.png' alt='Rstudio packages tab'>
+      </div>
+      <p>Once you have the packages installed the next part of the code, and for you the most important, part of the
+      code we need to look at is the very bottom of the script.</p>
+      <pre><code class='R'>
+pbp_list <- ds.compile_games(games = 20701,
+                             season = "20162017",
+                             pause = 2,
+                             try_tolerance = 5,
+                             agents = ds.user_agents)
+
+pbp_df <- pbp_list[[1]]
+      </code></pre>
+      <p>These lines are well the script tells the scraper to go do stuff i.e. scrape NHL games and store the info
+      into <code>pbp_list</code>. This is done with the <code>ds.compile_games</code> function. Lets go over the main
+      keywords for this function which are <code>games</code> and <code>season</code>. <code>games</code> can either be
+      one number or a vector of a range of numbers like this <code>c(20001:20100)</code>. NHL game numbers before this
+      season ranged from 20001 to 21230 but this season will max out at 21271 because of the addition of the Las Vegas Knights.</p>
+      <p>For the <code>season</code> keyword you'll need to include both years of the season as is done above. So if
+      you wanted to scrape this seasons games you would put '20172018', last year would be '20162017', etc. So after you
+      set the <code>ds.compile_games()</code> to scrape the games you want scraped the next line actually pulls the
+      pbp dataframe out of the list the scraper creates and stores it in a seperate data frame. </p>
+      <p>This variable, <code>pbp_df</code>
+      will be where the actual pbp data will be stored that you want to work with. If you scraped one game that
+      dataframe will have one game, if you scraped 100 games it will contain all 100. Be careful scraping a lot of games in one session i.e. feeding
+      many games to the <code>ds.compile_games</code> function at once as this can cause the code to throw an error
+      and you'll lose all the data you've scraped and have to repeat the time consuming process.</p>
+      <h2>Running the Script</h2>
+      <p>Once you have the keyword variables set in the scraping function all thats left to do is hit source at the
+      top of Rstudio and wait for the scraper to finish its job! What you do with the dataframe it produces is up to you
+      although I have a couple tips. First I would save whatever you scrape to a text file so that if you want to access
+      it again you can just read the file in and not have to scrape it again. The next tip is I would accumulate the data using
+      a for loop to feed the function one game at a time and then saving that game to a text file so that if
+      the code does throw an error you can pick up right where you left off and not have to scrape everything all over again.
+      <p>And that's pretty much all there is to this program. If you'd like to see it in action check out my
+      <a href='https://github.com/mcbarlowe/graphautomation/blob/master/xGscrape.R'>xGscrape</a> script which is the
+      setup I use to scrape the data that I used to create my daily game reports and to populate the SQL database
+      the <a href='tweetbot.html'>Twitter bot</a> uses to answer its queries.
+      <h2>Sources</h2>
+      <p><a href=https://yihui.name/en/2014/07/library-vs-require/>Library vs. Require</a></p>
+
+
+
