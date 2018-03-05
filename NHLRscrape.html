@@ -43,7 +43,7 @@ require(lubridate); require(doMC); require(rvest)
       </code></pre>
       <p>If you don't have these packages all you need to do is type <code>install.packages('rjson')</code> in your Rstudio
       terminal, and Rstudio will install the package for you. If you aren't sure all you need to do is look at
-      the packages tab in Rstudio and that will show all the packages you have insalled. Here is a picture of where that
+      the packages tab in Rstudio and that will show all the packages you have installed. Here is a picture of where that
       tab is:</p>
       <div class ='fitimage'>
         <img src = 'img/packages.png' alt='Rstudio packages tab'>
@@ -80,6 +80,29 @@ pbp_df <- pbp_list[[1]]
       it again you can just read the file in and not have to scrape it again. The next tip is I would accumulate the data using
       a for loop to feed the function one game at a time and then saving that game to a text file so that if
       the code does throw an error you can pick up right where you left off and not have to scrape everything all over again.
+      <pre><code class='R'>
+library('readr')
+games <-c(20001:21230)
+
+for (game in games) {
+    pbp_list <- ds.compile_games(games = 20701,
+                                 season = "20162017",
+                                 pause = 2,
+                                 try_tolerance = 5,
+                                 agents = ds.user_agents)
+
+    pbp_df <- pbp_list[[1]]
+
+    write_delim(pbp_df, as.string(game), delim ='|')
+}
+      </code></pre>
+      <p>In the code above I put the process in a loop for you and set it to write the pbp to a | delimited text file
+      named the game number. Obviously if you are scraping more than one season you'd want to add another differentiator
+      to the name as the next season would overwrite the earlier game number. Also most people are common with CSV files
+      as the common way to store data in text, but I avoid them for many reasons. The first being that commas are very often
+      found in the data itself making reading in dificult for some programs. Since the pipe character, |, isn't very common
+      in most people's data gathering it keeps those troubles from happening. All the text backups for my NHL database
+      are stored in pipe delimited files. I swear by it.
       <p>And that's pretty much all there is to this program. If you'd like to see it in action check out my
       <a href='https://github.com/mcbarlowe/graphautomation/blob/master/xGscrape.R'>xGscrape</a> script which is the
       setup I use to scrape the data that I used to create my daily game reports and to populate the SQL database

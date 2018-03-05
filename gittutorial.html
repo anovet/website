@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Using Git and Github</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Setting Up and Using Git</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>So if you've started out doing a little coding either for fun or like me
+      to try and do data analysis of the NHL, then you've probably heard people
+      talk a lot about Git and Github. And if you were like me, you've even tried
+      to learn it, or use it, but just got so frustrated you gave up and figured
+      it wasn't worth the time.</p>
+      <p>Well this article will try to dispel some of those confusions because
+      once Git clicks for you, you'll never code without it. It's such a powerful
+      tool to fit into your coding arsenal. But before we get into setting up
+      Git and using let's talk about what Git is and what it does.</p>
+      <h2>What is Git?</h2>
+      <p>First off let's differentiate between Git and Github. Many people use
+      these terms interchangeably, but they are very different things. Git is
+      what is called a Version Control System or VCS. To put it simply its a
+      software that just tracks the changes you make to the programs that you
+      write. That's all it is at its essence. Like working with a Google doc
+      with track changes switched on, Git remembers the changes you make to your files
+      and can restore those files to previous states.</p>
+      <p>Obviously Git can do a lot more, but don't worry about that
+      right now. Now Git itself is self contained to your computer, nobody can
+      see your changes except for you. Github on the other hand is a website
+      where you can store your code and the history of your changes saved by Git.
+      This is where you will send your work when you want to share it with the
+      world. So keep that in mind when reading the rest of this article. Git is
+      the program on your computer, and Github is the website where you will
+      send your code when you want to share it. This also adds the benefit of
+      an extra back up in case something happens to your system.</p>
+      <h2>Why use Git?</h2>
+      <h3>Track Changes</h3>
+      <p>Git as noted above keeps track of the changes you've made to your
+      code throughout the history of developing if used properly. Everytime I
+      add a new feature to my code I save it in Git. And using Git logs I can
+      see all the changes I've made. So if I write something and it messes
+      everything up I can just go back one step in the Git chain and get things
+      back up and running.</p>
+      <p>Obviously this may not be a big deal if you are just writing code that
+      only you will use yourself. But there's been plenty of times I've made
+      changes one night and forgotten what I've done the next day when I go back
+      to work on it. But if you are working with multiple people on a project
+      then this log of changes is invaluable to see what others have done in
+      the code base. Git also keeps track of the date and time of changes
+      made as well so you can see who made changes and when those changes
+      were made.</p>
+      <h3>Branching</h3>
+      <p>This is perhaps the most important part about git is that you can
+      create branches of the code you are working on in order to fix bugs or
+      create new features. You may be asking now, "Why not just create a copy
+      of the file and work on two copies?" Well if you're only working on one
+      file then you may not need git, but often you'll be working on multiple
+      files that often interact with each other.</p>
+      <p>Trying to keep track manually
+      of the working copies and copies that are being worked on would quickly
+      become confusing and could lead to bugs and errors that would you'd have
+      to waste futher time tracking down. Git handles all that behind the scenes
+      so you don't have to. You can create a new branch and make as many changes
+      all without breaking any of the files you are using until you have properly
+      tested the new versions.</p>
+      <p>To use a personal example I recently added the ability to query goalie
+      stats to my twitter bot. Instead of taking the bot down and working on
+      the file until the features were added, I created a new branch where I
+      worked on the new features until they were finished. Once done, I then
+      merged those changes back into my main script.</p>
+      <h3>It works with Everything</h3>
+      <p>Git is language agnostic. It works with any programming language out
+      there whether it's Python, R, C++, or something else, Git doesn't care.
+      It tracks all changes for all files no matter what they are. In fact if
+      you were just simply writing a novel or a story, Git would track those
+      changes just as well as changes to a programming script! It's near
+      universiality means it is a common ground for developers to meet and
+      collaborate on projects.</p>
+      <h2>Setting up Git</h2>
+      <p>>The first step to getting Git up and running is to go to <a href='github.com'>Github</a>
+      and setup an account. Once that's done open up a terminal screen and we'll
+      get started installing Git. If you don't have Hombrew installed on your
+      system please head <a href='homebrew.html'>here</a> and read this tutorial
+      to get up to date as I'll be using Homebrew to install Git.</p>
+      <p>If you have Homebrew installed and running, all you need to do is type
+      this at the command line:</p>
+      <pre><code class='Command Line'>
+$ brew install git
+      </code></pre>
+      <p>Brew does its usual stuff and after its done type <code>which git</code>
+      to make sure we are using the git that brew installed. The output should be
+      <code>usr/local/bin/git</code> if it is not then we need to change your <code>$PATH</code>
+      variable to put the Homebrew version first. To do that type these commands
+      one at a time and hit enter after each one:</p>
+      <pre><code class='Command Line'>
+$ echo export PATH='/usr/local/bin:$PATH' >> ~/.bash_profile
+$ source ~/.bash_profile
+$ echo $PATH
+      </code></pre>
+      <p>Withut getting into too much detail about the commands what you are doing there is place
+      the <code>usr/local/bin</code> at the front of your <code>$PATH</code> so that the bash
+      shell will look there first for the commands you are trying to run. Next we'll run some
+      commands to setup git to use the account you just setup on Github when you
+      want to push your work to a repository.
+      <pre><code class='Command Line'>
+$ git config --global user.name "Your Name Here"
+$ git config --global user.email "your_email@youremail.com"
+      </code></pre>
+      <p>"Your Name Here" and "your_email@youremail.com" should be the username you created
+      and the email you created it with on Github. After that's done we're going to setup Git
+      to save your user name and password to the OSX keychain that way you don't have to type it
+      in everytime you want to push something to one of your repositories on Github.</p>
+      <pre><code class='Command Line'>
+$ git config --global credential.helper osxkeychain
+      </code></pre>
+      <p>The first time you push something to a repository you'll have to enter your user name
+      and password but after that it will be saved to the OSX keychain and you won't need to enter
+      it anymore. Now that we have everything setup lets start creating our first initial
+      repository or repo for short. A repository is just a fancy name of where we will
+      store our code.
+      <h2>Creating Your First Repository</h2>
+      <p>Ok lets create a new directory to store our first repo.</p>
+      <pre><code class='Command Line'>
+$ mkdir gittutorial
+$ cd gittutorial
+$ git init
+      </code></pre>
+      <p>So with those three commands we created a new directory called <code>gittutorial</code>
+      we changed the directory to <code>gittutorial</code> and then we created the repository
+      with the <code>git init</code> command. If everything worked correctly you should see
+      this text as output:</p>
+      <pre><code class='Command Line'>
+Initialized empty Git repository in /Users/MattBarlowe/gittutorial/.git/
+      </code></pre>
+      <p>Instead of <code>/Users/MattBarlowe</code> it will be whatever username you are on
+      your Mac. So now that we have the repository initialized (init is short for initialize)
+      lets look our next command:
+      <pre><code class='Command Line'>
+$ git status
+      </code></pre>
+      <p>Which will return this:</p>
+      <pre><code class='Command Line'>
+On branch master
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+      </code></pre>
+      <p>This is the status of our repository and it tells us three important things.
+      The first thing is that we are on branch master. Master is the first branch
+      git creates when you initialize the repository. This is the main branch you
+      will be working on in any repository. You can rename it if you wanted to, but
+      I'd advise against it as its common usage to call it master. This will change
+      if you move to other branches in the repository.</p>
+      <p>The next line tells us that there have been no changes made to the repository.
+      In git speak a 'commit' is where you have saved your changes to git. No commits
+      means we haven't made any changes which is to be expected as it's a newly created
+      repository. The third line means there are no files that we can even commit/save
+      which again as it is a newly created directory shouldn't be surprising.</p>
+      <p>So lets create a file using whichever text editor you prefer. I use Vim myself
+      but if you want to use Nano or Emacs that's fine as well. But we'll write a
+      simple python script show below and then save it as gittutorial.py.</p>
+      <pre><code class='Command Line'>
+for x in range(10):
+    print(x)
+      </code></pre>
+      <p>After you've saved the file exit back out to the command line and run
+      <code>git status</code> and you should see this on the command line.</p>
+      <pre><code class='Command Line'>
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add file..." to include in what will be committed)
+
+	gittutorial.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+      </code></pre>
+      <p>As you can see the branch is the same and we still haven't made any commits, but
+      now we have a new one of Untracked files. This means that git has noticed we created
+      a new file, but git is not currently tracking it either in this commit or past commits.
+      As you can read in the output our next command <code>git add</code> will begin the process
+      of git tracking our changes. Now type:</p>
+      <pre><code class='Command Line'>
+$ git add gittutorial.py
+      </code></pre>
+      <p>Nothing will print out but if you type <code>git status</code> again you will see
+      this:</p>
+      <pre><code class='Command Line'>
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached file..." to unstage)
+
+	new file:   gittutorial.py
+      </code></pre>
+      <p>So is our file saved? No! At least not yet. All we've done is add the file to the staging area
+      so that when we commit the changes to our repository the file will be saved with the commit.
+      If you're a little confused don't worry a lot of people are confused over this step. Basically
+      what you are doing is telling Git what files you want to save when you actually save the state of
+      your repository. When you create a commit Git doesn't know what it needs to keep track of unless
+      you tell it the files it needs to track. All <code>git add</code> does is tell git exactly which
+      files you want to save.</p>
+      <p>So lets actually make our first commit. Type this into the command line:</p>
+      <pre><code class='Command Line'>
+$ git commit -m "First Commit"
+      </code></pre>
+      <p>So you've made your first commit! The '-m' flag to git commit allows you to add a message to the
+      commit so you can describe what you've done. You should always put a message on your commit so you
+      or others know what exactly you changed with that commit of the code. The message can be anything but
+      its best to keep it short and always put it between quotation marks.</p>
+      You have now officially saved the status of your repository
+      with git. Think of a commit as taking a snapshot of your code in time. Except unlike a photo, git
+      allows you to go back and forth along the timeline of your code, i.e. the branch, and stop at any
+      point in time of the development where you made a commmit. So now that we've commited our changes
+      lets type <code>git status</code> and see what it tells us.
+      <pre><code class='Command Line'>
+On branch master
+nothing to commit, working tree clean
+      </code></pre>
+      <p>Once we've commited our changes there is nothing more to commit. That is until you make new changes
+      and then you'll need to repeat the process over again. Ok let's get some more practice with this.
+      Go back into your gittutorial.py file and change the number in the range function to 20 save and then
+      exit. Now type in <code>git status</code> and you'll see this:</p>
+      <pre><code class='Command Line'>
+On branch master
+Changes not staged for commit:
+  (use "git add file..." to update what will be committed)
+  (use "git checkout -- file..." to discard changes in working directory)
+
+	modified:   gittutorial.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+      </code></pre>
+      <p>So now that we've made changes to the file we need to <code>git add</code> and then
+      <code>git commit -m "Changed number in range from 10 to 20"</code>. And now you have commited
+      your changes for the second time to the repository. So let's introduce a new command
+      where you can look at the history of your changes.
+      <pre><code class='Command Line'>
+$ git log --oneline
+      </code></pre>
+      Which will produce this:
+      <pre><code class='Command Line'>
+88e287f (HEAD -> master) Changed number in range from 10 to 20
+c9801bb First Commit
+      </code></pre>
+      <p>This is a log of all the changes you've made so far in this repository. As we've only made
+      two changes, there are only two entries. The <code>--oneline</code> shrinks your log down
+      into oneline for each entry to make it easier to read. To get more info for each commit
+      you can just type <code>git log</code>. Let's go over the output of the log as there
+      are several important things in the output.
+      <p>The string of numbers at the front of each entry is what's called the SHA. This is a unique
+      hash number that is assigned to each commit that keeps track of the commits. It's actually
+      much longer than those seven numbers but its shortened for the oneline output. You can search
+      log for certain commits if you know their SHA number as well. The next thing is the
+      <code>(HEAD -> master)</code>. This shows you where the location of the current branch you have
+      checked out. This tells us that we are currently working on the latest commit in the branch.</p>
+      <p>Now let's check out one of the most powerful features of git which is creating new branches.
+      Branches, and moving back and forth between them, really lie at the heart of what makes Git
+      great. Branches allow developers to work independently on the same files and develop different
+      features simultaneously. Understanding how they work is the important to understand Git.</p>
+      <p>So lets create a new branch which we'll call newbranch because it's late and I don't feel
+      very creative.
+      <pre><code class='Command Line'>
+$ git checkout -b newbranch
+      </code></pre>
+      <p><code>git checkout</code> is the main way one switches between branches in git, however when
+      we add the '-b' flag it tells the command to create a new branch name with the name we give it
+      and then switch to that branch. If we wanted to switch back to master all we would need to type
+      is <code>git checkout master</code>. Now lets got back into our python file and add the line
+      <code>print('This is a new feature')</code> after the for loop block and save it. We'll add and
+      commit these changes as we did before. To make sure you're on the newbranch make sure to run a
+      <code>git status</code> and check.
