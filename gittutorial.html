@@ -18,7 +18,7 @@
       <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
     </div>
     <div class = 'col-md-6'>
-      <h2>Setting Up and Using Git</h2>
+      <h2>Introduction to Git and Github</h2>
       <h2> by Matthew Barlowe</h2>
       <br />
       <p>So if you've started out doing a little coding either for fun or like me
@@ -33,13 +33,14 @@
       <h2>What is Git?</h2>
       <p>First off let's differentiate between Git and Github. Many people use
       these terms interchangeably, but they are very different things. Git is
-      what is called a Version Control System or VCS. To put it simply its a
-      software that just tracks the changes you make to the programs that you
+      what is called a Version Control System or VCS. To put it simply it's a
+      software that just tracks the changes you make to the programs you
       write. That's all it is at its essence. Like working with a Google doc
-      with track changes switched on, Git remembers the changes you make to your files
-      and can restore those files to previous states.</p>
-      <p>Obviously Git can do a lot more, but don't worry about that
-      right now. Now Git itself is self contained to your computer, nobody can
+      tracking changes, Git remembers the changes, and more importantly the history of those changes,
+      you make to your files.
+      This allows Git to restore those files to any previous state in the history of
+      the development of the code.</p>
+      <p>Now Git itself is self contained to your computer, nobody can
       see your changes except for you. Github on the other hand is a website
       where you can store your code and the history of your changes saved by Git.
       This is where you will send your work when you want to share it with the
@@ -58,7 +59,7 @@
       <p>Obviously this may not be a big deal if you are just writing code that
       only you will use yourself. But there's been plenty of times I've made
       changes one night and forgotten what I've done the next day when I go back
-      to work on it. But if you are working with multiple people on a project
+      to work on it. And if you are working with multiple people on a project
       then this log of changes is invaluable to see what others have done in
       the code base. Git also keeps track of the date and time of changes
       made as well so you can see who made changes and when those changes
@@ -68,11 +69,11 @@
       create branches of the code you are working on in order to fix bugs or
       create new features. You may be asking now, "Why not just create a copy
       of the file and work on two copies?" Well if you're only working on one
-      file then you may not need git, but often you'll be working on multiple
+      file then you may not need Git, but often you'll be working on multiple
       files that often interact with each other.</p>
       <p>Trying to keep track manually
       of the working copies and copies that are being worked on would quickly
-      become confusing and could lead to bugs and errors that would you'd have
+      become confusing and could lead to bugs and errors that you'd have
       to waste futher time tracking down. Git handles all that behind the scenes
       so you don't have to. You can create a new branch and make as many changes
       all without breaking any of the files you are using until you have properly
@@ -81,14 +82,15 @@
       stats to my twitter bot. Instead of taking the bot down and working on
       the file until the features were added, I created a new branch where I
       worked on the new features until they were finished. Once done, I then
-      merged those changes back into my main script.</p>
+      merged those changes back into my main script. And in doing this I only
+      worked on one file the whole time.</p>
       <h3>It works with Everything</h3>
       <p>Git is language agnostic. It works with any programming language out
       there whether it's Python, R, C++, or something else, Git doesn't care.
-      It tracks all changes for all files no matter what they are. In fact if
-      you were just simply writing a novel or a story, Git would track those
-      changes just as well as changes to a programming script! It's near
-      universiality means it is a common ground for developers to meet and
+      It tracks all changes for all files no matter what they are. In fact
+      Git works just as well with writing a novel or a story as it does with writing
+      code! It's near
+      universiality makes it a common ground for developers to meet and
       collaborate on projects.</p>
       <h2>Setting up Git</h2>
       <p>>The first step to getting Git up and running is to go to <a href='github.com'>Github</a>
@@ -111,7 +113,7 @@ $ echo export PATH='/usr/local/bin:$PATH' >> ~/.bash_profile
 $ source ~/.bash_profile
 $ echo $PATH
       </code></pre>
-      <p>Withut getting into too much detail about the commands what you are doing there is place
+      <p>Without getting into too much detail about the commands, what you are doing there is placing
       the <code>usr/local/bin</code> at the front of your <code>$PATH</code> so that the bash
       shell will look there first for the commands you are trying to run. Next we'll run some
       commands to setup git to use the account you just setup on Github when you
@@ -130,7 +132,7 @@ $ git config --global credential.helper osxkeychain
       <p>The first time you push something to a repository you'll have to enter your user name
       and password but after that it will be saved to the OSX keychain and you won't need to enter
       it anymore. Now that we have everything setup lets start creating our first initial
-      repository or repo for short. A repository is just a fancy name of where we will
+      repository or repo for short. A repository is just a fancy name for where we will
       store our code.
       <h2>Creating Your First Repository</h2>
       <p>Ok lets create a new directory to store our first repo.</p>
@@ -146,9 +148,9 @@ $ git init
       <pre><code class='Command Line'>
 Initialized empty Git repository in /Users/MattBarlowe/gittutorial/.git/
       </code></pre>
-      <p>Instead of <code>/Users/MattBarlowe</code> it will be whatever username you are on
+      <p>Instead of <code>/Users/MattBarlowe</code> it will be whatever username you are logged in on
       your Mac. So now that we have the repository initialized (init is short for initialize)
-      lets look our next command:
+      lets look our next command:</p>
       <pre><code class='Command Line'>
 $ git status
       </code></pre>
@@ -161,13 +163,13 @@ No commits yet
 nothing to commit (create/copy files and use "git add" to track)
       </code></pre>
       <p>This is the status of our repository and it tells us three important things.
-      The first thing is that we are on branch master. Master is the first branch
+      The first it tells us we are on branch master. Master is the first branch
       git creates when you initialize the repository. This is the main branch you
       will be working on in any repository. You can rename it if you wanted to, but
-      I'd advise against it as its common usage to call it master. This will change
-      if you move to other branches in the repository.</p>
+      I'd advise against it as its common usage to call it master.
+      </p>
       <p>The next line tells us that there have been no changes made to the repository.
-      In git speak a 'commit' is where you have saved your changes to git. No commits
+      In Git speak a 'commit' is where you have saved your changes to Git. No commits
       means we haven't made any changes which is to be expected as it's a newly created
       repository. The third line means there are no files that we can even commit/save
       which again as it is a newly created directory shouldn't be surprising.</p>
@@ -193,8 +195,8 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
       </code></pre>
       <p>As you can see the branch is the same and we still haven't made any commits, but
-      now we have a new one of Untracked files. This means that git has noticed we created
-      a new file, but git is not currently tracking it either in this commit or past commits.
+      now we have a new one of Untracked files. This means that Git has noticed we created
+      a new file, but Git is not currently tracking it either in this commit or past commits.
       As you can read in the output our next command <code>git add</code> will begin the process
       of git tracking our changes. Now type:</p>
       <pre><code class='Command Line'>
@@ -217,7 +219,7 @@ Changes to be committed:
       If you're a little confused don't worry a lot of people are confused over this step. Basically
       what you are doing is telling Git what files you want to save when you actually save the state of
       your repository. When you create a commit Git doesn't know what it needs to keep track of unless
-      you tell it the files it needs to track. All <code>git add</code> does is tell git exactly which
+      you tell it the files it needs to track. All <code>git add</code> does is tell Git exactly which
       files you want to save.</p>
       <p>So lets actually make our first commit. Type this into the command line:</p>
       <pre><code class='Command Line'>
@@ -227,11 +229,11 @@ $ git commit -m "First Commit"
       commit so you can describe what you've done. You should always put a message on your commit so you
       or others know what exactly you changed with that commit of the code. The message can be anything but
       its best to keep it short and always put it between quotation marks.</p>
-      You have now officially saved the status of your repository
-      with git. Think of a commit as taking a snapshot of your code in time. Except unlike a photo, git
+      <p>You have now officially saved the status of your repository
+      with Git. Think of a commit as taking a snapshot of your code in time. Except unlike a photo, git
       allows you to go back and forth along the timeline of your code, i.e. the branch, and stop at any
       point in time of the development where you made a commmit. So now that we've commited our changes
-      lets type <code>git status</code> and see what it tells us.
+      lets type <code>git status</code> and see what it tells us.</p>
       <pre><code class='Command Line'>
 On branch master
 nothing to commit, working tree clean
@@ -257,7 +259,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
       <pre><code class='Command Line'>
 $ git log --oneline
       </code></pre>
-      Which will produce this:
+      <p>Which will produce this:</p>
       <pre><code class='Command Line'>
 88e287f (HEAD -> master) Changed number in range from 10 to 20
 c9801bb First Commit
@@ -276,16 +278,186 @@ c9801bb First Commit
       <p>Now let's check out one of the most powerful features of git which is creating new branches.
       Branches, and moving back and forth between them, really lie at the heart of what makes Git
       great. Branches allow developers to work independently on the same files and develop different
-      features simultaneously. Understanding how they work is the important to understand Git.</p>
-      <p>So lets create a new branch which we'll call newbranch because it's late and I don't feel
+      features simultaneously. Understanding how they work is important to understand Git.</p>
+      <h2>Branching</h2>
+      <p>So lets create a new branch which we'll call newbranch because I don't feel
       very creative.
       <pre><code class='Command Line'>
 $ git checkout -b newbranch
       </code></pre>
-      <p><code>git checkout</code> is the main way one switches between branches in git, however when
-      we add the '-b' flag it tells the command to create a new branch name with the name we give it
+      <p><code>git checkout</code> is the main way one switches between branches in Git, however when
+      we add the '-b' flag it tells the command to create a new branch with the name we give it
       and then switch to that branch. If we wanted to switch back to master all we would need to type
       is <code>git checkout master</code>. Now lets got back into our python file and add the line
       <code>print('This is a new feature')</code> after the for loop block and save it. We'll add and
       commit these changes as we did before. To make sure you're on the newbranch make sure to run a
       <code>git status</code> and check.
+      <p>Ok now type <code>git log --oneline</code> again and look at the output.
+      <pre><code class='Command Line'>
+cf87ca3 (HEAD -> newbranch) Added print statement
+88e287f (master) Changed number in range from 10 to 20
+c9801bb First Commit
+      </code></pre>
+      <p>Now you can see both branches on the log, master and newbranch, and Head is pointing at the most
+      recent commit on our current branch where we added the print statement to the script. Here with one command we can see
+      that newbranch is one step, or one commit ahead of master. This means up until the last commit in
+      newbranch that the two branches where exactly the same. You can see that the master branch is still
+      at the last commit from the last time we commited a change on that branch.
+      <p>Ok now thats done we are going to merge our new feature back into the master branch. Obviously
+      with only adding one line of code this is a little overkill but imagine if were working on a project
+      with multiple files and 1000s of lines of code and then you'll start to see the potential of Git and
+      why everybody uses it. So type <code>git checkout master</code> to switch back to the master branch.
+      If you are ever unsure of which branch you are on <code>git status</code> and check, here shortly I'll
+      show you a trick to help with that.</p>
+      <p>So we'll switch back to the master branch with <code>git checkout master</code> and then follow that
+      with a <code>git merge newbranch</code> which will produce this output:</p>
+      <pre><code class='Command Line'>
+Fast-forward
+ gittutorial.py | 1 +
+ 1 file changed, 1 insertion(+)
+      </code></pre>
+      <p>This means that our merge is succesful! From the output you can see we only changed one file, and
+      inserted one line. This doesn't happen all the time and we'll look at what does happen with the
+      dreaded merge conflict.</p>
+      <h2>Merge Conflict</h2>
+      <p>So we've done our first merge and everything went smoothly. Now we are going to look at when things
+      don't go smoothly. Open up our python script while still on the master branch and right underneath our
+      new feature print statement type this <code>print('This is a feature of the master branch')</code>. Now
+      we'll <code>git add gittutorial.py</code> and then <code>git commit -m "Added new master feature"</code>
+      to commit the changes to the master branch. Now let's switch back over to newbranch with <code>git checkout newbranch</code>.
+      Once there open the same python file and now add on the fourth line <code>print('This is a feature of the newbranch')</code>.
+      Now add this file and commit just like you did with the master branch except change the commit message
+      to "Added newbranch feature."
+      <p>Now lets switch back to master with the checkout command and try to merge the two branches. This should
+      be the output you get:
+      <pre><code class='Command Line'>
+Auto-merging gittutorial.py
+CONFLICT (content): Merge conflict in gittutorial.py
+Automatic merge failed; fix conflicts and then commit the result.
+      </code></pre>
+      <p>So as you can see the merge failed because we have two different lines of code on the same line in each file.
+      To fix this we'll open up the code in our text editor, Vim for me but whatever you prefer and you'll see this:</p>
+      <pre><code class='Command Line'>
+for x in range(20):
+    print(x)
+print('This is a new feature')
+<<<<<<< HEAD
+print('This is a feature on the master branch')
+=======
+print('This is a newbranch feature')
+>>>>>>> newbranch
+      </code></pre>
+      <p>Git has clearly marked where the conflict is in our file. It will do this through out the file wherever
+      a conflict occurs so if you're working with a large file just search for HEAD and you can quickly zip through
+      the file and change what you want. Here Git gives us three choices: we can keep the master version, the newbranch
+      version, or both. We'll keep both for this excercise since it won't cause any problems. It obviously won't be this
+      easy all the time but this method will be the way you handle these issues when using Git. Since I'm going to keep both
+      for this excercise all I need to do is delete the HEAD, newbranch, and equal signs lines and I'm good to go.</p>
+      <p>A quick note here, HEAD refers to the HEAD of the branch you are merging in to. In this case it is the master branch
+      but it could any branch that you are merging files into. Ok so after I've deleted the lines I will add, and commit the file with
+      the message "Merged master and newbranch."</p>
+      <p>Let's get a visual representation of what all just happened. Type <code>git log --oneline --graph</code> and hit
+      enter which should produce this output:
+      <pre><code class='Command Line'>
+*   fe2e9e1 (HEAD -> master) Merged master and newbranch
+|\
+| * 688fd3a (newbranch) Added new newbranch feature
+* | b6090d1 Added new master feature
+|/
+* cf87ca3 Added print statement
+* 88e287f Changed number in range from 10 to 20
+* c9801bb First Commit
+      </code></pre>
+      <p>As you can se here the dots on the left are our master branch and then we see the newbranch branch out and
+      then come back in which represents our merge. Each asterisk represents a commit on that branch. And now you know
+      the basics of Git! There's tons more complex stuff in Git, but these are some of the main commands and along with
+      the next ones I'm going to show you represent the majority of commands you'll use on a day to day basis.
+      <h2>Using Github</h2>
+      <p>Ok so we've done a lot of talking about Git. And remember everything we've discussed so far takes place ONLY
+      ON YOUR COMPUTER. No one else can see that code and those changes unless you allow them access to your computer.
+      But that's never a bright idea so that's why we have Github. On Github you are basically just storing all the changes
+      you make on your computer on the internet so other people can use it or recommend improvements via pull requests. But how do you
+      get what we've done so far to Github itself?</p>
+      <p>To get our code to Github we are going to do what people call pushing the repository. It's called that because the
+      command to send stuff to Github is <code>push</code> as opposed to <code>pull</code> which brings code from Github to your computer.
+      So to get our code to Github, you'll need to log into Github and at the top you'll see a plus sign. Click on that
+      and a drop down menu will appear and then click create new repository which will bring you to this screen.</p>
+      <div class='fitimage'>
+        <img  src='img/repocreate.png' alt='Creating a Github Repo'>
+      </div>
+      <p>Name the repository but don't change anything else, and click "Create Repository." The next screen will
+      have a url that looks something like this <code>https://github.com/mcbarlowe/gittutorial.git</code>. Copy that url
+      and then in the terminal type
+      <code>git remote add origin your_url</code> and
+      replace my url with your own. After that type <code>git push -u origin master</code> and you should get output
+      that looks something like this:
+      <pre><code class='Command Line'>
+Counting objects: 18, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (18/18), 1.48 KiB | 759.00 KiB/s, done.
+Total 18 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), done.
+To https://github.com/mcbarlowe/gittutorial.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+      </code></pre>
+      <p>And now go to the url on github and you'll see your very own brand new repository on the website. If you've gotten this
+      far great job! I know its hard and confusing. It was for me as well, and it took me about four of five failed attempts at
+      trying to learn how to use Git before I finally understood it. But once it clicks you'll wonder how
+      you ever lived without it.</p>
+      <p>And now every time you make a commit and you want to push it up to Github all you have to type is <code>git push</code>
+      and within minutes your code is posted. How cool is that? And if you want to push another branch than master just checkout
+      that branch and type <code>git push -u origin branchname</code> and then when you have that branch checked out just type
+      <code>git push</code> and that branch will be pushed to your Github repository as well.</p>
+      <h2>Git Advice</h2>
+      <p>Here's a couple rules of thumb to follow to save yourself some Git headaches</p>
+      <ul>
+        <li><p>Always run <code>git status</code> before and after every add, commit, or merge. This will prevent you from making
+          mistakes of commiting wrong files to github like API keys, or forgetting to add files to the commit. It's just a good
+          habit to get into.</p></li>
+        <li><p>Commit often. That's not to say you need to commit everytime you change one thing, but a good rule I follow is
+          I make a commit everytime I write a new function and it passes its tests. That way if something goes wrong a 1000 lines
+          in you don't have to re type the whole thing and can just role back that one feature and branch it off and try to fix
+          it while you keep the master branch in production.</p></li>
+        <li><p>Always add commit messages to every commit. That way when you look back over the Git log you can see what changes
+          you've implemented along the way. Like properly commenting your code, properly commenting your Git commits will
+          save yourself, and others, wasted time trying to figure out which exact commit they need to look at for a feature
+          implementation.</p></li>
+      </ul>
+      <p>One last thing. I mentioned above an easy way to help keep track of what branch you are on. To do this we'll need to edit
+      your <code>.bash_profile</code> which is located in your home directory. In Linux and Unix systems the Home directory is
+      always symbolized with the <code>~</code> symbol. So to edit it you would type <code>vim ~/.bash_profile</code>. Or whatever text editor'
+      you prefer. Once you have it open add these lines:</p>
+      <pre><code class='Command Line'>
+# Git branch in prompt.
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+      </code></pre>
+      <p>Now save the file and at the command line type <code>source ~/.bash_profile</code> and you should see the git branch
+      you are currently on in the terminal prompt line like this:
+      <pre><code class='Command Line'>
+Username@computer-name website (master) $
+      </code></pre>
+
+      <p>Ok thats it for now with this tutorial. I know it must be a lot to take in; trust me it was a lot to write. If you have any
+      questions you can always check the sources for further info. And as always I'm always available on Twitter <a href='www.twitter.com/mcbarlowe'>@matt_barlowe</a>
+      or you can email me <a href='mailto:barloweanalytics@gmail.com'>barloweanalytics@gmail.com</a> if you have longer questions.
+      Good luck in your future in version control I bet you'll do great.
+
+      <h2>Sources</h2>
+      <p><a href='http://burnedpixel.com/blog/beginners-setup-guide-for-ruby-node-git-github-on-your-mac/'>Beginners Setup Guide for Git</a></p>
+      <p><a href='http://sourabhbajaj.com/mac-setup/Git/'>Mac Setup Guide: Git</a> This link covers a lot of other topics for setting
+      up your Mac as a development environment. And will probably cover things I won't get to for a while. Check it out if you're
+      wanting to do more advanced stuff.</p>
+      <p><a href='https://opensource.com/resources/what-is-git'>What is Git?</a></p>
+      <p><a href='https://www.sbf5.com/~cduan/technical/git/git-1.shtml'>Understanding Git Repositories</a></p>
+      <p><a href='https://www.git-tower.com/learn/git/ebook/en/command-line/basics/what-is-version-control#start'>What is Version Control</a></p>
+      <p><a href='https://softwareengineering.stackexchange.com/questions/315252/why-does-everyone-use-git-in-a-centralized-manner'>Engineering Stack Discussion on Git strutcture</a></p>
+      <p><a href='https://www.makeuseof.com/tag/git-version-control-youre-developer/'>What is Git and Why You Should Use Version Control if You are a Developer</a></p>
+      <p><a href='https://help.github.com/articles/caching-your-github-password-in-git/'>Caching your Github Password in Git</a></p>
+      <p><a href='https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/'>Adding an Existing Project to Github</a></p>
+      <p><a href='https://stackoverflow.com/questions/292357/what-is-the-difference-between-git-pull-and-git-fetch'>What is the Difference between Git Pull and Git Fetch</a></p>
+      <p><a href='https://git-scm.com'>Git Docs Page</a></p>
+
