@@ -93,9 +93,16 @@ for (game in games) {
 
     pbp_df <- pbp_list[[1]]
 
-    write_delim(pbp_df, as.string(game), delim ='|')
+    write_delim(pbp_df, as.character(game), delim ='|')
 }
       </code></pre>
+      <h2>Update:</h2>
+      <p>For Windows users you will need to replace the <code>doMC</code> package at the tope of the file with the
+      <code>Snow</code> or <code>doParallel</code> packages. I've only used the <code>doParallel</code> package so I know
+      that one works. To install it just type <code>install.packages('doParallel')</code> and then just change the
+      <code>require(doMC)</code> at the top of the script to <code>require(doParallel)</code> and that should solve any issues
+      you have with the program.
+
       <p>In the code above I put the process in a loop for you and set it to write the pbp to a | delimited text file
       named the game number. Obviously if you are scraping more than one season you'd want to add another differentiator
       to the name as the next season would overwrite the earlier game number. Also most people are common with CSV files
