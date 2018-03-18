@@ -85,7 +85,7 @@ library('readr')
 games <-c(20001:21230)
 
 for (game in games) {
-    pbp_list <- ds.compile_games(games = 20701,
+    pbp_list <- ds.compile_games(games = game,
                                  season = "20162017",
                                  pause = 2,
                                  try_tolerance = 5,
