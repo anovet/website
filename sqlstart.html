@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Installing Postgres</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Introduction to PostgreSQL</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok this is the first in a series of SQL tutorials I will be releasing. This tutorial will
+      cover the basics of getting Postgres setup on your computer and running. We won't actually
+      be working with in data in this article, but instead the focus is on the nuts and bolts
+      of what Postgres is and and its structure. But before I get into all that let's start
+      at the beginning. As always these tutorials will be focused on working in a Mac OS X
+      environment. The Postgres commands and the SQL syntax should work no matter what, but
+      the details of installing will definitely be different on a Windows system.</p>
+      <h2>What is SQL?</h2>
+      <p>SQL, or sequel as its commonly pronounced, is bascially an acronym that stands for
+      Structured Querying Language. SQL has been around forever since 1974 and isn't anywhere
+      near cutting edge in technology. Some may see this as a drawback, but it also has its
+      advantages as well. One being that it's a well documented system and language, and two
+      is that most people are at least somewhat familiar with its terminology.</p>
+      <p>But what does SQL do? Well SQL is the language used to query and manipulate data
+      in a relational database system. And a relational database system is a system that uses
+      the relational model; a model consisting of unique keys to create
+      relations between different tables on the database. Its not really important you
+      understand this all right now but just keep it in mind for future tutorials.</p>
+      <h2>What is Postgres?</h2>
+      <p>Postgres is just a flavor of SQL. I chose this one for several reasons. One being
+      it is noted for its speed, and secondly because it is open source and therefore free.
+      There are plenty other choices out there such as MySQL or SQLite3 that are perfectly
+      suitable, but these tutorials will focus on Postgres as it is the one I am most comfortable
+      using. There are differences between these options, but the basic commands we
+      wil go over in this series should be universal between all of these systems, however I can't
+      speak for all of them as there may be slight differences in syntax.</p>
+      <p>Still the majority of the lessons learned using Postgres and these tutorials will
+      be portable. Especially the ideas behind <code>JOIN</code> and how keys create
+      relations between tables.</p>
+      <h2>Installing Postgres</h2>
+      <p>To get Postgres onto our system we are going to use Homebrew to install the files. If
+      you don't have Homebrew please refer to this <a href='homebrew.html'>tutorial</a> to get
+      it up and running. So like our other brew installations, Postgres is installed with a
+      command you may find familiar if you've been following these tutorials.</p>
+      <pre><code class='Command Line'>
+$ brew install postgresql
+      </code></pre>
+      <p>And you'll see a whole bunch of text on the screen showing Homebrew installing the
+      Postgres files. It's often a good idea to skim this output even if you don't understand
+      it as sometimes the output will have very important info. When installing Postgres this
+      is one of those times. Because at the bottom it will give you two commands
+
+
