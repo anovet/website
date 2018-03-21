@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Basic SQL Commands</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Basic SQL Commands</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok if you've read the <a href='sqlstart.html'>first tutorial</a> on installing Postgres
+      and getting your first database up and running, you're now wondering "So how do I access all
+      this data?" Well that's where this tutorial comes in as we are going to cover some of the basic
+      commands in SQL to get the data we want. Ok let's get started and dive right in to our data.
+      <h2>SELECT</h2>
+      <p>The <code>SELECT</code> command is going to be your workhorse command when working with
+      SQL. It's the command that tells Postgres to pull the data from the table and return it to you
+      so you can use it. The <code>SELECT</code> is always paired with a <code>FROM</code> clause
+      so you can tell Postgres exactly what table you want to select your data. Let's take a look
+      at the command I used at the end of the first tutorial:</p>
+      <pre><code class='Command Line'>
+SELECT * FROM playerstats LIMIT 1;
+      </code></pre>
+      <p>Ok let's break it down piece by piece. <code>SELECT</code> tells Postgres that we want to
+      pull data. The <code>*</code> tells Postgres that we want the data from every column in the
+      table. You can choose whatever columns you want the data from and it doesn't have to be all of
+      them, but this example we are taking all of them. Next is the <code>FROM</code> clause that tells
+      Postgres we want to pull all the columns from the <code>playerstats</code> table.</p>
+      <p>If you have multiple tables you would change the name of the table to whatever table you wanted
+      data from. But right now all we have is the <code>playerstats</code> so that's the one we will
+      be using for the rest of this tutorial. The <code>LIMIT</code> clause while technically not needed
+      for a <code>SELECT</code> query is very important here. If we had just entered in the command without
+      using the <code>LIMIT</code> Postgres would have returned every single row in the table and you almost
+      never want that. So I added the <code>LIMIT</code> clause and passed it the number 1 telling Postgres
+      to limit the results to 1 row. Pretty simple eh?</p>
+      <p>Ok lets do a couple other <code>SELECT</code> queries to get the hang of it. First though
+      lets get a list of the columns in our table with the <code>\d+ playerstats</code> which will produce
+      and output similar to this:
+      <pre><code class='Command Line'>
+    Column    |  Type   | Collation | Nullable | Default | Storage  | Stats target | Description
+--------------+---------+-----------+----------+---------+----------+--------------+-------------
+ player       | text    |           |          |         | extended |              |
+ team         | text    |           |          |         | extended |              |
+ toi          | real    |           |          |         | plain    |              |
+ cf           | real    |           |          |         | plain    |              |
+ ca           | real    |           |          |         | plain    |              |
+ c_plus_minus | real    |           |          |         | plain    |              |
+ ff           | real    |           |          |         | plain    |              |
+ fa           | real    |           |          |         | plain    |              |
+      </code></pre>
+      <p>So now we have some columns lets adjust our <code>SELECT</code> statement to just include a few
+      of them instead of all of them:</p>
+      <pre><code class='Command Line'>
+SELECT player, game_date, team, cf, ca, c_plus_minus FROM playerstats LIMIT 10;
+      </code></pre>
+      <p>Which will produce an output similar to this:</p>
+      <pre><code class='Command Line'>
+       player      | game_date  | team | cf | ca | c_plus_minus
+-----------------+------------+------+----+----+--------------
+   ANDREJ.MESZAROS | 2014-10-23 | BUF  | 21 | 31 |          -10
+   BRIAN.GIONTA    | 2014-10-23 | BUF  | 14 | 29 |          -15
+   CHRIS.STEWART   | 2014-10-23 | BUF  | 29 | 23 |            6
+   CODY.HODGSON    | 2014-10-23 | BUF  | 24 | 22 |            2
+   CODY.MCCORMICK  | 2014-10-23 | BUF  |  5 |  9 |           -4
+   DREW.STAFFORD   | 2014-10-23 | BUF  |  5 | 10 |           -5
+   JHONAS.ENROTH   | 2014-10-23 | BUF  | 45 | 77 |          -32
+   JOSH.GORGES     | 2014-10-23 | BUF  | 10 | 31 |          -21
+   MARCUS.FOLIGNO  | 2014-10-23 | BUF  | 21 | 24 |           -3
+   MATT.MOULSON    | 2014-10-23 | BUF  | 15 | 29 |          -14
+(10 rows)
+      </code></pre>
+      <p>You can play around with the columns as much as you want and see the different outputs.
+      So now we're getting some more info that is something we can work with but nothing we can actually
+      draw insights from. The next clause though will help us narrow our data even more.</p>
+      <h2>WHERE</h2>
+      <p>So above we learned how to limit the columns the SQL query returns so now lets learn how to
+      limit the rows that are returned. This is done in SQL by using the <code>WHERE</code> clause
+      with your <code>SELECT</code>. <code>WHERE</code> gives your an SQL query a condition that it
+      checks every row against in the table and if the condition is met it returns the row and if it
+      isn't then the row is excluded. Let's look at it in action:
+      <pre><code class='Command Line'>
+SELECT player, game_date, team, cf, ca, c_plus_minus FROM playerstats
+WHERE team='CAR' LIMIT 10;
+      </code></pre>
+      <p>Now there is a order in whcih clauses go where in the SQL queries. Generally its SELECT, FROM,
+      WHERE, GROUP BY, HAVING, ORDER BY, LIMIT. So when playing around with your queries if you don't stick
+      to the order Postgres will throw an error. Obviously you don't know what all of those clauses do, but
+      just keep in mind for now that <code>WHERE</code> clauses will go before Limit clauses. So if you ran
+      command above this should be your output:</p>
+      <pre><code class='Command Line'>
+          player      | game_date  | team | cf | ca | c_plus_minus
+----------------------+------------+------+----+----+--------------
+       ANDREJ.SEKERA   | 2014-11-16 | CAR  | 40 | 18 |           22
+       ANTON.KHUDOBIN  | 2014-11-16 | CAR  | 84 | 44 |           40
+       BRAD.MALONE     | 2014-11-16 | CAR  | 11 |  9 |            2
+       BRETT.BELLEMORE | 2014-11-16 | CAR  | 22 | 14 |            8
+       CHRIS.TERRY     | 2014-11-16 | CAR  | 23 |  8 |           15
+       ELIAS.LINDHOLM  | 2014-11-16 | CAR  | 27 | 16 |           11
+       ERIC.STAAL      | 2014-11-16 | CAR  | 37 | 14 |           23
+       JAY.MCCLEMENT   | 2014-11-16 | CAR  |  7 |  9 |           -2
+       JEFF.SKINNER    | 2014-11-16 | CAR  | 35 | 12 |           23
+       JIRI.TLUSTY     | 2014-11-16 | CAR  | 28 | 14 |           14
+(10 rows)
+      </code></pre>
+      <p>If you're a Carolina fan some of those names will make you cringe, but as you can see where before
+      Buffalo was the first ten rows returned now the first ten rows returned will only be rows where the
+      <code>team</code> column is equal to <code>CAR</code>. You can also chain these commands as well using
+      logical switches such as AND or OR like so:
+      <pre><code class='Command Line'>
+SELECT player, game_date, team, cf, ca, c_plus_minus FROM playerstats
+WHERE team='CAR' AND game_date > '2018-02-01' LIMIT 10;
+      </code></pre>
+      <p>This will give us all the rows where the <code>team</code> is 'CAR' and the <code>game_date</code> is after
+      Feburary 2nd, 2018. There are many more ways to combine these as well to help select the data that you are looking
+      for but this is the basics. There will be a lot of trial and error at the beginning as you get
+      used to it so don't despair and just keep at it.
+      <h2>Aggregate Functions</h2>
+      <p>Ok so we've learned how to select the appropriate columns and rows that we want from our data, but
+      how do we look at the overall picture? How do we look at say the total goals scored or assists earned over
+      a season or even a certain time frame? This is done with our powerful aggregate functions and the
+      <code>GROUP BY</code>.</p>
+      <p>As you can see with the data each row is an individual game for an individual player so just using
+      <code>WHERE</code>won't tell you the whole story. So let's try and see if we can calculate the
+      goals and assists for Jeff Skinner for the 2018 season. We'll do that by using an SQL query that looks
+      like this:</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g), sum(a1), sum(a2) FROM playerstats
+WHERE player='JEFF.SKINNER' AND game_date > '2017-10-01' GROUP BY player;
+      </code></pre>
+      <p>Just a warning this won't be correct since we are using the data from my data dump that stopped
+      at the end of February this is just to show you the syntax. Which should make this the output:</p>
+      <pre><code class='Command Line'>
+    player    | sum | sum | sum
+--------------+-----+-----+-----
+ JEFF.SKINNER |  20 |   9 |   8
+(1 row)
+      </code></pre>
+      <p>Well those column names aren't very helpful. However there is a simple way to change that using the <code>AS</code>
+      command in your query:
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE player='JEFF.SKINNER' AND game_date > '2017-10-01'
+GROUP BY player;
+      </code></pre>
+      <p>And now your output looks much nicer:</p>
+      <pre><code class='Command Line'>
+    player    | goals | a1 | a2
+--------------+-------+----+----
+ JEFF.SKINNER |    20 |  9 |  8
+(1 row)
+      </code></pre>
+      <p>All <code>AS</code> does is just create an alias for the column. You can do this with any column you want
+      along with tables as well. It just creates another name for something that you can refer to later on in the query.
+      This won't work with <code>WHERE</code> statements because the <code>WHERE</code> clause references the raw data
+      and your alias is created after the fact.</p>
+      <p>There several aggregate functions in SQL with the most common being <code>sum, avg, min, max, count</code>. Respectively
+      those add the values, average the values, find the minimum value, the maximum value, and last counts the number of values i.e.
+      the of rows in a column.</p>
+      <p>The next and most important part of an aggregate function is the <code>GROUP BY</code> clause. This tells
+      Postgres how we want to calculate the aggregate functions. If we left out the <code>player</code> column then
+      the functions would just sum the total goals and assists of every player after the date we gave it. <code>GROUP BY</code>
+      though allows us to tell Postgres that we want to group the sums by each player. So Postgres will then group the
+      rows together by each individual player then sum the goals and assists and return those totals for each player
+      creating one row where once there where many. Let's take a look at our old command but this time we won't limit
+      it to Jeff Skinner.
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player LIMIT 10;
+      </code></pre>
+      <p>And this will be the output:</p>
+      <pre><code class='Command Line'>
+      player       | goals | a1 | a2
+-------------------+-------+----+----
+ BRANDON.HALVERSON |     0 |  0 |  0
+ TOM.WILSON        |    10 | 10 |  7
+ DARREN.HELM       |     7 | 11 |  4
+ MATT.NISKANEN     |     4 | 10 |  5
+ ANZE.KOPITAR      |    25 | 21 | 18
+ BRANDON.DUBINSKY  |     5 |  7 |  3
+ TRAVIS.DERMOTT    |     1 |  2 |  5
+ CLAUDE.GIROUX     |    20 | 26 | 24
+ ANTTI.NIEMI       |     0 |  0 |  1
+ KRIS.VERSTEEG     |     3 |  3 |  2
+      </code></pre>
+      <p>As you can see we are now calculating the goal and assist totals for all players in our time frame. I added a <code>LIMIT</code>
+      clause or else it would return every NHL player during that time frame. <code>GROUP BY</code> doesn't just work
+      for players we can use it on the <code>team</code> column as well or any other categorical column in your database.
+      In this one that is just mainly our teams and players, but if you were working with another database with
+      different categorical columns <code>GROUP BY</code> would work just as well on those with calculating aggregate
+      stats. If you have some experinece with pandas or R dataframes <code>GROUP BY</code> in SQL works basically the same
+      as <code>.groupby</code> and <code>group_by</code> respectively in those langauges.</p>
+      <h2>ORDER BY</h2>
+      <p>Ok the last command we'll look at in this tutorial is the <code>ORDER BY</code> clause in our select statements.
+      <code>ORDER BY</code> just tells Postgres by what column we want to order our data when it is returned to us. So using
+      last command above:
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player ORDER BY goals LIMIT 10;
+      </code></pre>
+      <p>Which produces this output:</p>
+      <pre><code class='Command Line'>
+      player       | goals | a1 | a2
+-------------------+-------+----+----
+ CAL.O'REILLY      |     0 |  0 |  0
+ MARTIN.MARINCIN   |     0 |  0 |  0
+ ZACH.REDMOND      |     0 |  0 |  0
+ PAUL.MARTIN       |     0 |  0 |  0
+ CHRIS.BIGRAS      |     0 |  0 |  1
+ JAMES.REIMER      |     0 |  0 |  0
+ BRANDON.HALVERSON |     0 |  0 |  0
+ MADISON.BOWEY     |     0 |  4 |  8
+ ANTTI.NIEMI       |     0 |  0 |  1
+ MIKE.BLUNDEN      |     0 |  0 |  0
+(10 rows)
+      </code></pre>
+      <p>Well that's really no fun but is an important lesson. <code>ORDER BY</code> always sorts in ascending order.
+      So it will always sort from the smallest value in the column to the largest unless we tell it otherwise. To do
+      that all you need to do is add the <code>DESC</code> flag to your order by statement like so:</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player ORDER BY goals DESC LIMIT 10;
+      </code></pre>
+      <p>Which gives us this output:</p>
+      <pre><code class='Command Line'>
+      player      | goals | a1 | a2
+------------------+-------+----+----
+ ALEX.OVECHKIN    |    36 | 16 | 15
+ EVGENI.MALKIN    |    33 | 19 | 18
+ NIKITA.KUCHEROV  |    32 | 22 | 23
+ WILLIAM.KARLSSON |    31 |  9 | 12
+ ANDERS.LEE       |    30 | 12 |  6
+ JOHN.TAVARES     |    30 | 22 | 12
+ SEAN.COUTURIER   |    29 | 20 | 10
+ TYLER.SEGUIN     |    29 | 16 |  6
+ PATRIK.LAINE     |    28 | 11 |  9
+ AUSTON.MATTHEWS  |    27 | 12 | 10
+(10 rows)
+      </code></pre>
+      <p>And now we have the top ten goal scorers over the time frame we passed our SQL query. And just with a
+      few simple commands you can start to do some actual analysis of hockey stats. Remember these are just
+      the basics of all these commands. With experience you'll be able to slice and dice the data
+      however you want. Stil with the basics learned here you can do a lot of research and start to get
+      the hang of how SQL queries are structured.</p>
+      <h2>Sources</h2>
+      <p><a href='https://www.postgresql.org/docs/9.5/static/functions-aggregate.html'>Postgres Aggregate Functions</a></p>
+      <p><a href='https://stackoverflow.com/questions/9532668/list-rows-after-specific-date'>List Rows after Specific Date in SQL</a></p>
+      <p><a href='https://dba.stackexchange.com/questions/22362/how-do-i-list-all-columns-for-a-specified-table'>List All Columns of Table</a></p>
+
+
+
+
+
