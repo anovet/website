@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Basic SQL Commands</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>SQL Basics Part 2</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok if you've been following these in order our <a href='basicsql.html'>last tutorial</a>
+      covered on the <code>SELECT</code> SQL command and some of the clauses associated with it.
+      I however negelected to mention two more important clause I commonly use and that you will
+      find useful to add to your repertoire.
+      <h2>HAVING</h2>
+      <p>The clause we are going to look at is the <code>HAVING</code> clause. If you remember
+      at the end of the last tutorial linked above we were dealing with agregate functions. But
+      what if you want to limit the rows returned in a <code>SELCT</code> query based on the value
+      returned by the aggregate function? Let's refresh our memory and look at one of these queries
+      first:</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player ORDER BY goals DESC;
+      </code></pre>
+      <p>Ok say we only wanted to see goal scorers that have scored over 30 goals instead of
+      all the goal scorers in the NHL. If you tried to put that in a <code>WHERE</code> clause
+      Postgres would throw an error. That's because, if you remember from last tutorial, that
+      the <code>WHERE</code> clause acts before the <code>sum()</code>. <code>WHERE</code> won't
+      know what goals is at all because in the order of operations it will look for <code>goals</code>
+      before you have even declared it.<p>
+      <p>"What if we just passed it <code>WHERE g > 30</code>? That should work right?" Nope,
+      because as we are working with individual games you won't find a single player who
+      has scored 30 goals in a game so the <code>WHERE</code> will just exclude all rows
+      and return an empty table.</p>
+      <p>This is where the <code>HAVING</code> clause comes in play. <code>HAVING</code> is like
+      a <code>WHERE</code> clause but it comes after the agregate functions are run. So lets change
+      our query from above:</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player HAVING sum(g) > 30 ORDER BY goals DESC;
+      </code></pre>
+      <p>And this will be your result:</p>
+      <pre><code class='Command Line'>
+       player       | goals | a1 | a2
+--------------------+-------+----+----
+ ALEX.OVECHKIN      |    43 | 20 | 15
+ PATRIK.LAINE       |    43 | 12 | 13
+ EVGENI.MALKIN      |    40 | 27 | 22
+ WILLIAM.KARLSSON   |    39 | 12 | 15
+ TYLER.SEGUIN       |    38 | 23 |  8
+ NATHAN.MACKINNON   |    38 | 35 | 18
+ ERIC.STAAL         |    37 | 18 | 14
+ NIKITA.KUCHEROV    |    36 | 29 | 27
+ ANDERS.LEE         |    35 | 13 |  7
+ CONNOR.MCDAVID     |    33 | 31 | 25
+ JOHN.TAVARES       |    32 | 26 | 15
+ TAYLOR.HALL        |    32 | 27 | 18
+ JAMES.VAN RIEMSDYK |    31 | 11 |  5
+ SEAN.MONAHAN       |    31 | 21 | 10
+ RICKARD.RAKELL     |    31 | 16 | 15
+ BRAD.MARCHAND      |    31 | 27 | 17
+(16 rows)
+      </code></pre>
+      <p>So now we have all the goal scorers who have score more than 30 goals in our time frame
+      we passed to the SQL query. The only way you will be able to filter future aggregate functions
+      will be with the <code>HAVING</code> command so make sure to keep it in mind. Another thing
+      I will mention is that the <code>HAVING</code> command is executed before the <code>SELECT</code>
+      command so it won't have any knowledge of the aliases you have created. This means that
+      you will need to pass it the whole aggregate function in order to filter the results as desired.</p>
+      <h2>BETWEEN</h2>
+      <p>Ok our last introductory command/clause for basic select statements is going to be the
+      <code>BETWEEN</code> clause. So using our command above we are going to limit the total goals
+      between the values of 20 and 25 like so:
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player HAVING sum(g) BETWEEN 20 and 25 ORDER BY goals DESC;
+      </code></pre>
+      <p>Here are our results:</p>
+      <pre><code class='Command Line'>
+             player       | goals | a1 | a2
+--------------------+-------+----+----
+ LOGAN.COUTURE      |    30 | 16 |  9
+ SEAN.COUTURIER     |    29 | 24 | 12
+ ANZE.KOPITAR       |    29 | 27 | 26
+ DAVID.PASTRNAK     |    29 | 25 | 16
+ PHIL.KESSEL        |    29 | 35 | 15
+ JASON.ZUCKER       |    29 | 18 |  9
+ BROCK.BOESER       |    29 | 13 | 13
+...
+ ALEX.DEBRINCAT     |    25 | 11 |  9
+ PATRICK.KANE       |    25 | 28 | 17
+ ALEX.RADULOV       |    25 | 24 | 14
+ ALEKSANDER.BARKOV  |    25 | 24 | 23
+ SEBASTIAN.AHO      |    25 | 20 | 12
+ CLAUDE.GIROUX      |    25 | 30 | 26
+ BRAYDEN.SCHENN     |    25 | 19 | 16
+ EVANDER.KANE       |    25 | 12 | 13
+      </code></pre>
+      <p>This isn't the whole selection as the result you should get will be 30 rows but as you see
+      the top is 30 and the bottom is 25. That's because <code>BETWEEN</code> is inclusive. Now you
+      could have done the same thing like this <code>HAVING sum(g)<=30 AND sum(g)>=25</code> but
+      I feel that <code>BETWEEN</code> is much easier to use. Not only that its much easier to read
+      and for others to interpret what your code is doing which is something you should always have
+      in the back of your mind as you are writing it.</p>
+      <p><code>BETWEEN</code> just doesn't work with <code>HAVING</code> you can also use it with
+      your <code>WHERE</code> clauses as well and in the exact same way. Say if we wanted to look at
+      goals scored in the month of October last year we would use <code>WHERE game_date BETWEEN
+        '2017-10-01' and '2017-10-31'</code> and it would limit the games we passed to our
+      <code>GROUP BY</code> clause to those that occured in October only.</p>
+      <h2>Sources</h2>
+      <p><a href='https://www.w3schools.com/sql/sql_having.asp'>SQL HAVING Clause</a></p>
+      <p><a href='https://blog.jooq.org/2016/12/09/a-beginners-guide-to-the-true-order-of-sql-operations/'>
+        A Beginner's Guide to the True Order of Operations in SQL</a>This is an excellent piece on the
+      order of operations so to speak in an SQL <code>SELECT</code> query. A must read.</p>
+      <p><a href='https://www.w3schools.com/sql/sql_between.asp'>SQL BETWEEN Operator</a></p>
+
+
+
+
+
