@@ -41,7 +41,7 @@ GROUP BY player ORDER BY goals DESC;
       Postgres would throw an error. That's because, if you remember from last tutorial, that
       the <code>WHERE</code> clause acts before the <code>sum()</code>. <code>WHERE</code> won't
       know what goals is at all because in the order of operations it will look for <code>goals</code>
-      before you have even declared it.<p>
+      before you have even declared it.</p>
       <p>"What if we just passed it <code>WHERE g > 30</code>? That should work right?" Nope,
       because as we are working with individual games you won't find a single player who
       has scored 30 goals in a game so the <code>WHERE</code> will just exclude all rows
@@ -129,7 +129,7 @@ GROUP BY player HAVING sum(g) BETWEEN 20 and 25 ORDER BY goals DESC;
         A Beginner's Guide to the True Order of Operations in SQL</a>This is an excellent piece on the
       order of operations so to speak in an SQL <code>SELECT</code> query. A must read.</p>
       <p><a href='https://www.w3schools.com/sql/sql_between.asp'>SQL BETWEEN Operator</a></p>
-
+    </div>
 
 
 
