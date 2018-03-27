@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>SQL IN Clause</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>SQL Basics Part 3</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok last time I was talking about <code>SELECT</code> clauses I discussed
+      using <code>OR</code> operator to dictate two states in your <code>WHERE</code>
+      clause that would filter the results. Well with this tutorial I'm going to show
+      you a little shortcut for when you want to set multiple filters on the query results.</p>
+      <h2>Using the IN Operator</h2>
+      <p>Ok let's look at the last query from the <a href='sqlbasics2.html'>last tutorial</a>:
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01'
+GROUP BY player HAVING sum(g) BETWEEN 20 and 25 ORDER BY goals DESC;
+      </code></pre>
+      <p>Ok if you remember that returned the players who had scored between 20 and 25 goals
+      in the data after 10/01/2017. But let's say we wanted to see only the results from a
+      few teams instead of all the teams. We could chain together a bunch of <code>OR</code>
+      statements, but we don't want to do that.</p>
+      <p>Not only would that make for a harder to read SQL query, it would also be more typing
+      and I'm never a fan of typing more than I have to. So lets change the query to show us
+      only the goal scorers from the Flyers, the Rangers, and Carolina.</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01' AND team IN ('PHI', 'NYR', 'CAR')
+GROUP BY player HAVING sum(g) BETWEEN 20 and 25 ORDER BY goals DESC;
+      </code></pre>
+      <p>This will produce a result that looks like this:</p>
+      <pre><code class='Command Line'>
+     player      | goals | a1 | a2
+-----------------+-------+----+----
+ MICHAEL.GRABNER |    25 |  4 |  2
+ SEBASTIAN.AHO   |    21 | 15 | 10
+ CLAUDE.GIROUX   |    20 | 26 | 24
+ WAYNE.SIMMONDS  |    20 | 10 |  7
+ JEFF.SKINNER    |    20 |  9 |  8
+(5 rows)
+      </code></pre>
+      <p>As you can see we have limited our results to just those teams in the <code>IN</code>.
+      Remember once again this data only goes up to the end of February so it won't have known that
+      Grabner was traded to the New Jersey Devils. And even if it was up to date since each row
+      is a single game it would still return Grabner's stats as a Ranger since he scored over
+      20 goals. It would not return any data from his New Jersey games though as the team wouldn't be
+      one of the teams in the <code>IN</code> list.</p>
+      <p><code>IN</code> will work for any column that is categorical such as team name, player name, and
+      game date. It will also work for numerical columns as well just return the rows where the value
+      is in the <code>IN</code> list. So if you wanted to look at games say for players where they scored
+      two goals you would adjust the query like this:</p>
+      <pre><code class='Command Line'>
+SELECT player, sum(g) AS goals, sum(a1) AS a1, sum(a2) AS a2
+FROM playerstats WHERE game_date > '2017-10-01' AND g IN (2)
+GROUP BY player ORDER BY goals DESC;
+      </code></pre>
+      <p>And it would return results like this:</p>
+      <pre><code class='Command Line'>
+            player      | goals | a1 | a2
+------------------+-------+----+----
+ SEAN.COUTURIER   |    12 |  1 |  1
+ RICK.NASH        |     8 |  0 |  1
+ MICHAEL.GRABNER  |     6 |  0 |  0
+ TEUVO.TERAVAINEN |     6 |  2 |  0
+ SEBASTIAN.AHO    |     6 |  1 |  0
+ TAYLOR.HALL      |     6 |  1 |  0
+ SCOTT.LAUGHTON   |     4 |  0 |  0
+ CHRIS.KREIDER    |     4 |  1 |  0
+ JEFF.SKINNER     |     4 |  0 |  0
+ NICO.HISCHIER    |     4 |  0 |  1
+(10 rows)
+      </code></pre>
+      <p>So as you can see the <code>IN</code> operator is a very powerful way to slice your data
+      while remaining easy to work. If you have many different categories to need to filter for
+      than <code>IN</code> probably isn't the best choice and you need to find more efficient solutions
+      such as <code>JOIN</code>. Still it's a good tool to keep handy and will be one you use
+      regularly.</p>
+      <h2>Sources</h2>
+      <p><a href='https://www.w3schools.com/sql/sql_in.asp'>SQL IN operator</a></p>
+      <p><a href='https://stackoverflow.com/questions/1009706/postgresql-max-number-of-parameters-in-in-clause'>Max Number of Parameters with IN</a></p>
+
+    </div>
+</body>
+</html>
