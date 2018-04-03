@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Postgres Privileges</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Postgres Privileges</h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>These rules are often known as permissions, and in
+      Unix are referred to as read, write, and execute permisions. These roughly
+      translate to <code>SELECT</code>, <code>UPDATE</code>, and <code>INSERT</code>
+      privileges on a table in a Postgres database.</p>
+      <p><code>SELECT</code> privileges allow one to read, query the data, in a table
+      on a database. It also allows them to <code>/copy</code> the data to a file
+      from the table as well. Which means while they may not be able to change
+      any of your data they could technically steal it so if you have sensitive
+      information this could be a problem.</p>
+      <p><code>UPDATE</code> pirviliges allows a user to change the data that
+      is actually in the table. This means the user could change every bit of
+      data in the table if they wanted to
+    </div>
+</body>
+</html>
+
