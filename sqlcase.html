@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>SQL Case</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>SQL CASE and Sub Queries </h2>
+      <h2> by Matthew Barlowe</h2>
+      <br />
+      <p>Ok if you've been following along with my SQL tutorials you should
+      now have a pretty good grasp of how to make queries and get the data
+      you need. However, the data is still the data. You can use aggregate
+      functions to sum or count things, but so far you've been limited in
+      actually creating new data itself with your <code>SELECT</code>
+      statements.</p>
+      <p>But what if you wanted to create a new group to denote say what
+      line a player would play on on an NHL team? The way to do that is
+      with a <code>CASE</code> SQL statement. If you are familiar with other
+      programming languages, then a <code>CASE</code> clause is similar to
+      and <code>IF/THEN</code> statement or <code>IF/ELSE</code> for
+      those that may be more familiar with R or Python.</p>
+      <p><code>CASE</code> allows you to set conditions on your data and
+      if the data meets those conditions then it assigns the data a label.
+      Reading that may not make any sense but once you see it in action
+      everything will hopefully be a little clearer. So like the example
+      above lets try and determine the lines of a team from our
+      <code>playerstats</code> database. If you don't have that setup I
+      suggest visting my <a href='sqlstart.html'>Postgres Setup</a>
+      tutorial and also the SQL Basics <a href='basicsql.html'>Part 1</a>
+      and <a href='sqlbasics2.html'>Part 2</a>.</p>
+      <p>Ok let's look at the query we are going to use to determine that:
+      <pre><code class='Command Line'>
+SELECT *,
+  CASE WHEN toi_per_gp &lt; 11 THEN 4
+       WHEN toi_per_gp between 11 and 14 THEN 3
+       WHEN toi_per_gp between 14 and 17 THEN 2
+       ELSE 1 END AS line
+FROM
+  (SELECT player, team, sum(toi) as toi, sum(g) as goals,
+  sum(a1 + a2) as assists, count(player) as GP,
+  trunc((sum(toi)/sum(gp)))::numeric, 2) as toi_per_gp
+  FROM playerstats where season = '20172018' GROUP BY player, team) as stats
+WHERE team = 'CAR' ORDER BY line DESC;
+      </code></pre>
+      <p>This query will then return results like this:</p>
+      <pre><code class='Command Line'>
+       player        | team |   toi   | goals | assists | gp | toi_per_gp | line
+---------------------+------+---------+-------+---------+----+------------+------
+ MARTIN.NECAS        | CAR  |     6.9 |     0 |       0 |  1 |       6.90 |    4
+ TREVOR.CARRICK      | CAR  | 7.53333 |     0 |       0 |  1 |       7.53 |    4
+ LUCAS.WALLMARK      | CAR  | 78.7333 |     1 |       0 |  9 |       8.74 |    4
+ PHILLIP.DI GIUSEPPE | CAR  |  490.35 |     4 |       8 | 47 |      10.43 |    4
+ JOSH.JOORIS         | CAR  | 325.817 |     3 |       3 | 31 |      10.51 |    4
+ JOAKIM.NORDSTROM    | CAR  | 792.883 |     2 |       5 | 75 |      10.57 |    4
+ NICOLAS.ROY         | CAR  | 10.7667 |     0 |       0 |  1 |      10.76 |    4
+ MARCUS.KRUGER       | CAR  | 520.183 |     1 |       5 | 48 |      10.83 |    4
+ JANNE.KUOKKANEN     | CAR  |   44.25 |     0 |       0 |  4 |      11.06 |    4
+ WARREN.FOEGELE      | CAR  |   23.85 |     2 |       1 |  2 |      11.92 |    4
+ LEE.STEMPNIAK       | CAR  | 432.117 |     3 |       6 | 35 |      12.34 |    3
+ ROLAND.MCKEOWN      | CAR  |   134.1 |     0 |       3 | 10 |      13.40 |    3
+ VALENTIN.ZYKOV      | CAR  | 137.067 |     3 |       4 | 10 |      13.70 |    3
+ BROCK.MCGINN        | CAR  | 1126.08 |    16 |      14 | 78 |      14.43 |    2
+      </code></pre>
+      <p>And you can see by the results we've group each player into a line
+      by their TOI per game played. Obviously there's nothing exact about these
+      groupings in fact they are rather arbitrary bins, but it definitely helps
+      you see quickly which players are more favored by their coach and which
+      ones are not.</p>
+      <p>So now we've got out results let's break this query
+      down piece by piece since it includes
+      a lot of things you haven't seen before in the other tutorials. The first
+      thing we'll look at (and the other main part of the title) is the
+      second <code>SELECT</code> statment in the query</p>
+      <p>'What is that?' you may be asking yourself because if you've
+      followed along with the tutorials all you've seen so far are queries
+      with just one <code>SELECT</code> in each query. This is what is known
+      as a sub query, or sub <code>SELECT</code>, and is a critical concept
+      to add to your SQL toolbox.</p>
+      <pre><code class='Command Line'>
+FROM
+  (SELECT player, team, sum(toi) as toi, sum(g) as goals,
+  sum(a1 + a2) as assists, count(player) as GP,
+  trunc((sum(toi)/sum(gp))::numeric, 2) as toi_per_gp
+  FROM playerstats where season = '20172018' GROUP BY player, team) as stats
+WHERE team = 'CAR' ORDER BY line DESC;
+      </code></pre>
+      <p>This part above is the actual subquery of the query in question.
+      Usually subqueries are contained in parenthesis and after them
+      is a name that will be used as an alias to refer to the subquery in other
+      parts of the original query</p>
+      <p>So a subquery is just another query that you execute before you pass
+      it to the original query you want to execute. Oftentimes in an SQL
+      database the data will not be in the perfect form you need it to be.
+      So in order to shape the data into the from you need it to be you'll
+      execute a sub query to create a new table on which you'll then
+      execute functions or in this instance our <code>CASE</code> statement</p>
+      <p>Basically what I'm doing with my sub query is I'm creating a brand
+      new table that I will then <code>SELECT</code> from to creat my results.
+      In this case I'm creating a new table from which I am then selecting
+      from to run my <code>CASE</code> statement on. One way to determine if
+      you are working with a subquery is that it will always be encased
+      in parentheses.</p>
+      <p>Inside those parentheses is just a standard <code>SELECT</code> you've
+      seen plenty of times before, but there are a couple of new things I want
+      to go over first. First is the <code>trunc((sum(toi)/sum(gp))::numeric, 2)</code>
+      statement. <code>trunc</code> is a function that is short for truncate which
+      means shorten. Basically what we are doing here is rounding the results of
+      our <code>sum(toi)/sum(gp)</code> statement.
+      <p>However in Postgres <code>trunc</code> needs a <code>numeric</code>
+      input. If you remember back when we were creating out table schemas
+      we had to define what value type each column would be. In Postgres
+      <code>numeric</code> is one of those value types. Unlike <code>real</code>
+      value types <code>numeric</code> in postgres is allowed to have a user
+      defined percision hence the reason its needed for the <code>trunc</code>
+      function. The way we change our the <code>real</code> results to a
+      numerice is with the <code>::</code> operator.</p>
+      <p>The double colons allows us to cast the type of the column, i.e. what
+      data format it is, to another within our <code>SELECT</code> query. In
+      this instance if we didn't cast the results of our division to a
+      <code>numeric</code> type the SQL would return an error.</p>
+      <h2>CASE Statement</h2>
+      <p>Ok let's move on to the second part of this article and look at the
+      <code>CASE</code> statement part of the query as you see below.</p>
+      <pre><code class='Command Line'>
+SELECT *,
+  CASE WHEN toi_per_gp &lt; 11 THEN 4
+       WHEN toi_per_gp between 11 and 14 THEN 3
+       WHEN toi_per_gp between 14 and 17 THEN 2
+       ELSE 1 END AS line
+      </code></pre>
+      <p>Ok the <code>*</code> you've seen before that just means pull all the
+      columns of the table we are feeding our <code>FROM</code> clause. But in
+      addition to that we are adding the <code>CASE</code> statement to calculate
+      what line the players are on by their ice time per game played. So if you
+      look at the sub query above <code>toi_per_gp</code> was the column where we
+      calculated a players average TOI per game.</p>
+      <p>Using that column will pass it's values to our <code>CASE</code> clause.
+      The syntax for a <code>CASE</code> statement in Postgres follows this syntax:
+      <code>CASE WHEN logical_statement THEN value ELSE another_value END new_column_name</code>.
+      The <code>CASE</code> checks to see if the value in the logical statement
+      is true and if so it puts the <code>value</code> in the <code>new_column_name</code>
+      column for that row. If it's not true then it will place <code>another_value</code>.</p>
+      <p>You can chain the <code>WHEN</code> statements as I've done above to create
+      multiple conditions and the resultant values that will be put in the new
+      column we are creating. The code above looks at the <code>toi_per_gp</code> if
+      that value is less than 11 it places a 4 in the <code>line</code> column, if its
+      between 11 and 14 minutes then they are third liners and so on.</p>
+      <p>The last part of the statement is the <code>ELSE</code> clause. This lets you assign
+      a value for that row in the column whenever none of the logical conditions you
+      set have been met. In our example if a player didn't meet any of the conditions
+      he would be playing over 17 minutes a night on average which allows us to just
+      call him a first liner without even checking. It's just a catch all for all the
+      values you don't need to set a specific check for. If you plan only every value
+      being caught in your logical checks then you don't even need, but most of the time
+      that won't be true.</p>
+      <p>The conditions that you are checking for in a <code>CASE</code> statement
+      can be whatever you want them to be. You can check to see if a value in a column
+      is a certain phrase, or if the sum of two different columns is greater than another
+      column; it's up to you but any time you need to do a logical check in SQL
+      then <code>CASE</code> is the tool you need.
+      <h2>Sources</h2>
+      <p><a href='https://community.modeanalytics.com/sql/tutorial/sql-case/'>SQL CASE</a></p>
+      <p><a href='https://www.w3schools.com/sql/func_mysql_case.asp'>SQL CASE Function</a></p>
+      <p><a href='https://stackoverflow.com/questions/21313025/select-using-case-in-sql'>SELECT using CASE in SQL</a></p>
+      <p><a href='https://www.essentialsql.com/using-conditional-logic-in-sql-with-case-expression/'>Using Conditional Logic in SQL</a></p>
+      <p><a href='https://community.modeanalytics.com/sql/tutorial/sql-subqueries/'>Writing Subqueries in SQL</a></p>
+      <p><a href='https://www.postgresql.org/docs/9.3/static/datatype-numeric.html'>Postgres Numeric Types</a></p>
+
+
+    </div>
+</body>
+</html>
