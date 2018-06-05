@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap/css/tutorialstyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Using Git and Github</title>
+</head>
+<body>
+    <div class = 'col-md-2'>
+      <h3><a href='index.html' class='class1'>Home</a></h3>
+      <h3><a href='projects.html' class='class1'>Projects</a></h3>
+      <h3><a href='tutorials.html' class='class1'>Tutorials</a></h3>
+      <h3><a href='analysis.html' class='class1'>Analysis</a></h3>
+    </div>
+    <div class = 'col-md-6'>
+      <h2>Introduction to GGanimate and Plotting PbP Events</h2>
+      <h2>by Jake Flancer</h2>
+      <br />
+      <p><i>Editor's note: This piece was written by Jake Flancer
+        a large contributor to the
+        <a href='https://tapetotapetracker.com/#!/login'>Tape 2 Tape</a>
+        project. His other work can be found
+        <a href='http://threepointgames.blogspot.com'>here</a> and you
+        can follow him on twitter <a href='https://twitter.com/jakef1873'>
+          @jakef1873</a></i></p>.
+      <p>In this tutorial I’ll be covering how to set up gganimate,
+      and then I’ll walk through how to create this graphic. This tutorial
+      will be using the R programming language. I will explain everything
+      as if you are relatively new with R, but it will be more clear
+      depending on your experience. I’ll also assume you understand
+      general syntax and how to run code, but if something is still
+      unclear I’d be happy to explain it.</p>
+      <p>There are several useful tutorials for gganimate available online,
+      but most used the same default example. While they are helpful,
+      I thought it would be fun to introduce a new application
+      relevant to hockey.</p>
+      <h2>Installing gganimate</h2>
+      <p>Gganimate is an extension to the popular graphing package ggplot2,
+      which allows users to create animated visuals of their data.
+      To use gganimate, you first have to install
+      <a href='https://www.imagemagick.org/script/index.php'>ImageMagick</a>,
+      a command-line program for image editing. There are several
+      ways to do this, but I’ll be going through what I found
+      easiest on a macOS system. To do this, you must first set up
+      Homebrew, which is a helpful package manager. If you don’t have
+      Homebrew already installed, a <a href='homebrew.html'>tutorial</a>
+      has already been created for this process.
+      <p>Once Homebrew is installed, you can simply type:</p>
+      <pre><code class='Command Line'>
+brew install imagemagick
+      </code></pre>
+      <p>into your console (terminal). Once this is prepared,
+      run the following code in the R terminal and gganimate
+      will be downloaded available for use.</p>
+      <pre><code class='Command Line'>
+if(!require(devtools)) install.packages("devtools")
+devtools::install_github("dgrtwo/gganimate")
+      </code></pre>
+      <h2>Background Setup</h2>
+      <p>We will be working with NHL play-by-play data,
+      which can be retrieved using Emmanuel Perry’s scraper.
+      The code can be found
+      <a href='https://github.com/mcbarlowe/tutorialscode/blob/master/Rscraper/Manny_scraper_HTM.R'>
+        here</a>, and a
+      <a href='NHLscrape.html'>tutorial</a> for working
+      with this file can be found here. For this tutorial,
+      you will only load a single game of data and will not
+      need to save it. As a result, I’d recommend deleting
+      or commenting out all lines from 3116
+      <code>library(readr)</code> to the end of the file.</p>
+      <p>To graph the events, we need to use a rink.
+      Prashanth Iyer has already made code to create a rink in ggplot,
+      which can be found
+      <a href='https://github.com/mcbarlowe/graphautomation/blob/master/RinkFunction.R'>here</a>.
+      I’ll revisit this in a little. At this point, all extraneous
+      steps have been finished, and the rest of the tutorial
+      will simply require following along code in R.</p>
+      <h2>Background</h2>
+      <p>This has already been mentioned, but just to reiterate,
+      the first step is to load all necessary packages into R.
+      The tidyverse package is actually a group of packages,
+      and for this tutorial we’ll only be using ‘dplyr’ for
+      data manipulation and ‘ggplot2’ for graphing. However, it
+      is much easier to load them all at once. Additionally,
+      be sure to load the ‘gganimate’ and ‘animation’
+      packages that I covered earlier.</p>
+      <pre><code class='Command Line'>
+library(tidyverse)
+library(gganimate)
+library(animation)
+      </code></pre>
+      <p>At this point, I’d also recommend loading Prashanth’s
+      rink information. Run the command below to do this,
+      except change the file location.</p>
+      <pre><code class='Command Line'>
+source('/Users/jake/Documents/R/RinkFunction.R')
+      </code></pre>
+      <p>The next step is to open and run the entire scraper file.
+      You don’t need to worry about the contents of the file,
+      just make sure that it is being loaded in the same
+      environment that you will be using to run the rest of the
+      code. At this point, you’re current environment should
+      have a dataframe named ‘ds.espn_codes’ and a list named
+      ‘rink’, as well as several values and functions.</p>
+      <p>Next, we will be manually setting a few values.
+      After this there is no code that will need to be changed.
+      To select a specific game, manually enter the season in
+      the same format as below. To the best of my knowledge,
+      the easiest way to find a game ID is to look in the URL
+      of the game’s box score on nhl.com. For example, the url of
+      game 2 of the Finals is:
+      <pre><code class='Command Line'>
+https://www.nhl.com/gamecenter/wsh-vs-vgk/2018/05/30/2017030412/recap/box-score#game=2017030412,game_state=final,lock_state=final,game_tab=boxscore”
+      </code></pre>
+      <p>In this text, we can see the “30412” that is typed below.
+      As some general rules, regular season games start with a ‘2’
+      and playoff games start with a ‘3’. The third digit ‘4’,
+      represents the round in the playoffs.
+      I’m not completely clear about the rest of the code,
+      but I’m sure there’s a method to the madness.</p>
+      <pre><code class='Command Line'>
+Season &lt- "20172018"
+game_ID &lt- "30412"
+      </code></pre>
+      <p><i>Editors Note: the NHL game code consists of three distinct parts.
+        Take for example 2017030412 in the url above.
+        The first four digits represent the year in which the season
+        starts. So for this season it's 2017 and for last season it
+        would be 2016. The next two digits represent the type of
+        game being played: 01 is preseason, 02 are regular season
+        games, and 03 represent playoff games. In regular and preseason
+        games the numbers after those two digits represent the numbered
+        game in that season. The total games in an NHL season is now
+        1271. Before Vegas's addition it was 1230. </i></p>
+      <p><i>In the playoffs the digits after the 03 aren't the running
+        total of games. As jake said above the next two digits
+        represent which round of the playoffs the game takes place in.
+        First round would be 01, second 02, etc. The next digit represents
+        which series in the round the game takes place in. In the finals
+        there's only one series so it will always be a one, but if it was
+        a first round game the digit could range from 1 to 8 and would shrink
+        according to the round. The next digit represents which game
+        in that series is taking place. This can only range from 1 to 7.</i></p>
+      <p>The final variable, ‘interval’, specifies the amount of seconds
+      each frame represents. At 30, the frame is updated every 30 seconds.
+      This can be made larger or smaller, but I’d caution against making it
+      too small. The way gganimate works is by basically combining a bunch
+      of .jpg files into a .gif. At a 30 second interval, the computer is
+      asked to create 120 files. This takes some time and depending on
+      your computer I wouldn’t recommend making it any larger.</p>
+      <pre><code class='Command Line'>
+interval &lt- 30
+      </code></pre>
+      <p>The next line uses a function from the scraper file to save
+      game information in the ‘pbp_file’ variable. The information
+      by default is stored as a list, so ‘[[1]]’ is needed to extract the data frame.</p>
+      <pre><code class='Command Line'>
+pbp_file &lt- ds.compile_games(games = game_ID,
+                             season = Season,
+                             pause = 2,
+                             try_tolerance = 5,
+                             agents = ds.user_agents)[[1]]
+
+      </code></pre>
+      <p>The pbp_file is stored as a data frame, which stores information
+      as rows and columns. Each row indicates an individual event from
+      the game, and each column provides information about the event.
+      Using the colnames() command, we can get an idea about the type
+      of data we’ll be working with:</p>
+      <pre><code class='Command Line'>
+colnames(pbp_file)
+ [1] "season"              "game_id"             "game_date"           "session"
+ [5] "event_index"         "game_period"         "game_seconds"        "event_type"
+ [9] "event_description"   "event_detail"        "event_team"          "event_player_1"
+[13] "event_player_2"      "event_player_3"      "event_length"        "coords_x"
+[17] "coords_y"            "players_substituted" "home_on_1"           "home_on_2"
+[21] "home_on_3"           "home_on_4"           "home_on_5"           "home_on_6"
+[25] "away_on_1"           "away_on_2"           "away_on_3"           "away_on_4"
+[29] "away_on_5"           "away_on_6"           "home_goalie"         "away_goalie"
+[33] "home_team"           "away_team"           "home_skaters"        "away_skaters"
+[37] "home_score"          "away_score"          "game_score_state"    "game_strength_state"
+[41] "highlight_code"
+      </code></pre>
+      <p>Next, we will be storing some information in strings for easier use later in the code:</p>
+      <pre><code class='Command Line'>
+home_team &lt;- pbp_file$home_team[1]
+away_team &lt;- pbp_file$away_team[1]
+date &lt;- pbp_file$game_date[1]
+max_period &lt;- max(pbp_file$game_period)
+      </code></pre>
+      <h2>Data Formatting</h2>
+      <p>Now we need to prepare the play-by-play information for display.
+      This will be done using the aforementioned ‘dplyr’ package.
+      The ‘%&lt;%’ is referred to as the pipe operator and allows you to
+      apply functions in an easier to read and interpret format.
+      The first function used is ‘filter’. By using the ‘%in%’ function
+      we can choose only unblocked shot events. The second function, ‘select’,
+      chooses the relevant columns we’ll be working with.</p>
+      <p>The final function is mutate, which allows us to create new columns.
+      The first column ‘flip’, stores either 1 or -1 to change the coordinates
+      to the correct side of the ice. This works by using the modulus “mod”
+      operator to return true (-1) if the period is an even number, and false
+      (1) if the period is an odd number. The next two columns ‘x’ and ‘y’ puts
+      each time on its own side of the ice by multiplying the coordinate by the flip.
+      I also need to use the<code>as.numeric(as.character())</code> functions
+      because the coordinates are originally stored as factors. The final new
+      column is ‘time_bin’, which uses the integer division operator to set the
+      bin for each event. This essentially just rounds down the number created
+      in usual numeric division. For example, a shot 13 seconds into the game
+      is given a value of 0 (13/30) and a shot 100 seconds into the game
+      is given a value of 3 (100/30).</p>
+      <pre><code class='Command Line'>
+      game_file &lt;- pbp_file %&gt;%
+  filter(event_type %in% c('SHOT','MISS','GOAL')) %&gt;%
+  select(game_seconds,
+         event_type,
+         event_team,
+         coords_x,
+         coords_y,
+         home_score,
+         away_score,
+         home_team,
+         away_team,
+         game_strength_state,
+         game_period) %&gt;%
+  mutate(flip = ifelse(as.numeric(game_period)%%2 == 0,-1,1),
+         x = as.numeric(as.character(coords_x)) * flip,
+         y = as.numeric(as.character(coords_y)) * flip,
+         time_bin = (game_seconds%/%interval)
+         )
+      </code></pre>
+      <p>This next part might get a little confusing, but hopefully I explain it clearly.
+      Many 30 second intervals of a hockey game do not include any shot attempts, but
+      we don’t want the animation to simply skip around to each attempt. I chose
+      to set up the gif as a function of time, so it counts up every 30 seconds. This
+      means that we want a frame to be displayed regardless of if any attempts were
+      taken in that time. For example, no shots were taken between 13 and 100 seconds
+      in our game. This means we are missing two bins for the times between 30-59 seconds
+      and 60-89 seconds. Instead of skipping these frames, we need to add in rows with
+      limited information to make sure the gif includes these frames.</p>
+      <p>To start, we create an empty dataframe with a row for each 30 second interval
+      possible in the game and the same columns as our game_file. Next, we fill the
+      time_bin column with each possible bin in a game. With 30 second intervals,
+      there are time bins from 0-119 (120 half-minute groups). Additionally,
+      we use the ‘rep()’ command to fill the game_period column with the period
+      for each bin. Using 30 second intervals, there are 40 bins in each period.</p>
+      <pre><code class='Command Line'>
+min_game &lt;- data.frame(matrix(NA,
+                              nrow = (1200/interval)*max_period,
+                              ncol = ncol(game_file)))
+colnames(min_game) &lt;- colnames(game_file)
+min_game$time_bin &lt;- 0:((1200/interval)*max_period - 1)
+min_game$game_period &lt;- rep(1:max_period, each = (1200/interval))
+      </code></pre>
+      <p>Using the ‘which()’ function, we can now filter only the time bins in the
+      blank dataframe that are not included in the game information.</p>
+      <pre><code class='Command Line'>
+min_game &lt;- min_game[which(!min_game$time_bin %in% game_file$time_bin),]
+      </code></pre>
+      <p>Finally, using this methodology, if a game goes into overtime we would
+      keep displaying frames after the game has ended. To account for this,
+      we can use the following lines, which cuts of the frames when the
+      overtime goal is scored.</p>
+      <pre><code class='Command Line'>
+ot_end &lt;- game_file$time_bin[nrow(game_file)]
+if(max_period &gt; 3){
+  min_game &lt;- filter(min_game, time_bin &lt;= ot_end)
+      </code></pre>
+      <p>This next command first binds together the game_file
+      (which contains the pbp info) and min_game (which contains the empty info).
+      Now we use the pipe operator to create columns indicating if the
+      events are goals. This will be used to take a running count later on.
+      Since the rows from the empty dataframe produce NA values, the next two lines set these at zeros.</p>
+      <pre><code class='Command Line'>
+intervaled_file &lt;- bind_rows(game_file,min_game) %&gt;%
+  mutate(home_goal = ifelse(event_type == "GOAL" &amp; event_team == home_team,1,0),
+         away_goal = ifelse(event_type == "GOAL" &amp; event_team == away_team,1,0))
+
+intervaled_file$home_goal[is.na(intervaled_file$home_goal)] &lt;- 0
+intervaled_file$away_goal[is.na(intervaled_file$away_goal)] &lt;- 0
+      </code></pre>
+      <p>We need to include this next line because some stadiums record
+      data on reverse sides. This is pretty jumbled code, but it basically
+      just looks at if the home team started on the left or right side
+      of the ice. We want the home team on the left so if it turns out
+      on the right orientation is -1.</p>
+      <pre><code class='Command Line'>
+orientation &lt;- ifelse(as.numeric(as.character((
+                                    filter(intervaled_file,
+                                           event_team == home_team))$coords_x))[1] > 0,-1,1)
+
+      </code></pre>
+      <p>Now there isn’t much left to do. We use the pipe operator again
+      to prepare the remaining information. First, ‘arrange’ is used
+      to sort the data from the beginning to the end of the game- to
+      keep track of the score. We now use mutate again to create and
+      edit some columns. The coordinates are first updated to the correct
+      orientation. The ‘cumsum’ command is used to create a running count
+      for the home and away scores (this is why we needed to use arrange).
+      Period_min gets the minute of the period, so the 21st minute in the game
+      is changed to 1, etc. The final variable, game_time, is what we will
+      be using to proceed through the frames and display the time and score
+      information. The formatting is a little complicated, but it essentially
+      stores the game as a time, where the period is represented as an hour,
+      and minutes and seconds are the minutes and seconds into the period.
+      It then displays the home and away score on the next line.
+      The weird spacing is done so home and away score are formatted
+      symmetrically in the center.</p>
+      <pre><code class='Command Line'>
+ntervaled_file &lt;- intervaled_file %&gt;%
+  arrange(time_bin) %&gt;%
+  mutate(x = x*orientation,
+         y = y*orientation,
+         home_score = cumsum(home_goal), #takes running count of score
+         away_score = cumsum(away_goal),
+         period_min = time_bin%%(1200/interval),
+         # This creates the time frame and formats the text for display
+         game_time = format(as.POSIXct('0001-01-01 00:00:00') +
+         period_min*interval + 3600*game_period +
+         interval, paste("Period: %H Time: %M:%S",
+         "\n                                                                            ",
+         home_score,
+         "-",
+         way_score)))
+      </code></pre>
+      <p>These are the final lines for data formatting. Basically,
+      in the rare chance that a shot, missed shot, or goal don’t
+      occur (most frequently a 0-0 game or when looking at a subset
+      of the game), we still want the legend to remain the same.
+      To do this, we create a dataframe with three completely blank rows,
+      except for each event type. These rows are then bound to our main
+      data frame and the event type is changed to a factor. Now,
+      regardless of the events that actually occur in the game,
+      the color legend will remain the same.</p>
+      <pre><code class='Command Line'>
+temp &lt;- as.data.frame(matrix(c(NA,"GOAL",rep(NA,17),
+                               NA,"SHOT",rep(NA,17),
+                               NA,"MISS",rep(NA,17)),
+                             ncol = 19,
+                             byrow = T))
+colnames(temp) &lt;- colnames(intervaled_file)
+intervaled_file &lt;- bind_rows(intervaled_file, temp)
+intervaled_file$event_type &lt;- as.factor(intervaled_file$event_type)
+      </code></pre>
+      <p>Using Prashanth’s code, we first create a blank rink.</p>
+      <pre><code class='Command Line'>
+rink &lt;- fun.draw_rink() + coord_fixed()
+      </code></pre>
+      <p>Finally, we can put together the graphic. As a quick background,
+      ggplot works by adding layers to a graphic. Some layers asks for
+      aesthetic (aes) mappings, and others require different parameters.
+      First we create a geom_point layer. The aesthetic mapping takes
+      the x and y-coordinates stored as x and y from the intervaled_file.
+      The color aesthetic is specified as the event type. For those
+      familiar with ggplot but not gganimate, these next two aesthetics
+      are new. Frame takes in the variable we need to iterate over,
+      which in this case is the game_time column. Cumulative specifies
+      whether or not we want the previous points to stay, in this
+      case we will set that as true. Size makes the points larger, and
+      the alpha parameter gives the points a transparency. The next
+      layer sets the color scale for the events, I chose to make
+      goals green, missed shots light blue, and shots on goal dark blue.
+      The labs layer changes the legend title from ‘event_type’ to
+      ‘Shot Type’. Finally, the ggtitle layer allows the title to be
+      formatted nicer.</p>
+      <pre><code class='Command Line'>
+b &lt;- rink +
+  geom_point(data= intervaled_file, aes(x=x,y=y,color = event_type,
+             frame = game_time, cumulative = T), size = 4, alpha = 0.8) +
+  scale_color_manual(values = c("seagreen","skyblue","navyblue"),
+                     labels = c("Goal","Missed Shot","Shot on Goal"),
+                     drop = F) +
+  labs(color = "Shot Type") +
+  ggtitle(paste(home_team,
+                "vs",
+                away_team,
+                date,
+                "\n"),
+          subtitle = paste("\n                                                                              ",
+                           home_team,
+                           "                                        ",
+                           away_team))
+      </code></pre>
+      <p>The output <code>Warning: Ignoring unknown aesthetics: frame, cumulative</code>
+      should be displayed. Additionally, if you were to enter “b” into
+      the console the final graph will be displayed ignoring the gganimate parameters.</p>
+      <p>Using the animation package, we can set several features.
+      Loop determines how many times the gif loops. The default is 0,
+      which infinitely loops the gif. I chose 1, which means the gif
+      stops after the game ends. This is a personal preference,
+      as I like to look at the complete shot chart after the
+      game has finished. The height and width are set so the
+      teams and score lines up symmetrically.</p>
+      <pre><code class='Command Line'>
+ani.options(loop = 1, ani.width  = 690, ani.height = 400)
+      </code></pre>
+      <p>This is the final line of code. The ‘gganimate’ command
+      creates and (if you want to) saves the gif. Interval
+      determines the speed, I think 0.25 is a good speed but
+      you can change that as you’d like. Additionally, I use the
+      paste command to name the files so for example,
+      “VGKWSH2018-05-30.gif”. I also imagine you’d want to change
+      the file location.</p>
+      <pre><code class='Command Line'>
+gganimate(b,
+          interval = 0.25,
+          filename = paste("~/Documents/R/game_viz/",
+                           home_team,
+                           away_team,
+                           date,
+                           ".gif",
+                           sep=''))
+
+      </code></pre>
+      <h2>Sources</h2>
+      <a href='https://github.com/KubaMichalczyk/Tracking-Data/blob/master/convex_hull_animation.R'>
+        This is an interesting visualization using player tracking in soccer I’d recommend looking into.</a>
+      <a href='http://www.sthda.com/english/articles/16-r-packages/58-gganimate-create-animations-with-ggplot2/'>
+        gganimate package docs</a>
+    </div>
