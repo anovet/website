@@ -347,6 +347,7 @@ colnames(temp) &lt;- colnames(intervaled_file)
 intervaled_file &lt;- bind_rows(intervaled_file, temp)
 intervaled_file$event_type &lt;- as.factor(intervaled_file$event_type)
       </code></pre>
+      <h2>Visualization</h2>
       <p>Using Prashanth’s code, we first create a blank rink.</p>
       <pre><code class='Command Line'>
 rink &lt;- fun.draw_rink() + coord_fixed()
@@ -418,8 +419,8 @@ gganimate(b,
 
       </code></pre>
       <h2>Sources</h2>
-      <a href='https://github.com/KubaMichalczyk/Tracking-Data/blob/master/convex_hull_animation.R'>
-        This is an interesting visualization using player tracking in soccer I’d recommend looking into.</a>
-      <a href='http://www.sthda.com/english/articles/16-r-packages/58-gganimate-create-animations-with-ggplot2/'>
-        gganimate package docs</a>
+      <p><a href='https://github.com/KubaMichalczyk/Tracking-Data/blob/master/convex_hull_animation.R'>
+        This is an interesting visualization using player tracking in soccer I’d recommend looking into.</a></p>
+      <p><a href='http://www.sthda.com/english/articles/16-r-packages/58-gganimate-create-animations-with-ggplot2/'>
+        gganimate package docs</a></p>
     </div>
