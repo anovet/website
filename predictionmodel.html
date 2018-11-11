@@ -163,7 +163,9 @@
       <p>So if the goals are tied at the end of regulation the model needs to determine how to declare a winner.
       Again building off the work of Alan Ryder(Ryder p.19), he used a poisson distribution to determine the
       probability of no goals scored in OT. That is what the code<code>
-        prob_of_home_so_win = home_so_win_percent/(home_so_win_percent + away_so_win_percent)</code> does. Once that
+
+        prob_of_zero_goals = (math.exp(-home_ot_lambda) * math.exp(-away_ot_lambda))
+</code> does. Once that
       is determined then determing whether a game is determined in OT or goes to the Shootout is a simple Bernoulli trial,
       or coin flip. If the flip comes up one then the game goes to shootout, if zero then it was determined in overtime.
       </p>
